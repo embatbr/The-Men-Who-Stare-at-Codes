@@ -31,7 +31,7 @@ Here we identify three basic elements of this model:
 
 The model also has an externally applied *bias*, denoted by $latex b_k$ (sometimes called $latex w_0$ with an input $latex x_0 = +1$ as in *Fig. 2*), which effect is to increase or decrease the net input of the activation function.
 
-[caption id=\"attachment_253\" align=\"aligncenter\" width=\"450\"]<a href=\"http://themenwhostareatcodes.files.wordpress.com/2014/03/neuron-diagram-02.png\"><img class=\" wp-image-253  \" alt=\"neuron-diagram-02\" src=\"http://themenwhostareatcodes.files.wordpress.com/2014/03/neuron-diagram-02.png?w=300\" width=\"450\" height=\"273\" /></a> <strong>Figure 2</strong> Another model of a neuron, with the bias as an input.[/caption]
+[caption id=\"attachment_253\" align=\"aligncenter\" width=\"450\"]<a href=\"http://themenwhostareatcodes.files.wordpress.com/2014/03/neuron-diagram-02.png\"><img class=\" wp-image-253  \" alt=\"neuron-diagram-02\" src=\"http://themenwhostareatcodes.files.wordpress.com/2014/03/neuron-diagram-02.png?w=300\" width=\"450\" height=\"273\" /></a> <strong>Figure 2</strong> Another nonlinear model of a neuron, with the bias as an input.[/caption]
 
 All this given, we can describe the neuron *k* by the pair of equations:
 
@@ -71,7 +71,7 @@ class MCP_Neuron(object):
         return heaviside(summed + self.bias)
 [/code]
 
-Notice the *activation function* was not set as an attribute. In a more general model it would (and will) be necessary. And at last we test the model (the negative bias makes the neuron firing more difficult - what usually is our intent):
+Notice the *activation function* was not set as an attribute. In a more general model it would (and will) be necessary. Also the implementation is based on the diagram of *Fig. 1*. The other shown in *Fig. 2* would be better for a circuit implementation. And at last we test the model (the negative bias makes the neuron firing more difficult - what usually is our intent):
 
 [code language=\"python\"]
 if __name__ == &#039;__main__&#039;:
@@ -100,7 +100,8 @@ The complete code is in the post directory on <a href=\"https://github.com/embat
 
 ### References
 
-- Neural Networks and Learning Machines - 3rd Ed - Simon Haykin - Pearson.
+- <a href=\"http://en.wikipedia.org/wiki/Artificial_neural_network\" target=\"_blank\">Neural Networks - Wikipedia</a>.
+- <a href=\"http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392\" target=\"_blank\">Neural Networks and Learning Machines - 3rd Ed - Simon Haykin - Pearson</a>.
 
 **Live long and prosper**"
 }
