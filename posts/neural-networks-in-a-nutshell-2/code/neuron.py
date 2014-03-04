@@ -17,6 +17,12 @@ def unit_step(x):
     else:
         return 0
 
+def signal(x):
+    if x >= 0:
+        return 1
+    else:
+        return -1
+
 def logsig(x):
     return (1 / (1 + exp(-x)))
 
@@ -37,11 +43,13 @@ class Neuron(object):
 
 if __name__ == '__main__':
     neuron_1 = Neuron([0.4, 0.6, 0.9], -0.8)
-    neuron_2 = Neuron([0.4, 0.6, 0.9], -0.8, logsig)
-    neuron_3 = Neuron([0.4, 0.6, 0.9], -0.8, tansig)
+    neuron_2 = Neuron([0.4, 0.6, 0.9], -1.5, signal)
+    neuron_3 = Neuron([0.4, 0.6, 0.9], -0.8, logsig)
+    neuron_4 = Neuron([0.4, 0.6, 0.9], -0.8, tansig)
 
     inputs = [1, 0, 1]
 
     print('Test #1 - inputs on neuron_1:', neuron_1.fire(inputs))
     print('Test #1 - inputs on neuron_2:', neuron_2.fire(inputs))
     print('Test #1 - inputs on neuron_3:', neuron_3.fire(inputs))
+    print('Test #1 - inputs on neuron_4:', neuron_4.fire(inputs))
