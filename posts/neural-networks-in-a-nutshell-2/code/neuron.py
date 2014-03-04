@@ -11,7 +11,7 @@ This code is intended to show how to define and use a general model of a neuron.
 from math import exp, tanh
 
 
-def unit_step(x):
+def treshold(x):
     if x >= 0:
         return 1
     else:
@@ -31,7 +31,7 @@ tansig = tanh
 
 class Neuron(object):
 
-    def __init__(self, weights, bias, activation=unit_step):
+    def __init__(self, weights, bias, activation=treshold):
         self.weights = weights
         self.bias = bias
         self.activation = activation
