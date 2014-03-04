@@ -1,0 +1,5 @@
+It's ironic this post is in the Fast Food category, because the advice from Peter Norvig I'm linking below is exactly the opposite. It's totally necessary to anyone who wants to be a good programmer.
+
+The article is <a href="http://norvig.com/21-days.html" target="_blank">Teach Yourself Programming in Ten Years</a>.
+
+**Live long and prosper**
