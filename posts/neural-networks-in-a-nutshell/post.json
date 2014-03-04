@@ -2,7 +2,7 @@
     "title" : "Neural networks in a nutshell",
     "category" : "Learning",
     "tags" : ["neural networks", "neuron", "machine learning", "pattern recognition", "McCulloch-Pitts",
-    "Heaviside", "nutshell", "python", "bash"],
+    "Heaviside", "nutshell", "python"],
     "content" : "This is the first post that makes justice to the blog's motto: **show me the code motherfucker**. In this and the next *n* posts with the title \"Neural networks in a nutshell - part *k*\" I will talk about artificial neural networks, showing concepts (theory) and code (practice). The codes will be written in <a href=\"http://python.org/\" target=\"_blank\">Python</a> without any fancy library as <a href=\"http://www.numpy.org/\" target=\"_blank\">NumPy</a>, <a href=\"http://www.scipy.org/\" target=\"_blank\">SciPy</a> or <a href=\"http://pybrain.org/\" target=\"_blank\">PyBrain</a> just because:
 
 1. I don't know how to use any of these.
