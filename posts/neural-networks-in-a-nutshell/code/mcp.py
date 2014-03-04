@@ -8,7 +8,7 @@ This code is intended to show how to define and use a McCulloch-Pitts neuron.
 """
 
 
-def heaviside(x):
+def unit_step(x):
     if x >= 0:
         return 1
     else:
@@ -23,7 +23,7 @@ class MCP_Neuron(object):
 
     def fire(self, inputs):
         summed = sum([i*w for (i,w) in zip(inputs, self.weights)])
-        return heaviside(summed + self.bias)
+        return unit_step(summed + self.bias)
 
 
 if __name__ == '__main__':
