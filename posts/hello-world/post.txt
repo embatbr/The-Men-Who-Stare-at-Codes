@@ -1,0 +1,7 @@
+This is the opening post for **The Men Who Stare at Codes**, a blog where I will talk mostly about IT, always with a technical approach. No PMBOK, ITIL or any of these small talks, but **old good motherfucking code** for **old good motherfucking coders**.
+
+Most posts will be some kind of "shared study" where I will learn (or relearn) some subject and share my progress with the readers. After all, the best way to really understand something is trying to teach it to others.
+
+There's a *.com* domain for this blog, but as I suck at web dev the *.wordpress* will remain for a long, long time.
+
+**Live long and prosper**
