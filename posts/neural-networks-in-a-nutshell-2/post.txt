@@ -1,0 +1,87 @@
+Last <a title="Neural networks in a nutshell" href="http://themenwhostareatcodes.wordpress.com/2014/03/02/neural-networks-in-a-nutshell/" target="_blank">post</a> I showed the *McCulloch-Pitts neuron*, which main difference to a more wide model is the binary *activation function*. Continuing this subject for while, I will talk briefly about other existent *activation functions*. Pay attention to the fact the neuron structure is the same, the only difference being how it fires.
+
+The *Heaviside function* is also called *unit step function* because it has an abrupt change in value when reaches `x = 0`. However this change doesn't happens in the real neuron. It's not binary, but more smooth, going from (almost) nothing and growing until reach it's limit. Is shaped more like a **S**. The *sigmoid function* has this shape, as shown in *Fig. 1*, and the two cases demonstrated here are the *logistic sigmoid* (*Eq. 3*) and the *hyperbolic tangent* (*Eq. 4*).
+
+[caption id="attachment_314" align="aligncenter" width="360"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-014.png"><img class="wp-image-314 " alt="figure-01" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-014.png?w=300" width="360" height="191" /></a> <strong>Figure 1</strong> Sigmoid function shaped as a "S".[/caption]
+
+- (3) $latex \varphi(v) = \frac{1}{1 + e^{-av}}$, with $latex \varphi(v)$ between `0` and `1`.
+- (4) $latex \varphi(v) = tanh(v) = \frac{e^v - e^{-v}}{e^v + e^{-v}}$, with $latex \varphi(v)$ between `-1` and `1`.
+
+Also, another caracteristic is these functions are *differentiable*, while the *unit step* is not, what will prove to be an importante feature still in this post.
+
+So, now, a piece of code. Using the code from the previous post we will build a more general model of a neuron, containing the *logsig* (with `a = 1`) and *tansig* functions:
+
+[code language="python"]
+from math import exp, tanh
+
+
+def unit_step(x):
+    if x >= 0:
+        return 1
+    else:
+        return 0
+
+def logsig(x):
+    return (1 / (1 + exp(-x)))
+
+tansig = tanh
+[/code]
+
+Also a class defining a general Neuron. Notice the default value for parameter *activation* in `Neuron.__init__`
+
+[code language="python"]
+class Neuron(object):
+
+    def __init__(self, weights, bias, activation=unit_step):
+        self.weights = weights
+        self.bias = bias
+        self.activation = activation
+
+    def fire(self, inputs):
+        summed = sum([i*w for (i,w) in zip(inputs, self.weights)])
+        return self.activation(summed + self.bias)
+[/code]
+
+indicating that given no *activation function*, our neuron is a *McCulloch-Pitts* one. And the tests
+
+[code language="python"]
+if __name__ == '__main__':
+    neuron_1 = Neuron([0.4, 0.6, 0.9], -0.8)
+    neuron_2 = Neuron([0.4, 0.6, 0.9], -0.8, logsig)
+    neuron_3 = Neuron([0.4, 0.6, 0.9], -0.8, tansig)
+
+    inputs = [1, 0, 1]
+
+    print('Test #1 - inputs on neuron_1:', neuron_1.fire(inputs))
+    print('Test #1 - inputs on neuron_2:', neuron_2.fire(inputs))
+    print('Test #1 - inputs on neuron_3:', neuron_3.fire(inputs))
+[/code]
+
+```
+embat@hal9000:~/desktop/neural$ python3.3 neuron.py
+Test #1 - inputs on neuron_1: 1
+Test #1 - inputs on neuron_2: 0.6224593312018546
+Test #1 - inputs on neuron_3: 0.46211715726000974
+embat@hal9000:~/desktop/neural$
+```
+
+showing the infinite range of values a non*McCulloch-Pitts* neuron produces.
+
+This fase done, it's time to study the perceptrons.
+
+## 2 - Perceptron
+
+
+
+### References
+
+- <a href="http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392" target="_blank">Neural Networks and Learning Machines - 3rd Ed - Haykin, Simon - Pearson</a>.
+- <a href="http://prolland.free.fr/works/ai/docs/neuro-intro.pdf" target="_blank">An introduction to Neural Networks - 8th Ed. - Kröse, Ben; van der Smagt, Patrick - University of Amsterdam</a>.
+
+
+
+
+
+
+
+
