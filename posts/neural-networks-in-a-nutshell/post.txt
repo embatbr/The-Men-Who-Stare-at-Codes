@@ -30,8 +30,8 @@ The model also has an externally applied *bias* or *treshold*, denoted by $latex
 
 All this given, we can describe the neuron *k* by the pair of equations:
 
-1. $latex u_k = \sum_{j=1}^{m} w_kj x_j$
-2. $latex y_k = \varphi(u_k + b_k)$
+- (1) $latex u_k = \sum_{j=1}^{m} w_kj x_j$
+- (2) $latex y_k = \varphi(u_k + b_k)$
 
 where we can say $latex y_k = \varphi(v_k)$ and $latex v_k = u_k + b_k$. The value of $latex v_k$ is modified depending on the signal of $latex b_k$ as shown in *Fig. 3*.
 
@@ -81,21 +81,21 @@ if __name__ == &#039;__main__&#039;:
     print(&#039;Test #1 - inputs on neuron_3:&#039;, neuron_3.fire(inputs))
 [/code]
 
-To fit in this page, I created a soft link in the desktop with the line `ln -s ~/dados/workspace/The-Men-Who-Stare-at-Codes/posts/neural-networks-in-a-nutshell/code/ neural-code`.
+To fit in this page, I created a soft link in the desktop with the line `ln -s ~/dados/workspace/The-Men-Who-Stare-at-Codes/posts/neural-networks-in-a-nutshell/code/ neural`.
 
-[code language="bash"]
-embat@hal9000:~/desktop/neural-code$ python3.3 mcp.py
+```
+embat@hal9000:~/desktop/neural$ python3.3 mcp.py
 Test #1 - inputs on neuron_1: 0
 Test #1 - inputs on neuron_2: 1
 Test #1 - inputs on neuron_3: 0
-embat@hal9000:~/desktop/neural-code$
-[/code]
+embat@hal9000:~/desktop/neural$
+```
 
 The complete code is in the post directory on <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/blob/master/posts/neural-networks-in-a-nutshell/code/mcp.py" target="_blank">github</a> and that's all for today folks. In the next post we will see the perceptrons.
 
 ### References
 
 - <a href="http://en.wikipedia.org/wiki/Artificial_neural_network" target="_blank">Neural Networks - Wikipedia</a>.
-- <a href="http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392" target="_blank">Neural Networks and Learning Machines - 3rd Ed - Simon Haykin - Pearson</a>.
+- <a href="http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392" target="_blank">Neural Networks and Learning Machines - 3rd Ed. - Haykin, Simon - Pearson</a>.
 
 **Live long and prosper**
