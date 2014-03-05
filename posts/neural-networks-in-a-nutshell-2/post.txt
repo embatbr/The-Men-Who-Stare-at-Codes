@@ -80,25 +80,25 @@ Now we know an ANN is a distributed parallel system composed of very simple proc
 
 ## 2 - Perceptron
 
-The *Perceptron* was the first algorithmically described neural network (and is the simplest). It was invented by <a href="http://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank">*Frank Rosenblatt*</a> in 1958 and is a model for learning with a teacher (*supervised learning*). It is used to classify patterns *linearly separable* (patterns that lie on opposite sides of a hyerplane). Basically, the *Perceptron* is a single neuron, that can only classify examples belonging to two *linearly separable* classes. Others configurations can use more than a neuron per layer, but the classes must be all *linearly separable*.
+The *Perceptron* was the first algorithmically described neural network (and is the simplest). It was invented by <a href="http://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank">*Frank Rosenblatt*</a> in 1958, is a model for learning with a teacher (*supervised learning*) and is used to classify patterns *linearly separable* (patterns that lie on opposite sides of a hyerplane). Basically, the *Perceptron* is a single neuron, that can only classify examples belonging to two *linearly separable* classes. Others configurations can use more than a neuron per layer, but the classes must be all *linearly separable*.
 
-Depending of the source consulted, the *McCulloch-Pitts* model can use the *treshold function* or the *signal function* to activate the neuron. Previously we defined the model using the *treshold function*, but we will loose this definition a little, to maintain the consistency with the sources (shown in the *references* section at the end of the post). So now, our neuron will use the *signal function*.
+Depending of the source consulted, the *McCulloch-Pitts* model can use the *treshold function* or the *signal function* to activate the neuron. Previously we defined the model using the *treshold function*, but we will loose this definition a little, to maintain the consistency with the sources used (shown in the *references* section at the end of the post). So now, our neuron will use the *signal function*.
 
 [caption id="attachment_370" align="aligncenter" width="360"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-06.png"><img class=" wp-image-370  " alt="Figure 6 Signal-flow graph of the perceptron." src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-06.png?w=300" width="360" height="174" /></a> <strong>Figure 6</strong> Signal-flow graph of the perceptron.[/caption]
 
-As shown in *Fig. 6*, the *Perceptron* with a single neuron is equal to the diagram of *Fig. 1*. Soon I will show why we had to change the *activation function* of the MCP neuron. Still according to *Fig. 6*, the total input $latex v$ is given by *Eq. 5*
+As shown in *Fig. 6*, the *Perceptron* with a single neuron is equal to the diagram of *Fig. 1*. Soon I will show why we had to change the *activation function* of the MCP neuron. Still according to *Fig. 6*, the total input $latex v$ is given by *Eq. 5*:
 
 - (5) $latex v = \sum_{j=1}^{m} w_j x_j + b$
 
-The goal is to correctly classify the inputs into classes `C1` (if $latex \varphi(v) = +1$) or `C2` (if $latex \varphi(v) = -1$). So, we need to define a border, and that's when *Eq. 5* is `0` ($latex v = 0$ arbitrarily belongs to class `C1` as $latex \varphi(0) = +1$), as shown in *Eq. 6*:
+The goal is to correctly classify the inputs into classes `C1` (if $latex \varphi(v) = +1$) or `C2` (if $latex \varphi(v) = -1$). So, we need to define a border, and that's when *Eq. 5* is `0` ($latex v = 0$ arbitrarily belongs to class `C1` as $latex \varphi(0) = +1$), as shown below:
 
 - (6) $latex v = \sum_{j=1}^{m} w_j x_j + b = 0$
 
-With this equation we can plot a map of the decision regions in the *m*-dimensional space. In the simplest case (one neuron) there are two decision regions separated by a *hyperplane*, as defined by *Eq. 6*. The *Fig. 7* illustrates the case with two inputs, for which the boundary takes a form of a straight line. Each point $latex (x_1, x_2)$ above the boundary line belongs to class `C1` and each point below the boundary line belongs to class `C2`. Note the bias *b* just shift the line away from the origin.
+Now we can plot a map of the decision regions in the *m*-dimensional space. In the simplest case (one neuron) there are two decision regions separated by a *hyperplane*, as defined by *Eq. 6*. The *Fig. 7* illustrates the case with two inputs, for which the boundary takes a form of a *straight line*. Each point $latex (x_1, x_2)$ above the boundary line belongs to class `C1` and each point below the boundary line belongs to class `C2`. Note the bias *b* just shift the line away from the origin.
 
 [caption id="attachment_380" align="aligncenter" width="260"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-07.png"><img class="size-medium wp-image-380 " alt="figure-07" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-07.png?w=260" width="260" height="300" /></a> <strong>Figure 7</strong> Decision boundary for a two dimensional, two class problem.[/caption]
 
-Here is the code for the Perceptron:
+Here is the code for the Perceptron
 
 [code language="python"]
 from neuron import signal, Neuron
@@ -127,31 +127,45 @@ class Perceptron(Neuron):
                 self.weights = [(w + self.lrn_rate*error*x) for (w, x) in
                                 zip(self.weights, input_vector)]
                 self.bias = self.bias + self.lrn_rate*error
-
-    def load_test(self, examples):
-        total = len(examples)
-        error = 0
-        for example in examples:
-            (input_vector, desired_output) = example
-            actual_output = self.fire(input_vector)
-            if desired_output != actual_output:
-                error = error + 1
-
-        return error/total
-
-    def validate(self, examples, max_error):
-        error = self.load_test(examples)
-        return (max_error > error, error)
-
-    def __str__(self):
-        ret = super().__str__()
-
-        return ret
 [/code]
 
-The default parameters in the \__init\__ method creates a *virgin* Perceptron (*bias* and *weights* zero). The learning rate for this case can be `1`, but a smaller one makes the learning more solid (but slower). I will skip the method `train()` to detail it more. The `load_test` takes a list of tuples `(input_vector, desired_output)` and check test for each one, returning a ratio between the number of errors and the number of examples. The method `validate` execute the `load_test` and check if the error rate is acceptable. It returns a tuple containing a `boolean` (it was validated or not) and the error rate.
+and some auxiliar functions:
 
-The method `train()` runs the examples a number of iterations defined by the variable `epochs`. This variable is necessary because sometimes, even after thousands of examples, the *net* isn't well trained, so the weights must be adjusted again. For each `epoch`, all examples are tested and for each, the weights (and the bias) are changed according to the <a href="http://en.wikipedia.org/wiki/Hebbian_theory" target="_blank">*Hebb's rule*</a>. Each example's *actual output* is compared to the *correct output* provided, giving the error, which is multiplied by the *learning rate* and the corresponding input, and then added to the weight. The speed the weight changes is controlled by the *learning rate*. Remember that the method `train()` is effective only for an untrained *net*, that usually is a *virgin* one.
+[code language="python"]
+def load_test(perceptron, examples):
+    total = len(examples)
+    error = 0
+    for example in examples:
+        (input_vector, desired_output) = example
+        actual_output = perceptron.fire(input_vector)
+        if desired_output != actual_output:
+            error = error + 1
+
+    return error/total
+
+def validate(perceptron, examples, max_error):
+    error = load_test(perceptron, examples)
+    return (max_error > error, error)
+[/code]
+
+The default parameters in the `\__init\__()` method creates a "virgin" Perceptron (*bias* and *weights* zero). The learning rate for this case can be `1`, but a smaller one makes the learning more solid (but slower). I will skip the method `train()` to detail it soon. The `load_test()` takes a list of tuples `(input_vector, desired_output)` and test each one, returning a ratio between the number of errors and the number of examples. The function `validate()` executes the `load_test` and check if the error rate is acceptable. It returns a tuple containing a `boolean` (it was validated or not) and the error rate.
+
+The method `train()` runs according to the algorithm:
+
+1. Take a perceptron with `weights` and `bias` reset (usually).
+2. If `epochs` are over:
+   `goto` step 6
+   Else:
+   take `ex` from `examples`
+3. If `examples` are over:
+   `goto` step 2
+   Else:
+   `actual_output = net.fire(ex)`
+4. If `actual_output` is wrong:
+   `error = desired_output - actual_output`
+   `weight(ex + 1) = weight(ex) + lrn_rate*error*input(ex)`
+5. `goto` step 3
+6. Finish
 
 Now, here there's a not so clean code to train, validate and test the Perceptron:
 
@@ -233,7 +247,13 @@ if __name__ == '__main__':
     print('\nsaved on', filename)
 [/code]
 
-The command line to execute this code is `python3.3 perceptrons.py lrn_rate epochs num_training num_validation max_error num_test a b`, where `max_error` is the limit to validate the Perceptron and `a` and `b` are the parameters of a straight line dividing the classes. In the <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-2" target="_blank">post repository</a> there's some examples of *nets*.
+The command line to execute this code is
+
+```
+python3.3 perceptrons.py lrn_rate epochs num_training num_validation max_error num_test a b
+```
+
+where `max_error` is the limit to validate the Perceptron and `a` and `b` are the parameters of a straight line dividing the classes. In the <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-2" target="_blank">post repository</a> there's some examples of *nets*.
 
 ### References
 
