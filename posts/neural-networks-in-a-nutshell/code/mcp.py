@@ -8,7 +8,7 @@ This code is intended to show how to define and use a McCulloch-Pitts neuron.
 """
 
 
-def unit_step(x):
+def threshold(x):
     if x >= 0:
         return 1
     else:
@@ -23,7 +23,7 @@ class MCP_Neuron(object):
 
     def fire(self, inputs):
         summed = sum([i*w for (i,w) in zip(inputs, self.weights)])
-        return unit_step(summed + self.bias)
+        return threshold(summed + self.bias)
 
 
 if __name__ == '__main__':

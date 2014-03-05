@@ -20,39 +20,39 @@ As said before, an ANN is a direct graph in which the nodes are *neurons* and th
 
 Here we identify three basic elements of this model:
 
-1. A set of *synapses*, each caracterized by a *weight*. For each input (*dendrite signal*) $latex x_j$ in the neuron $latex k$ there is a synaptic weight $latex w_kj$ to multiply it.
+1. A set of *synapses*, each caracterized by a *weight*. For each input (*dendrite signal*) $latex x_j$ in the neuron *k* there is a synaptic weight $latex w_{kj}$ to multiply it.
 2. A *linear combiner* or *adder* for summing the weighted input signals.
 3. An *activation function* $latex \varphi(.)$ for limiting the amplitude of the neuron's output. It is in the interval [0,1].
 
-The model also has an externally applied *bias* or *treshold*, denoted by $latex b_k$ (sometimes called $latex w_0$ with an input $latex x_0 = +1$ as in *Fig. 2*), which effect is to increase or decrease the net input of the activation function.
+The model also has an externally applied *bias* or *threshold*, denoted by $latex b_k$ (sometimes called $latex w_{k0}$ with an input $latex x_0 = +1$ as in *Fig. 2*), which effect is to increase or decrease the net input of the activation function.
 
 [caption id="attachment_253" align="aligncenter" width="450"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/neuron-diagram-02.png"><img class=" wp-image-253  " alt="neuron-diagram-02" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/neuron-diagram-02.png?w=300" width="450" height="273" /></a> <strong>Figure 2</strong> Another nonlinear model of a neuron, with the bias as an input.[/caption]
 
 All this given, we can describe the neuron *k* by the pair of equations:
 
-- (1) $latex u_k = \sum_{j=1}^{m} w_kj x_j$
+- (1) $latex u_k = \sum_{j=1}^{m} w_{kj} x_j$
 - (2) $latex y_k = \varphi(u_k + b_k)$
 
 where we can say $latex y_k = \varphi(v_k)$ and $latex v_k = u_k + b_k$. The value of $latex v_k$ is modified depending on the signal of $latex b_k$ as shown in *Fig. 3*.
 
 [caption id="attachment_252" align="aligncenter" width="290"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/bias-graphic.png"><img class="wp-image-252  " alt="bias-graphic" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/bias-graphic.png?w=290" width="290" height="300" /></a> <strong>Figure 3</strong> Affine transformation produced by the presence of a bias.[/caption]
 
-The *activation function* $latex \varphi(.)$ is the <a href="http://en.wikipedia.org/wiki/Heaviside_step_function" target="_blank">*unit step function*</a>, which means the output $latex y_k$ is 1 for any nonnegative value of $latex v_k$ and 0 otherwise, as shown in *Fig. 4*.
+The *activation function* $latex \varphi(.)$ is the <a href="http://en.wikipedia.org/wiki/Heaviside_step_function" target="_blank">*threshold function*</a>, which means the output $latex y_k$ is `1` for any nonnegative value of $latex v_k$ and `0` otherwise, as shown in *Fig. 4*.
 
-[caption id="attachment_276" align="aligncenter" width="300"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/heaviside-graphic.png"><img class=" wp-image-276 " alt="heaviside-graphic" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/heaviside-graphic.png?w=300" width="300" height="155" /></a> <strong>Figure 4</strong> The Heaviside function.[/caption]
+[caption id="attachment_276" align="aligncenter" width="300"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/heaviside-graphic.png"><img class=" wp-image-276 " alt="heaviside-graphic" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/heaviside-graphic.png?w=300" width="300" height="155" /></a> <strong>Figure 4</strong> The threshold function.[/caption]
 <p style="text-align:center;"></p>
 
-Now we will see some code. First let's define the *unit step function*:
+Now we will see some code. First let's define the *threshold function*:
 
 [code language="python"]
-def unit_step(x):
+def threshold(x):
     if x >= 0:
         return 1
     else:
         return 0
 [/code]
 
-Notice that in this case, for `x == 0` the return is `1`, not `1/2`. Later comes the class defining the neuron (I am no checking if `inputs` and `self.weights` have the same length):
+Notice that in this case, for `x == 0` the return is `1`, not `1/2` (must be one class, can't be in the middle). Later comes the class defining the neuron (I am no checking if `inputs` and `self.weights` have the same length):
 
 [code language="python"]
 class MCP_Neuron(object):
@@ -63,7 +63,7 @@ class MCP_Neuron(object):
 
     def fire(self, inputs):
         summed = sum([i*w for (i,w) in zip(inputs, self.weights)])
-        return unit_step(summed + self.bias)
+        return threshold(summed + self.bias)
 [/code]
 
 The *activation function* was not set as an attribute. In a more general model it would (and will) be necessary. Also the implementation is based on the diagram of *Fig. 1*, as the other shown in *Fig. 2* would be better for a circuit implementation. And at last we test the model (the negative bias makes the neuron firing more difficult - what usually is our intention):
