@@ -35,25 +35,26 @@ class Perceptron(Neuron):
                                 zip(self.weights, input_vector)]
                 self.bias = self.bias + self.lrn_rate*error
 
-    def load_test(self, examples):
-        total = len(examples)
-        error = 0
-        for example in examples:
-            (input_vector, desired_output) = example
-            actual_output = self.fire(input_vector)
-            if desired_output != actual_output:
-                error = error + 1
-
-        return error/total
-
-    def validate(self, examples, max_error):
-        error = self.load_test(examples)
-        return (max_error > error, error)
-
     def __str__(self):
         ret = super().__str__()
 
         return ret
+
+def load_test(perceptron, examples):
+    total = len(examples)
+    error = 0
+    for example in examples:
+        (input_vector, desired_output) = example
+        actual_output = perceptron.fire(input_vector)
+        if desired_output != actual_output:
+            error = error + 1
+
+    return error/total
+
+def validate(perceptron, examples, max_error):
+    error = load_test(perceptron, examples)
+    return (max_error > error, error)
+
 
 
 # Tests
@@ -102,7 +103,7 @@ if __name__ == '__main__':
         examples.append(example)
 
     print('\nvalidating')
-    validation_error = perceptron.validate(examples, max_error)
+    validation_error = validate(perceptron, examples, max_error)
 
     examples = []
     for _ in range(num_test):
@@ -112,7 +113,7 @@ if __name__ == '__main__':
         examples.append(example)
 
     print('\ntesting')
-    test_error = perceptron.load_test(examples)
+    test_error = load_test(perceptron, examples)
 
     # name: perceptron_lrnRate_epochs_numExamples_a_b
     # format: weights bias activation
