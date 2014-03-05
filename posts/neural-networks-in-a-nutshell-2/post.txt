@@ -1,6 +1,6 @@
-Last <a title="Neural networks in a nutshell" href="http://themenwhostareatcodes.wordpress.com/2014/03/02/neural-networks-in-a-nutshell/" target="_blank">post</a> I showed the *McCulloch-Pitts neuron*, which main difference to a more wide model is the binary *activation function*. Continuing this subject for while, I will talk briefly about other existent *activation functions*. Pay attention to the fact the neuron structure is the same, the only difference being how it fires.
+Last <a title="Neural networks in a nutshell" href="http://themenwhostareatcodes.wordpress.com/2014/03/02/neural-networks-in-a-nutshell/" target="_blank">post</a> I showed the *McCulloch-Pitts neuron*, which main difference to a more wide model is the *threshold function*. Continuing this subject for while, I will talk briefly about other existent *activation functions*. Pay attention to the fact the neuron structure is the same, the only difference being how it fires.
 
-The *Heaviside function* is also called *unit step function* because it has an abrupt change in value when reaches `x = 0`. But the *unit step function* can be either a *Heaviside function* or *treshold function* (limited between `0` and `1`), or a *signal function* (output between `-1` and `1`), as shown in *Fig. 4*. However this change doesn't happens in the real neuron. It's not binary, but more smooth, going from (almost) nothing and growing until reach it's limit. Is shaped more like an **S**. The *sigmoid function* has this shape, as shown in *Fig. 5*, and the two cases demonstrated here are the *logistic sigmoid* (*Eq. 3*) and the *hyperbolic tangent* (*Eq. 4*) functions.
+The so called *unit step function* has an abrupt change in value when reaches `x = 0`, but it can be either a *treshold function* (limited between `0` and `1`), or a *signal function* (output between `-1` and `1`), as shown in *Fig. 4*. However this change doesn't happens in the real neuron. It's not binary, but more smooth, going from the lower limit and growing until the upper limit, shaped like an **S**. The *sigmoid function* has this shape, as shown in *Fig. 5*, and the two cases demonstrated here are the *logistic sigmoid* (*Eq. 3*) and the *hyperbolic tangent* (*Eq. 4*) functions.
 
 [caption id="attachment_354" align="aligncenter" width="360"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-05.png"><img class=" wp-image-354 " alt="figure-05" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-05.png?w=300" width="360" height="191" /></a> <strong>Figure 5</strong> Sigmoid function shaped as an S.[/caption]
 
@@ -16,13 +16,13 @@ from math import exp, tanh
 
 
 def treshold(x):
-    if x >= 0:
+    if x &gt;= 0:
         return 1
     else:
         return 0
 
 def signal(x):
-    if x >= 0:
+    if x &gt;= 0:
         return 1
     else:
         return -1
@@ -76,9 +76,164 @@ embat@hal9000:~/desktop/neural$
 
 showing the infinite range of values a neuron with *sigmoid activation function* produces.
 
-Now we know that a ANN is a distributed parallel system composed of very simple processing units (*neurons*) interconnected and how these units work, it's time to learn about some topologies. In this post we will talk about the perceptrons, that are *feedforward neural networks*. The nexts will cover more elaborated ones.
+Now we know an ANN is a distributed parallel system composed of very simple processing units (*neurons*) interconnected and how these units work, it's time to learn about some topologies. In this post we will talk about the perceptrons, which are *feedforward neural networks*. The nexts will cover more elaborated ones.
 
 ## 2 - Perceptron
+
+The *Perceptron* was the first algorithmically described neural network (and is the simplest). It was invented by <a href="http://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank">*Frank Rosenblatt*</a> in 1958 and is a model for learning with a teacher (*supervised learning*). It is used to classify patterns *linearly separable* (patterns that lie on opposite sides of a hyerplane). Basically, the *Perceptron* is a single neuron, that can only classify examples belonging to two *linearly separable* classes. Others configurations can use more than a neuron per layer, but the classes must be all *linearly separable*.
+
+Depending of the source consulted, the *McCulloch-Pitts* model can use the *treshold function* or the *signal function* to activate the neuron. Previously we defined the model using the *treshold function*, but we will loose this definition a little, to maintain the consistency with the sources (shown in the *references* section at the end of the post). So now, our neuron will use the *signal function*.
+
+[caption id="attachment_370" align="aligncenter" width="360"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-06.png"><img class=" wp-image-370  " alt="Figure 6 Signal-flow graph of the perceptron." src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-06.png?w=300" width="360" height="174" /></a> <strong>Figure 6</strong> Signal-flow graph of the perceptron.[/caption]
+
+As shown in *Fig. 6*, the *Perceptron* with a single neuron is equal to the diagram of *Fig. 1*. Soon I will show why we had to change the *activation function* of the MCP neuron. Still according to *Fig. 6*, the total input $latex v$ is given by *Eq. 5*
+
+- (5) $latex v = \sum_{j=1}^{m} w_j x_j + b$
+
+The goal is to correctly classify the inputs into classes `C1` (if $latex \varphi(v) = +1$) or `C2` (if $latex \varphi(v) = -1$). So, we need to define a border, and that's when *Eq. 5* is `0` ($latex v = 0$ arbitrarily belongs to class `C1` as $latex \varphi(0) = +1$), as shown in *Eq. 6*:
+
+- (6) $latex v = \sum_{j=1}^{m} w_j x_j + b = 0$
+
+With this equation we can plot a map of the decision regions in the *m*-dimensional space. In the simplest case (one neuron) there are two decision regions separated by a *hyperplane*, as defined by *Eq. 6*. The *Fig. 7* illustrates the case with two inputs, for which the boundary takes a form of a straight line. Each point $latex (x_1, x_2)$ above the boundary line belongs to class `C1` and each point below the boundary line belongs to class `C2`. Note the bias *b* just shift the line away from the origin.
+
+[caption id="attachment_380" align="aligncenter" width="260"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-07.png"><img class="size-medium wp-image-380 " alt="figure-07" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-07.png?w=260" width="260" height="300" /></a> <strong>Figure 7</strong> Decision boundary for a two dimensional, two class problem.[/caption]
+
+Here is the code for the Perceptron:
+
+[code language="python"]
+from neuron import signal, Neuron
+
+
+class Perceptron(Neuron):
+
+    def __init__(self, input_size, lrn_rate=1, weights=None, bias=0):
+        """'input_size' is the length of the input.
+        'lrn_rate' is the learning rate.
+        """
+        if not weights:
+            weights = [0]*input_size
+        super().__init__(weights, bias, signal)
+        self.lrn_rate = lrn_rate
+
+    def train(self, examples, epochs=1):
+        """'examples' is a list of tuples (input_vector, desired_output)
+        """
+        for i in range(epochs):
+            for example in examples:
+                (input_vector, desired_output) = example
+                actual_output = self.fire(input_vector)
+                error = desired_output - actual_output
+
+                self.weights = [(w + self.lrn_rate*error*x) for (w, x) in
+                                zip(self.weights, input_vector)]
+                self.bias = self.bias + self.lrn_rate*error
+
+    def load_test(self, examples):
+        total = len(examples)
+        error = 0
+        for example in examples:
+            (input_vector, desired_output) = example
+            actual_output = self.fire(input_vector)
+            if desired_output != actual_output:
+                error = error + 1
+
+        return error/total
+
+    def validate(self, examples, max_error):
+        error = self.load_test(examples)
+        return (max_error > error, error)
+
+    def __str__(self):
+        ret = super().__str__()
+
+        return ret
+[/code]
+
+The default parameters in the \__init\__ method creates a *virgin* Perceptron (*bias* and *weights* zero). The learning rate for this case can be `1`, but a smaller one makes the learning more solid (but slower). I will skip the method `train()` to detail it more. The `load_test` takes a list of tuples `(input_vector, desired_output)` and check test for each one, returning a ratio between the number of errors and the number of examples. The method `validate` execute the `load_test` and check if the error rate is acceptable. It returns a tuple containing a `boolean` (it was validated or not) and the error rate.
+
+The method `train()` runs the examples a number of iterations defined by the variable `epochs`. This variable is necessary because sometimes, even after thousands of examples, the *net* isn't well trained, so the weights must be adjusted again. For each `epoch`, all examples are tested and for each, the weights (and the bias) are changed according to the <a href="http://en.wikipedia.org/wiki/Hebbian_theory" target="_blank">*Hebb's rule*</a>. Each example's *actual output* is compared to the *correct output* provided, giving the error, which is multiplied by the *learning rate* and the corresponding input, and then added to the weight. The speed the weight changes is controlled by the *learning rate*. Remember that the method `train()` is effective only for an untrained *net*, that usually is a *virgin* one.
+
+Now, here there's a not so clean code to train, validate and test the Perceptron:
+
+[code language="python"]
+def __classify__(y, x, a, b):
+    if y >= a*x + b:
+        return 1 # class C1
+    return -1 # class C2
+
+if __name__ == '__main__':
+    import sys, json, os, os.path
+    from random import choice, uniform
+
+    params = sys.argv[1 : ]
+    # params: lrn_rate epochs num_training num_validation max_error num_test a b
+    # from 'y = a*x + b'
+    lrn_rate = float(params[1])
+    epochs = int(params[2])
+    num_training = int(params[3])
+    num_validation = int(params[4])
+    max_error = float(params[5])
+    num_test = int(params[6])
+    a = float(params[7])
+    b = float(params[8])
+
+    perceptron = Perceptron(2, lrn_rate)
+
+    print('PRE-TRAINING:\n', perceptron, sep='')
+
+    examples = []
+    for _ in range(num_training):
+        x1 = uniform(-1, 1)
+        x2 = uniform(-1, 1)
+        example = ([x1, x2], __classify__(x1, x2, a, b))
+        examples.append(example)
+
+    print('\ntraining')
+    perceptron.train(examples, epochs)
+    print('\nPOS-TRAINING:\n', perceptron, sep='')
+
+    examples = []
+    for _ in range(num_validation):
+        x1 = uniform(-1, 1)
+        x2 = uniform(-1, 1)
+        example = ([x1, x2], __classify__(x1, x2, a, b))
+        examples.append(example)
+
+    print('\nvalidating')
+    validation_error = perceptron.validate(examples, max_error)
+
+    examples = []
+    for _ in range(num_test):
+        x1 = uniform(-1, 1)
+        x2 = uniform(-1, 1)
+        example = ([x1, x2], __classify__(x1, x2, a, b))
+        examples.append(example)
+
+    print('\ntesting')
+    test_error = perceptron.load_test(examples)
+
+    # name: perceptron_lrnRate_epochs_numExamples_a_b
+    # format: weights bias activation
+    nethash = hash(perceptron)
+    filename = 'nets/trained_net_%s.json' % nethash
+    if not os.path.exists('nets'):
+        os.makedirs('nets')
+    with open(filename, 'w') as netfile:
+        net_params = {'type' : 'perceptron', 'lrn_rate' : lrn_rate,
+                      'epochs' : epochs, 'num_training' : num_training,
+                      'num_validation' : num_validation, 'num_test' : num_test,
+                      'max_error' : max_error, 'a' : a, 'b' : b}
+        net_attr = {'bias' : perceptron.bias, 'weights' : perceptron.weights,
+                    'activation' : perceptron.activation.__name__,
+                    'lrn_rate' : perceptron.lrn_rate}
+        net = {'net_params' : net_params, 'net_attr' : net_attr,
+               'validation_error' : validation_error, 'test_error' : test_error}
+        netfile.write(json.dumps(net, indent=4, sort_keys=True))
+
+    print('\nsaved on', filename)
+[/code]
+
+The command line to execute this code is `python3.3 perceptrons.py lrn_rate epochs num_training num_validation max_error num_test a b`, where `max_error` is the limit to validate the Perceptron and `a` and `b` are the parameters of a straight line dividing the classes. In the post repository there's some examples of *nets*.
 
 ### References
 
