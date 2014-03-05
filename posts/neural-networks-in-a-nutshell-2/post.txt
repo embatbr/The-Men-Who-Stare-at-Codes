@@ -233,7 +233,7 @@ if __name__ == '__main__':
     print('\nsaved on', filename)
 [/code]
 
-The command line to execute this code is `python3.3 perceptrons.py lrn_rate epochs num_training num_validation max_error num_test a b`, where `max_error` is the limit to validate the Perceptron and `a` and `b` are the parameters of a straight line dividing the classes. In the post repository there's some examples of *nets*.
+The command line to execute this code is `python3.3 perceptrons.py lrn_rate epochs num_training num_validation max_error num_test a b`, where `max_error` is the limit to validate the Perceptron and `a` and `b` are the parameters of a straight line dividing the classes. In the <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-2" target="_blank">post repository</a> there's some examples of *nets*.
 
 ### References
 
