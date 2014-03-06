@@ -1,5 +1,7 @@
 This sunday I finally disassembled and cleaned my notebook, which was suffering with overheating for almost a year. It's a **Dell Inspiron 14R** (N4110), and as my previous one (an **Acer TravelMate 5120**), it was working fine for just 5 minutes before starting to fail. Trying to get more info about, I installed programs to set processor's mode (always *conservative*) and a temperature monitor. After those initial 5 minutes, the 2 physical cores (it's a core i5) were at 80 degrees Celsius. In 20 minutes, the computer shutted down.
 
+<!--more-->
+
 What I did? I "installed" a new fan and it worked for a while.
 
 [caption id="attachment_110" align="aligncenter" width="158"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/02/fan-mondial.jpeg"><img class=" wp-image-110  " alt="fan-mondial" src="http://themenwhostareatcodes.files.wordpress.com/2014/02/fan-mondial.jpeg" width="158" height="158" /></a> Fashion. Fashion everywhere.[/caption]
