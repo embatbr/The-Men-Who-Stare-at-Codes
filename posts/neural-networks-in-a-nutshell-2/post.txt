@@ -148,7 +148,7 @@ def validate(perceptron, examples, max_error):
     return (max_error > error, error)
 [/code]
 
-The default parameters in the `\__init\__()` method creates a "virgin" Perceptron (*bias* and *weights* zero). The learning rate for this case can be `1`, but a smaller one makes the learning more solid (but slower). I will skip the method `train()` to detail it soon. The `load_test()` takes a list of tuples `(input_vector, desired_output)` and test each one, returning a ratio between the number of errors and the number of examples. The function `validate()` executes the `load_test` and check if the error rate is acceptable. It returns a tuple containing a `boolean` (it was validated or not) and the error rate.
+The default parameters in the `__init__()` method creates a "virgin" Perceptron (*bias* and *weights* reset). The learning rate for this case can be `1`, but a smaller one makes the learning more solid (but slower). I will skip the method `train()` to detail it soon. The `load_test()` takes a list of tuples `(input_vector, desired_output)` and test each one, returning a ratio between the number of errors and the number of examples. The function `validate()` executes the `load_test` and check if the error rate is acceptable. It returns a tuple containing a `boolean` (it was validated or not) and the error rate.
 
 The method `train()` runs according to the algorithm:
 
@@ -167,93 +167,37 @@ The method `train()` runs according to the algorithm:
 5. `goto` step 3
 6. Finish
 
-Now, here there's a not so clean code to train, validate and test the Perceptron:
+Now, here there's code to test the Perceptron:
 
 [code language="python"]
-def __classify__(y, x, a, b):
-    if y >= a*x + b:
-        return 1 # class C1
-    return -1 # class C2
-
-if __name__ == '__main__':
-    import sys, json, os, os.path
-    from random import choice, uniform
-
-    params = sys.argv[1 : ]
-    # params: lrn_rate epochs num_training num_validation max_error num_test a b
-    # from 'y = a*x + b'
-    lrn_rate = float(params[1])
-    epochs = int(params[2])
-    num_training = int(params[3])
-    num_validation = int(params[4])
-    max_error = float(params[5])
-    num_test = int(params[6])
-    a = float(params[7])
-    b = float(params[8])
-
+def perceptron(lrn_rate, epochs, training, validation, max_error, test, a, b):
+    """max_error = 0.xy == xy%
+    """
     perceptron = Perceptron(2, lrn_rate)
 
-    print('PRE-TRAINING:\n', perceptron, sep='')
+    training_examples = gen_examples(training, a, b)
+    print('#training')
+    perceptron.train(training_examples, epochs)
 
-    examples = []
-    for _ in range(num_training):
-        x1 = uniform(-1, 1)
-        x2 = uniform(-1, 1)
-        example = ([x1, x2], __classify__(x1, x2, a, b))
-        examples.append(example)
+    validation_examples = gen_examples(validation, a, b)
+    print('#validating')
+    valid = validate(perceptron, validation_examples, max_error)
+    print('valid?', valid[0])
+    print('error:', valid[1])
 
-    print('\ntraining')
-    perceptron.train(examples, epochs)
-    print('\nPOS-TRAINING:\n', perceptron, sep='')
-
-    examples = []
-    for _ in range(num_validation):
-        x1 = uniform(-1, 1)
-        x2 = uniform(-1, 1)
-        example = ([x1, x2], __classify__(x1, x2, a, b))
-        examples.append(example)
-
-    print('\nvalidating')
-    validation_error = perceptron.validate(examples, max_error)
-
-    examples = []
-    for _ in range(num_test):
-        x1 = uniform(-1, 1)
-        x2 = uniform(-1, 1)
-        example = ([x1, x2], __classify__(x1, x2, a, b))
-        examples.append(example)
-
-    print('\ntesting')
-    test_error = perceptron.load_test(examples)
-
-    # name: perceptron_lrnRate_epochs_numExamples_a_b
-    # format: weights bias activation
-    nethash = hash(perceptron)
-    filename = 'nets/trained_net_%s.json' % nethash
-    if not os.path.exists('nets'):
-        os.makedirs('nets')
-    with open(filename, 'w') as netfile:
-        net_params = {'type' : 'perceptron', 'lrn_rate' : lrn_rate,
-                      'epochs' : epochs, 'num_training' : num_training,
-                      'num_validation' : num_validation, 'num_test' : num_test,
-                      'max_error' : max_error, 'a' : a, 'b' : b}
-        net_attr = {'bias' : perceptron.bias, 'weights' : perceptron.weights,
-                    'activation' : perceptron.activation.__name__,
-                    'lrn_rate' : perceptron.lrn_rate}
-        net = {'net_params' : net_params, 'net_attr' : net_attr,
-               'validation_error' : validation_error, 'test_error' : test_error}
-        netfile.write(json.dumps(net, indent=4, sort_keys=True))
-
-    print('\nsaved on', filename)
+    test_examples = gen_examples(test, a, b)
+    print('#testing')
+    error = load_test(perceptron, test_examples)
+    print('error:', error)
 [/code]
 
 The command line to execute this code is
 
-```
-python3.3 perceptrons.py lrn_rate epochs num_training num_validation max_error num_test a b
-```
+`python3.3 test_perceptrons.py`
 
-where `max_error` is the limit to validate the Perceptron and `a` and `b` are the parameters of a straight line dividing the classes. In the <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-2" target="_blank">post repository</a> there's some examples of *nets*.
+In the <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-2" target="_blank">post repository</a> there's the whole code.
+
+If the classes are *linearly separable*, the perceptron will converge (i.e. it will learn how to correct classify the inputs).
 
 ### References
 
