@@ -191,11 +191,11 @@ def perceptron(lrn_rate, epochs, training, validation, max_error, test, a, b):
     print('error:', error)
 [/code]
 
-The command line to execute this code is
+I used the line `x2 = -5x1 + 2` to separate the classes. The function `gen_examples()` (not shown) creates a random number of points that matches one class, so this way we maintain a similar number of examples for both classes. The command line to execute this code is
 
-`python3.3 test_perceptrons.py`
+`embat@hal9000:~/desktop/neural$ python3.3 test_perceptrons.py`
 
-In the <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-2" target="_blank">post repository</a> there's the whole code.
+and it runs three tests with different learning rates, epochs and number of examples. In the <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-2" target="_blank">post repository</a> there's the whole code.
 
 If the classes are *linearly separable*, the perceptron will converge (i.e. it will learn how to correct classify the inputs).
 
