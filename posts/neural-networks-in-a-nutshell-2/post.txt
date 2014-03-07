@@ -1,5 +1,7 @@
 Last <a title="Neural networks in a nutshell" href="http://themenwhostareatcodes.wordpress.com/2014/03/02/neural-networks-in-a-nutshell/" target="_blank">post</a> I showed the *McCulloch-Pitts neuron*, which main difference to a more wide model is the *threshold function*. Continuing this subject for while, I will talk briefly about other existent *activation functions*. Pay attention to the fact the neuron structure is the same, the only difference being how it fires.
 
+<!--more-->
+
 The so called *unit step function* has an abrupt change in value when reaches `x = 0`, but it can be either a *treshold function* (limited between `0` and `1`), or a *signal function* (output between `-1` and `1`), as shown in *Fig. 4*. However this change doesn't happens in the real neuron. It's not binary, but more smooth, going from the lower limit and growing until the upper limit, shaped like an **S**. The *sigmoid function* has this shape, as shown in *Fig. 5*, and the two cases demonstrated here are the *logistic sigmoid* (*Eq. 3*) and the *hyperbolic tangent* (*Eq. 4*) functions.
 
 [caption id="attachment_354" align="aligncenter" width="360"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-05.png"><img class=" wp-image-354 " alt="figure-05" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-05.png?w=300" width="360" height="191" /></a> <strong>Figure 5</strong> Sigmoid function shaped as an S.[/caption]
@@ -16,13 +18,13 @@ from math import exp, tanh
 
 
 def treshold(x):
-    if x &gt;= 0:
+    if x >= 0:
         return 1
     else:
         return 0
 
 def signal(x):
-    if x &gt;= 0:
+    if x >= 0:
         return 1
     else:
         return -1
@@ -82,11 +84,11 @@ Now we know an ANN is a distributed parallel system composed of very simple proc
 
 The *Perceptron* was the first algorithmically described neural network (and is the simplest). It was invented by <a href="http://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank">*Frank Rosenblatt*</a> in 1958, is a model for learning with a teacher (*supervised learning*) and is used to classify patterns *linearly separable* (patterns that lie on opposite sides of a hyerplane). Basically, the *Perceptron* is a single neuron, that can only classify examples belonging to two *linearly separable* classes. Others configurations can use more than a neuron per layer, but the classes must be all *linearly separable*.
 
-Depending of the source consulted, the *McCulloch-Pitts* model can use the *treshold function* or the *signal function* to activate the neuron. Previously we defined the model using the *treshold function*, but we will loose this definition a little, to maintain the consistency with the sources used (shown in the *references* section at the end of the post). So now, our neuron will use the *signal function*.
+Depending of the source consulted, the *McCulloch-Pitts* model can use the *treshold function* or the *signal function* to activate the neuron. Previously we adopted the *treshold function* to define the model, but we will loose this definition a little in order to maintain consistency with the sources used (shown in the *references* section at the end of the post). So now, our neuron will use the *signal function*.
 
 [caption id="attachment_370" align="aligncenter" width="360"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-06.png"><img class=" wp-image-370  " alt="Figure 6 Signal-flow graph of the perceptron." src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-06.png?w=300" width="360" height="174" /></a> <strong>Figure 6</strong> Signal-flow graph of the perceptron.[/caption]
 
-As shown in *Fig. 6*, the *Perceptron* with a single neuron is equal to the diagram of *Fig. 1*. Soon I will show why we had to change the *activation function* of the MCP neuron. Still according to *Fig. 6*, the total input $latex v$ is given by *Eq. 5*:
+As shown in *Fig. 6*, the *Perceptron* with a single neuron is equal to the diagram of *Fig. 1* (soon I will show why we had to change the *activation function* of the MCP neuron). According to the figure, the total input $latex v$ is given by *Eq. 5*:
 
 - (5) $latex v = \sum_{j=1}^{m} w_j x_j + b$
 
@@ -94,112 +96,125 @@ The goal is to correctly classify the inputs into classes `C1` (if $latex \varph
 
 - (6) $latex v = \sum_{j=1}^{m} w_j x_j + b = 0$
 
-Now we can plot a map of the decision regions in the *m*-dimensional space. In the simplest case (one neuron) there are two decision regions separated by a *hyperplane*, as defined by *Eq. 6*. The *Fig. 7* illustrates the case with two inputs, for which the boundary takes a form of a *straight line*. Each point $latex (x_1, x_2)$ above the boundary line belongs to class `C1` and each point below the boundary line belongs to class `C2`. Note the bias *b* just shift the line away from the origin.
+Now we can plot a map of the decision regions in the *m*-dimensional space. In the simplest case (one neuron) there are two decision regions separated by a *hyperplane*, as defined by *Eq. 6*. The *Fig. 7* illustrates the case with two inputs, for which the boundary takes the form of a *straight line*. Each point $latex (x_1, x_2)$ above the boundary line belongs to class `C1` and each point below the boundary line belongs to class `C2`. Note the bias *b* just shift the line away from the origin.
 
 [caption id="attachment_380" align="aligncenter" width="260"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-07.png"><img class="size-medium wp-image-380 " alt="figure-07" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-07.png?w=260" width="260" height="300" /></a> <strong>Figure 7</strong> Decision boundary for a two dimensional, two class problem.[/caption]
 
-Here is the code for the Perceptron
+Here is the code for the Perceptron:
 
 [code language="python"]
 from neuron import signal, Neuron
 
 
-class Perceptron(Neuron):
+class Perceptron():
 
-    def __init__(self, input_size, lrn_rate=1, weights=None, bias=0):
+    def __init__(self, input_size, lrn_rate=1, weights=None, bias=0,
+                 activation=signal):
         """'input_size' is the length of the input.
         'lrn_rate' is the learning rate.
         """
         if not weights:
             weights = [0]*input_size
-        super().__init__(weights, bias, signal)
+        self.neuron = Neuron(weights, bias, activation)
         self.lrn_rate = lrn_rate
 
-    def train(self, examples, epochs=1):
-        """'examples' is a list of tuples (input_vector, desired_output)
-        """
-        for i in range(epochs):
+    def training(self, examples):
+        epochs = 0
+        while True:
+            epochs = epochs + 1
+            error_count = 0
+
             for example in examples:
                 (input_vector, desired_output) = example
                 actual_output = self.fire(input_vector)
                 error = desired_output - actual_output
 
-                self.weights = [(w + self.lrn_rate*error*x) for (w, x) in
-                                zip(self.weights, input_vector)]
-                self.bias = self.bias + self.lrn_rate*error
-[/code]
+                if error != 0:
+                    learned = self.lrn_rate*error
+                    self.neuron.weights = [(w + learned*x) for (w, x) in
+                                           zip(self.neuron.weights, input_vector)]
+                    self.neuron.bias = self.neuron.bias + learned # x = +1
 
-and some auxiliar functions:
+                    error_count = error_count + 1
 
-[code language="python"]
+            if error_count == 0:
+                break
+
+        return epochs
+
+    def fire(self, input_vector):
+        return self.neuron.fire(input_vector)
+
+    def __str__(self):
+        ret = self.neuron.__str__()
+        ret = '%s\n%s' % (ret, self.lrn_rate)
+
+        return ret
+
 def load_test(perceptron, examples):
-    total = len(examples)
-    error = 0
+    error_count = 0
     for example in examples:
         (input_vector, desired_output) = example
         actual_output = perceptron.fire(input_vector)
         if desired_output != actual_output:
-            error = error + 1
+            error_count = error_count + 1
 
-    return error/total
-
-def validate(perceptron, examples, max_error):
-    error = load_test(perceptron, examples)
-    return (max_error > error, error)
+    return error_count
 [/code]
 
-The default parameters in the `__init__()` method creates a "virgin" Perceptron (*bias* and *weights* reset). The learning rate for this case can be `1`, but a smaller one makes the learning more solid (but slower). I will skip the method `train()` to detail it soon. The `load_test()` takes a list of tuples `(input_vector, desired_output)` and test each one, returning a ratio between the number of errors and the number of examples. The function `validate()` executes the `load_test` and check if the error rate is acceptable. It returns a tuple containing a `boolean` (it was validated or not) and the error rate.
+The Perceptron contains as attributes one neuron and a learning rate, and as methods `training()` and `fire()`. As the Perceptron always converge (i.e. it will train until every example gives a correct answer, stop changing weights), I `break` the loop when the `error_count` is zero. The function`load_test` takes a list of examples (inputs and desired outputs) and test everyone, returning the error count.
 
-The method `train()` runs according to the algorithm:
+The method `training()` runs according to the algorithm:
 
-1. Take a perceptron with `weights` and `bias` reset (usually).
-2. If `epochs` are over:
-   `goto` step 6
-   Else:
-   take `ex` from `examples`
-3. If `examples` are over:
-   `goto` step 2
-   Else:
-   `actual_output = net.fire(ex)`
-4. If `actual_output` is wrong:
-   `error = desired_output - actual_output`
-   `weight(ex + 1) = weight(ex) + lrn_rate*error*input(ex)`
-5. `goto` step 3
-6. Finish
+1. Take a perceptron with `weights` and `bias` reset.
+2. For each example `n`, fire the perceptron.
+3. If `actual_output` is wrong:
+       `weights(n) = weights(n) + lrn_rate*error*x(n)`
+       `bias(n) = bias(n) + lrn_rate*error`
+where
+       `error = desired_output - actual_output` and `weights` and `x` are vectors.
+4. If `error_count > 0`:
+       `goto` step 2.
+5. Finish
 
 Now, here there's code to test the Perceptron:
 
 [code language="python"]
-def perceptron(lrn_rate, epochs, training, validation, max_error, test, a, b):
-    """max_error = 0.xy == xy%
-    """
+def gen_examples(num_examples, a, b):
+    examples = []
+
+    for _ in range(num_examples):
+        x1 = uniform(-10, 10)
+        x2 = uniform(-10, 10)
+        example = ([x1, x2], __classify__(x1, x2, a, b))
+        examples.append(example)
+
+    return examples
+
+def __classify__(y, x, a, b):
+    if y >= a*x + b:
+        return 1 # class C1
+    return -1 # class C2
+
+def perceptron(lrn_rate, num_training, num_test, a, b):
     perceptron = Perceptron(2, lrn_rate)
 
-    training_examples = gen_examples(training, a, b)
-    print('#training')
-    perceptron.train(training_examples, epochs)
+    training_examples = gen_examples(num_training, a, b)
+    print('#TRAINING')
+    epochs = perceptron.training(training_examples)
+    print('epochs:', epochs)
 
-    validation_examples = gen_examples(validation, a, b)
-    print('#validating')
-    valid = validate(perceptron, validation_examples, max_error)
-    print('valid?', valid[0])
-    print('error:', valid[1])
-
-    test_examples = gen_examples(test, a, b)
-    print('#testing')
-    error = load_test(perceptron, test_examples)
-    print('error:', error)
+    test_examples = gen_examples(num_test, a, b)
+    print('#TESTING')
+    error_count = load_test(perceptron, test_examples)
+    print('error_count:', error_count)
 [/code]
 
-I used the line `x2 = -5x1 + 2` to separate the classes. The function `gen_examples()` (not shown) creates a random number of points that matches one class, so this way we maintain a similar number of examples for both classes. The command line to execute this code is
-
-`embat@hal9000:~/desktop/neural$ python3.3 test_perceptrons.py`
-
-and it runs three tests with different learning rates, epochs and number of examples. In the <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-2" target="_blank">post repository</a> there's the whole code.
-
-If the classes are *linearly separable*, the perceptron will converge (i.e. it will learn how to correct classify the inputs).
+I used the line `x2 = -5x1 + 2` to separate the classes. The function `gen_examples()` creates a random number of points that matches only one class, so this way we maintain a similar number of examples for both. The command line to execute this code is `embat@hal9000:~/desktop/neural$ ./test.py perceptron`.
 
 ### References
 
 - <a href="http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392" target="_blank">Neural Networks and Learning Machines - 3rd Ed - Haykin, Simon - Pearson</a>.
 - <a href="http://prolland.free.fr/works/ai/docs/neuro-intro.pdf" target="_blank">An introduction to Neural Networks - 8th Ed. - Kröse, Ben; van der Smagt, Patrick - University of Amsterdam</a>.
+
+**Live long and prosper**

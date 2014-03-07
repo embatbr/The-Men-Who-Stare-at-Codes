@@ -50,25 +50,3 @@ class Neuron(object):
         ret = '%s\nactivation: %s' % (ret, self.activation.__name__)
 
         return ret
-
-
-# Tests
-
-if __name__ == '__main__':
-    neuron_1 = Neuron([0.4, 0.6, 0.9], -0.8)
-    neuron_2 = Neuron([0.4, 0.6, 0.9], -1.5, signal)
-    neuron_3 = Neuron([0.4, 0.6, 0.9], -0.8, logsig)
-    neuron_4 = Neuron([0.4, 0.6, 0.9], -0.8, tansig)
-
-    print('neuron_1:\n', neuron_1, sep='')
-    print('\nneuron_2:\n', neuron_2, sep='')
-    print('\nneuron_3:\n', neuron_3, sep='')
-    print('\nneuron_4:\n', neuron_4, sep='')
-
-    inputs = [1, 0, 1]
-
-    print()
-    print('Test #1 - inputs on neuron_1:', neuron_1.fire(inputs))
-    print('Test #1 - inputs on neuron_2:', neuron_2.fire(inputs))
-    print('Test #1 - inputs on neuron_3:', neuron_3.fire(inputs))
-    print('Test #1 - inputs on neuron_4:', neuron_4.fire(inputs))
