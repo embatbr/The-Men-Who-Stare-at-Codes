@@ -40,9 +40,14 @@ class Neuron(object):
         self.bias = bias
         self.activation = activation
 
-    def fire(self, inputs):
-        summed = sum([i*w for (i,w) in zip(inputs, self.weights)])
+    def fire(self, input_vector):
+        summed = sum([i*w for (i,w) in zip(input_vector, self.weights)])
         return self.activation(summed + self.bias)
+
+    def update(self, input_vector, factor):
+        self.weights = [(w + factor*x) for (w, x) in
+                        zip(self.weights, input_vector)]
+        self.bias = self.bias + factor # x = +1
 
     def __str__(self):
         ret = 'weights: %s' % str(self.weights)
@@ -50,3 +55,21 @@ class Neuron(object):
         ret = '%s\nactivation: %s' % (ret, self.activation.__name__)
 
         return ret
+
+
+if __name__ == '__main__':
+    neuron_1 = Neuron([0.4, 0.6, 0.9], -0.8)
+    neuron_2 = Neuron([0.4, 0.6, 0.9], -1.5, signal)
+    neuron_3 = Neuron([0.4, 0.6, 0.9], -0.8, logsig)
+    neuron_4 = Neuron([0.4, 0.6, 0.9], -0.8, tansig)
+
+    print('neuron_1:', neuron_1, sep='\n')
+    print('\nneuron_2:', neuron_2, sep='\n')
+    print('\nneuron_3:', neuron_3, sep='\n')
+    print('\nneuron_4:', neuron_4, sep='\n')
+
+    inputs = [1, 0, 1]
+    print('\nTest #1 - inputs on neuron_1:', neuron_1.fire(inputs))
+    print('Test #1 - inputs on neuron_2:', neuron_2.fire(inputs))
+    print('Test #1 - inputs on neuron_3:', neuron_3.fire(inputs))
+    print('Test #1 - inputs on neuron_4:', neuron_4.fire(inputs))

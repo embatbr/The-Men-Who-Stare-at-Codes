@@ -88,7 +88,18 @@ Depending of the source consulted, the *McCulloch-Pitts* model can use the *tres
 
 [caption id="attachment_370" align="aligncenter" width="360"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-06.png"><img class=" wp-image-370  " alt="Figure 6 Signal-flow graph of the perceptron." src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-06.png?w=300" width="360" height="174" /></a> <strong>Figure 6</strong> Signal-flow graph of the perceptron.[/caption]
 
-As shown in *Fig. 6*, the *Perceptron* with a single neuron is equal to the diagram of *Fig. 1* (soon I will show why we had to change the *activation function* of the MCP neuron). According to the figure, the total input $latex v$ is given by *Eq. 5*:
+As shown in *Fig. 6*, the *Perceptron* with a single neuron is equal to the diagram of *Fig. 1*, so let's create a method to update a neuron's *weights* and *bias*
+
+[code language="python"]
+def update(input_vector, factor):
+    self.weights = [(w + factor*x) for (w, x) in
+                    zip(self.weights, input_vector)]
+    self.bias = self.bias + factor # x = +1
+[/code]
+
+which receives an *input_vector* and a *factor* and change the *weights* and *bias* values. It will be useful soon.
+
+So, according to *Fig. 6*, the total input $latex v$ is given by *Eq. 5*:
 
 - (5) $latex v = \sum_{j=1}^{m} w_j x_j + b$
 
@@ -103,13 +114,10 @@ Now we can plot a map of the decision regions in the *m*-dimensional space. In t
 Here is the code for the Perceptron:
 
 [code language="python"]
-from neuron import signal, Neuron
-
-
 class Perceptron():
 
-    def __init__(self, input_size, lrn_rate=1, weights=None, bias=0,
-                 activation=signal):
+    def __init__(self, input_size, weights=None, bias=0, activation=signal,
+                 lrn_rate=1):
         """'input_size' is the length of the input.
         'lrn_rate' is the learning rate.
         """
@@ -117,54 +125,31 @@ class Perceptron():
             weights = [0]*input_size
         self.neuron = Neuron(weights, bias, activation)
         self.lrn_rate = lrn_rate
+        self.fire = self.neuron.fire
 
     def training(self, examples):
         epochs = 0
+
         while True:
             epochs = epochs + 1
             error_count = 0
 
-            for example in examples:
-                (input_vector, desired_output) = example
-                actual_output = self.fire(input_vector)
+            for (input_vector, desired_output) in examples:
+                actual_output = self.neuron.fire(input_vector)
                 error = desired_output - actual_output
 
                 if error != 0:
                     learned = self.lrn_rate*error
-                    self.neuron.weights = [(w + learned*x) for (w, x) in
-                                           zip(self.neuron.weights, input_vector)]
-                    self.neuron.bias = self.neuron.bias + learned # x = +1
-
+                    self.neuron.update(input_vector, learned)
                     error_count = error_count + 1
 
             if error_count == 0:
                 break
 
         return epochs
-
-    def fire(self, input_vector):
-        return self.neuron.fire(input_vector)
-
-    def __str__(self):
-        ret = self.neuron.__str__()
-        ret = '%s\n%s' % (ret, self.lrn_rate)
-
-        return ret
-
-def load_test(perceptron, examples):
-    error_count = 0
-    for example in examples:
-        (input_vector, desired_output) = example
-        actual_output = perceptron.fire(input_vector)
-        if desired_output != actual_output:
-            error_count = error_count + 1
-
-    return error_count
 [/code]
 
-The Perceptron contains as attributes one neuron and a learning rate, and as methods `training()` and `fire()`. As the Perceptron always converge (i.e. it will train until every example gives a correct answer, stop changing weights), I `break` the loop when the `error_count` is zero. The function`load_test` takes a list of examples (inputs and desired outputs) and test everyone, returning the error count.
-
-The method `training()` runs according to the algorithm:
+The Perceptron contains only one neuron and an attribute learning rate, so as methods `training()` and `fire()` (a copy of the neuron's `fire()` function). The method `training()` runs according to the algorithm
 
 1. Take a perceptron with `weights` and `bias` reset.
 2. For each example `n`, fire the perceptron.
@@ -173,44 +158,47 @@ The method `training()` runs according to the algorithm:
        `bias(n) = bias(n) + lrn_rate*error`
 where
        `error = desired_output - actual_output` and `weights` and `x` are vectors.
-4. If `error_count > 0`:
+4. If `error_count &gt; 0`:
        `goto` step 2.
 5. Finish
 
-Now, here there's code to test the Perceptron:
+and as the Perceptron always converge (i.e. it will train until every example gives a correct answer, stop changing weights), I `break` the loop when the `error_count` is zero (it learnt everything). Now, here there's code to test the Perceptron:
 
 [code language="python"]
+def classify(y, x, a, b):
+    if y >= a*x + b:
+        return 1 # class C1
+    return -1 # class C2
+
 def gen_examples(num_examples, a, b):
     examples = []
 
     for _ in range(num_examples):
         x1 = uniform(-10, 10)
         x2 = uniform(-10, 10)
-        example = ([x1, x2], __classify__(x1, x2, a, b))
-        examples.append(example)
+        examples.append(([x1, x2], classify(x1, x2, a, b)))
 
     return examples
 
-def __classify__(y, x, a, b):
-    if y >= a*x + b:
-        return 1 # class C1
-    return -1 # class C2
-
 def perceptron(lrn_rate, num_training, num_test, a, b):
-    perceptron = Perceptron(2, lrn_rate)
+    perceptron = Perceptron(2, lrn_rate=lrn_rate)
 
-    training_examples = gen_examples(num_training, a, b)
+    examples = gen_examples(num_training, a, b)
     print('#TRAINING')
-    epochs = perceptron.training(training_examples)
+    epochs = perceptron.training(examples)
     print('epochs:', epochs)
 
-    test_examples = gen_examples(num_test, a, b)
+    examples = gen_examples(num_test, a, b)
     print('#TESTING')
-    error_count = load_test(perceptron, test_examples)
+    error_count = load_test(perceptron, examples)
     print('error_count:', error_count)
 [/code]
 
 I used the line `x2 = -5x1 + 2` to separate the classes. The function `gen_examples()` creates a random number of points that matches only one class, so this way we maintain a similar number of examples for both. The command line to execute this code is `embat@hal9000:~/desktop/neural$ ./test.py perceptron`.
+
+Remember: the convergence is when, during the training, all examples are correctly classified. It doesn't mean the *net* will never make a mistake when used with different inputs.
+
+Next post I will talk about the types of Multiclass Perceptron and Multilayer Perceptron.
 
 ### References
 
