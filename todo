@@ -24,6 +24,9 @@ Modelo de educacao superior (post: Less nutshell, more pumpkin):
         1 mês de férias entre meio de junho e meio de julho
         1 mês de férias entre meio de dezembro e meio de janeiro (do ano seguinte)
 
+Curso Básico (3 anos):
+    Podendo ser iniciado aos 16 anos de idade, com término aos 18 (o "high school", escola fundamental/elementar/whatever deveria ir até os 15 anos).
+
 1º Período:
     1 - Cálculo 1
     2 - Física 1
@@ -54,11 +57,25 @@ Modelo de educacao superior (post: Less nutshell, more pumpkin):
     5 - Sistemas Digitais
 
 5º Período:
-    1 - Infra de Hardware
-    2 - Infra de Software
-    3 - Infra de Comunicação
+    1 - Arquitetura e Organização de Computadores (infra de hw)
+    2 - Sistemas Operacionais (infra de sw)
+    3 - Redes de Computadores (infra de com)
     4 - Sinais e Sistemas
     5 - Sistemas Inteligentes
+
+6º Período:
+    1 - Engenharia de Software
+    2 - Estágio Obrigatório
+    3 - Trabalho de Conclusão (demonstrar conhecimento em todas as disciplinas)
+        3.1 - Teoria (monografia)
+        3.2 - Prática (implementação da monografia)
+
+    Ao final dos 3 anos recebe o grau de Bachelor in Computer Science.
+
+Aprimoramento (1 ano):
+    2 semestres de eletivas dentro de 1 ou mais áreas (terminar com 19 anos).
+    + 1 ano e recebe o grau de Master in Computer Science (terminar com 20 anos).
+    + 3 anos e recebe o grau de PhD. in Computer Science (terminar com 23 anos).
 
 
 Dev:
