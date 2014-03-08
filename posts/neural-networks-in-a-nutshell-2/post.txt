@@ -194,7 +194,7 @@ I used the line $latex x_2 = -5x_1 + 2$ to separate the classes. The function `g
 
 Remember: the convergence is when, during the training, all examples are correctly classified. It doesn't mean the *net* will never make a mistake when used with different inputs.
 
-Next post I will talk about the types of Multiclass Perceptron and Multilayer Perceptron.
+Every code, image and post info is saved <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-2" title="Repository at gthub" target="_blank">here</a>. Next post I will talk about the types of Multiclass Perceptron and Multilayer Perceptron.
 
 ### References
 
