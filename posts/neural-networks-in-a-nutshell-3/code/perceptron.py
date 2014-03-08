@@ -12,111 +12,139 @@ from neuron import signal, Neuron
 
 
 class Perceptron():
-    """A layer with one or more neurons.
-    """
-
-    def __init__(self, input_size, weights=None, bias=None, activation=signal,
-                 lrn_rate=1, num_neurons=1):
+    def __init__(self, input_size, lrn_rate=1, activation=signal):
         """'input_size' is the length of the input.
         'lrn_rate' is the learning rate.
         """
-        if not weights and not bias:
-            weights = [[0]*input_size]*num_neurons
-            bias = [0]*num_neurons
-
-        self.neurons = [Neuron(weights[i], bias[i], activation) for i in
-                        range(num_neurons)]
+        self.neuron = Neuron([0]*input_size, 0, activation)
         self.lrn_rate = lrn_rate
-        self.num_neurons = num_neurons
+        self.fire = self.neuron.fire
 
-    def fire(self, input_vector):
-        return [neuron.fire(input_vector) for neuron in self.neurons]
-
-    def training(self, examples, max_epochs=None):
+    def training(self, inputs_vector, outputs, max_epochs):
+        """Not checking if inputs_vector and outputs have the same size.
+        """
         epochs = 0
 
         while True:
             epochs = epochs + 1
             error_count = 0
 
-            for (input_vector, desired_output_vector) in examples:
-                for i in range(self.num_neurons):
-                    neuron = self.neurons[i]
-                    desired_output = desired_output_vector[i]
-                    actual_output = neuron.fire(input_vector)
-                    error = desired_output - actual_output
+            for (inputs, output) in zip(inputs_vector, outputs):
+                actual_output = self.fire(inputs)
+                error = output - actual_output
 
-                    if error != 0:
-                        learned = self.lrn_rate*error
-                        neuron.update(input_vector, learned)
-                        error_count = error_count + 1
+                if error != 0:
+                    learned = self.lrn_rate*error
+                    self.neuron.update(inputs, learned)
+                    error_count = error_count + 1
 
             if error_count == 0:
-                return epochs
+                break
             elif max_epochs and (epochs > max_epochs):
                 return False
 
+        return epochs
+
     def __str__(self):
         ret = 'lrn_rate: %s' % self.lrn_rate
-        for i in range(self.num_neurons):
-            neuron = self.neurons[i]
-            ret = '%s\nneuron #%d:\n%s' % (ret, i, neuron.__str__())
+        ret = '%s\n%s' % (ret, self.neuron.__str__())
         return ret
 
 
-def load_test(perceptron, examples):
-    error_count = 0
+class Layer(object):
+    """A layer containing two or more perceptrons.
+    """
+    def __init__(self, input_size, num_perceptrons=2, lrn_rates=[1, 1],
+                 activations=[signal, signal]):
+        """Not checking if lrn_rates and activations have the length equals to
+        num_perceptrons.
+        """
+        self.perceptrons = [Perceptron(input_size, lrn_rates[i], activations[i])
+                            for i in range(num_perceptrons)]
 
-    for (input_vector, desired_output_vector) in examples:
-        actual_output_vector = perceptron.fire(input_vector)
-        if desired_output_vector != actual_output_vector:
+    def fire(self, inputs):
+        return [perceptron.fire(inputs) for perceptron in self.perceptrons]
+
+    def training(self, inputs_vector, outputs_vector, max_epochs):
+        """outputs_vector is a list containing the same number of elements of
+        perceptron. Each element is another list with length equals to inputs_vector's
+        length.
+        """
+        epochs = 0
+
+        for (perceptron, outputs) in zip(self.perceptrons, outputs_vector):
+            epochs_per_perceptron = perceptron.training(inputs_vector, outputs,
+                                                        max_epochs)
+            if not epochs_per_perceptron:
+                return epochs_per_perceptron
+
+            epochs = epochs + epochs_per_perceptron
+
+        return epochs
+
+    def __str__(self):
+        ret = ''
+        for (i, perceptron) in zip(range(len(self.perceptrons)), self.perceptrons):
+            ret = '%sperceptron #%d:\n%s\n' % (ret, i, perceptron.__str__())
+        return ret
+
+
+def load_test(layer, inputs_vector, outputs_vector):
+    error_count = 0
+    desired_output_vector = [list(tup) for tup in zip(*outputs_vector)]
+
+    for (inputs, desired_output) in zip(inputs_vector, desired_output_vector):
+        actual_output = layer.fire(inputs)
+        if desired_output != actual_output:
             error_count = error_count + 1
 
     return error_count
 
 
-# test for 2 neurons
+# test
 
 from random import uniform
 
 
-def classify(y, x, a, b, c, d):
-    if (y >= a*x + b) and (y >= c*x + d):
-        return [1, 1] # class C1
-    elif (y >= a*x + b) and (y < c*x + d):
-        return [1, -1] # class C2
-    elif (y < a*x + b) and (y >= c*x + d):
-        return [-1, 1] # class C3
-    return [-1, -1] # class C4
+def classify(y, x, a, b):
+    if y >= a*x + b:
+        return 1 # class C1
+    return -1 # class C2
 
 def gen_examples(num_examples, a, b, c, d):
-    examples = []
+    inputs_vector = []
+    outputs_vector = [[], []]
 
     for _ in range(num_examples):
         x1 = uniform(-10, 10)
         x2 = uniform(-10, 10)
-        examples.append(([x1, x2], classify(x1, x2, a, b, c, d)))
 
-    return examples
+        inputs_vector.append([x1, x2])
+        outputs_vector[0].append(classify(x1, x2, a, b))
+        outputs_vector[1].append(classify(x1, x2, c, d))
 
-def perceptron(lrn_rate, num_training, num_test, a, b, c, d):
-    perceptron = Perceptron(2, lrn_rate=lrn_rate, num_neurons=2)
+    return (inputs_vector, outputs_vector)
 
-    examples = gen_examples(num_training, a, b, c, d)
+def layer(lrn_rates, num_training, num_test, a, b, c, d):
+    layer = Layer(2, lrn_rates=lrn_rates)
+
+    (inputs_vector, outputs_vector) = gen_examples(num_training, a, b, c, d)
     print('#TRAINING (max_epochs = 80)')
-    epochs = perceptron.training(examples, max_epochs=80)
-    print('epochs:', epochs if epochs else 'NOT TRAINED')
+    epochs = layer.training(inputs_vector, outputs_vector, 80)
+    print(('epochs: %d' % epochs) if epochs else 'training aborted')
 
-    if epochs:
-        examples = gen_examples(num_test, a, b, c, d)
-        print('#TESTING')
-        error_count = load_test(perceptron, examples)
-        print('error_count:', error_count)
+    (inputs_vector, outputs_vector) = gen_examples(num_test, a, b, c, d)
+    print('#TESTING')
+    error_count = load_test(layer, inputs_vector, outputs_vector)
+    print('error_count:', error_count)
 
 if __name__ == '__main__':
     print('testing module perceptron')
 
-    lrn_rate_list = [x/10 for x in range(1, 11)]
-    for lrn_rate in lrn_rate_list:
-        print('\nperceptron(%s, 10000, 1000, -5, 2, 3, 4)' % lrn_rate)
-        perceptron(lrn_rate, 10000, 1000, -5, 2, 3, 4)
+    lrn_rates_list = [[x/10, x/10] for x in range(1, 11)]
+    for lrn_rates in lrn_rates_list:
+        print('\nlayer(%s, 10000, 1000, -5, 2, 3, 4)' % lrn_rates)
+        layer(lrn_rates, 10000, 1000, -5, 2, 3, 4)
+
+    # print('layer([1, 1], 10000, 1000, -5, 2, 3, 4)')
+    # layer([1, 1], 10000, 1000, -5, 2, 3, 4)

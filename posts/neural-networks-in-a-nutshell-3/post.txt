@@ -2,10 +2,10 @@ For now we learnt <a href="http://themenwhostareatcodes.wordpress.com/2014/03/02
 
 <!--more-->
 
-The Perceptron converged in our example because the problem was *lineraly separable*, what means we could divide it in two classes using a *hyperplane* (in that case, a *straight line*). That's why I defined the stopping rule as "just live when there's no errors, bitch", because someday it happens. If just one example of class `C1` where in the region of class `C2`, we couldn't draw a line dividing both classes. So, if you don't know if the problem is *linearly separable* (what could lead to an endless loop), change the *stopping rule* to abort training after a predefined number of epochs:
+The Perceptron converged in our example because the problem was *lineraly separable*, what means we could divide it in two classes using a *hyperplane* (in that case, a *straight line*). That's why I defined the stopping rule as "stop when there's no errors, *bitch*", because someday it happens. If just one example of class `C1` where in the region of class `C2`, we couldn't draw a line dividing both classes. So, if you don't know if the problem is *linearly separable* (what could lead to an endless loop), change the *stopping rule* to abort training after a predefined number of epochs:
 
 [code language="python"]
-def training(self, examples, max_epochs=None):
+    def training(self, examples, max_epochs=None):
         epochs = 0
 
         while True:
@@ -27,99 +27,112 @@ def training(self, examples, max_epochs=None):
                 return False
 [/code]
 
-But sometimes what doesn't seem to be separable by one line can be by two or more. This way we still can divide the classes in two distinct regions. To understand how to "cheat" the Perceptron, let's first learn about Multiclass Perceptron.
+But sometimes what doesn't seem to be separable by one line can be by two or more. This way we still can divide the classes in two regions. To understand how to "cheat" this Perceptron's weakness, let's first learn about Multiclass Perceptron.
 
 ## 3 - Multiclass Perceptron
 
-Using our line equation from previous post, $latex x_2 = 3x_1 + 4$, let's add another line (*Eq. 8*) crossing the first
+Taking our equation from previous post (as shown in *Eq. 7*) let's add another line (*Eq. 8*) crossing the first
 
 - (7) $latex x_2 = -5x_1 + 2$
 - (8) $latex x_2 = 3x_1 + 4$
 
-so the plane $latex x_1x_2$ be divided in four different regions:
+so the plane $latex x_1x_2$ is divided in four different regions:
 
 - C1: above *Eq. 7* and *Eq. 8*
 - C2: above *Eq. 7* and below *Eq. 8*
 - C3: below *Eq. 7* and above *Eq. 8*
 - C4: below *Eq. 7* and *Eq. 8*
 
-Having four regions we need two neurons, one for each line. With two neurons we have two outputs (and four *linearly separable* classes), defined as
+Having four regions we need two neurons, one for each line. With two neurons we have two outputs (and four *linearly separable* classes), defined as:
 
 - C1: (output_1, output_2) = (1, 1)
 - C2: (output_1, output_2) = (1, -1)
 - C3: (output_1, output_2) = (-1, 1)
 - C4: (output_1, output_2) = (-1, -1)
 
-and the Perceptron must be modified to support a list of neurons:
+Then we need to build a *layer* of perceptrons. Basically what is done is a class containing a list of perceptrons (remember each one is **independent** from the others):
 
 [code language="python"]
-class Perceptron():
-    """A layer with one or more neurons.
+class Layer(object):
+    """A layer containing two or more perceptrons.
     """
-
-    def __init__(self, input_size, weights=None, bias=None, activation=signal,
-                 lrn_rate=1, num_neurons=1):
-        """'input_size' is the length of the input.
-        'lrn_rate' is the learning rate.
+    def __init__(self, input_size, num_perceptrons=2, lrn_rates=[1, 1],
+                 activations=[signal, signal]):
+        """Not checking if lrn_rates and activations have the length equals to
+        num_perceptrons.
         """
-        if not weights and not bias:
-            weights = [[0]*input_size]*num_neurons
-            bias = [0]*num_neurons
+        self.perceptrons = [Perceptron(input_size, lrn_rates[i], activations[i])
+                            for i in range(num_perceptrons)]
 
-        self.neurons = [Neuron(weights[i], bias[i], activation) for i in
-                        range(num_neurons)]
-        self.lrn_rate = lrn_rate
-        self.num_neurons = num_neurons
+    def fire(self, inputs):
+        return [perceptron.fire(inputs) for perceptron in self.perceptrons]
 
-    def fire(self, input_vector):
-        return [neuron.fire(input_vector) for neuron in self.neurons]
-
-    def training(self, examples, max_epochs=None):
+    def training(self, inputs_vector, outputs_vector, max_epochs):
+        """outputs_vector is a list containing the same number of elements of
+        perceptron. Each element is another list with length equals to inputs_vector's
+        length.
+        """
         epochs = 0
 
-        while True:
-            epochs = epochs + 1
-            error_count = 0
+        for (perceptron, outputs) in zip(self.perceptrons, outputs_vector):
+            epochs_per_perceptron = perceptron.training(inputs_vector, outputs,
+                                                        max_epochs)
+            if not epochs_per_perceptron:
+                return epochs_per_perceptron
 
-            for (input_vector, desired_output_vector) in examples:
-                for i in range(self.num_neurons):
-                    neuron = self.neurons[i]
-                    desired_output = desired_output_vector[i]
-                    actual_output = neuron.fire(input_vector)
-                    error = desired_output - actual_output
+            epochs = epochs + epochs_per_perceptron
 
-                    if error != 0:
-                        learned = self.lrn_rate*error
-                        neuron.update(input_vector, learned)
-                        error_count = error_count + 1
-
-            if error_count == 0:
-                return epochs
-            elif max_epochs and (epochs > max_epochs):
-                return False
+        return epochs
 [/code]
 
-It's importante to notice that each neuron receives all inputs, no matter if it's one, two or ten in a single layer. So, now, our Perceptron is composed of two layers: an input layer and an output layer (where the neurons are).
+It's importante to notice that each *perceptron* receives all inputs, no matter if it's one, two or ten in the layer. Also, as the classes are *linearly separable*, we can train one *perceptron* per time. So, now, our Multiclass Perceptron is composed of two layers: an input layer and an output layer (where the neurons are).
 
-The code to test this new Perceptron of ours (with two neurons) is basically the same, with the addition of *straight line* $latex x_2 = cx_1 + d$, where $latex c = 3$ and $latex d = 4$. I will show only the function `classify()`, as the others has irrelevant changes:
+The code to test this new Perceptron of ours (with two neurons) is basically the same:
 
 [code language="python"]
-def classify(y, x, a, b, c, d):
-    if (y >= a*x + b) and (y >= c*x + d):
-        return [1, 1] # class C1
-    elif (y >= a*x + b) and (y < c*x + d):
-        return [1, -1] # class C2
-    elif (y < a*x + b) and (y >= c*x + d):
-        return [-1, 1] # class C3
-    return [-1, -1] # class C4
+def classify(y, x, a, b):
+    if y >= a*x + b:
+        return 1 # class C1
+    return -1 # class C2
+
+def gen_examples(num_examples, a, b, c, d):
+    inputs_vector = []
+    outputs_vector = [[], []]
+
+    for _ in range(num_examples):
+        x1 = uniform(-10, 10)
+        x2 = uniform(-10, 10)
+
+        inputs_vector.append([x1, x2])
+        outputs_vector[0].append(classify(x1, x2, a, b))
+        outputs_vector[1].append(classify(x1, x2, c, d))
+
+    return (inputs_vector, outputs_vector)
+
+def layer(lrn_rates, num_training, num_test, a, b, c, d):
+    layer = Layer(2, lrn_rates=lrn_rates)
+
+    (inputs_vector, outputs_vector) = gen_examples(num_training, a, b, c, d)
+    print('#TRAINING (max_epochs = 80)')
+    epochs = layer.training(inputs_vector, outputs_vector, 80)
+    print(('epochs: %d' % epochs) if epochs else 'training aborted')
+
+    (inputs_vector, outputs_vector) = gen_examples(num_test, a, b, c, d)
+    print('#TESTING')
+    error_count = load_test(layer, inputs_vector, outputs_vector)
+    print('error_count:', error_count)
 [/code]
 
+Now, imagine we keep the lines from *Eq. 7* and *Eq. 8*, but again we just have two classes:
 
+- C1: above *Eq. 7* and *Eq. 8*
+- C2: otherwise
 
+This means `C2`, `C3` and `C4` are all called just `C2`. There's no way to draw a line separating the new classes `C1` and `C2`. One way would be to filter the previously shown *layer*'s outputs (two numbers `y1` and `y2`) into just one, using another *perceptron*. This new *perceptron*'s rule would be something like:
 
+- C1: (`y1`, `y2`) = (1, 1)
+- C2: otherwise
 
+This is a draft of a networks known as **Multilayer Perceptron**.
 
-
-
-
-
+## 4 - Multilayer Perceptron
