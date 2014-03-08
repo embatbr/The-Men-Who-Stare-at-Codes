@@ -11,6 +11,56 @@ Posts:
 - Banco de dados
 - Lógica, teoria da computação (AFDs, turing e etc.), compiladores, paradigmas...
 
+
+Modelo de educacao superior (post: Less nutshell, more pumpkin):
+
+    Disciplinas não precisariam começar exatamente na mesma época. Por exemplo, Física 1 poderia esperar algum tempo após o início de Cálculo 1, de modo que o estudante desenvolva uma base melhor.
+
+    Cada ano teria 2 períodos:
+        1º: meio de janeiro até meio de junho
+        2º: meio de julho até meio de dezembro
+
+        5 meses por semestre de estudo pesadíssimo!
+        1 mês de férias entre meio de junho e meio de julho
+        1 mês de férias entre meio de dezembro e meio de janeiro (do ano seguinte)
+
+1º Período:
+    1 - Cálculo 1
+    2 - Física 1
+    3 - Geometria Analítica
+    4 - Matemática Discreta
+    5 - Introdução a Programação
+    6 - Introdução a Computação (cadeira bem leve)
+
+2º Período:
+    1 - Cálculo 2
+    2 - Física 2
+    3 - Álgebra Linear
+    4 - Lógica Computacional
+    5 - Algoritmos e Estruturas de Dados
+
+3º Período:
+    1 - Cálculo 3
+    2 - Física 3
+    3 - Gerenciamento de Dados e Informação (Bancos de Dados)
+    4 - Informática Teórica (Turing Machines e etc.)
+    5 - Paradigmas de Linguagens de Programação
+
+4º Período:
+    1 - Cálculo 4
+    2 - Física 4
+    3 - Probabilidade e Estatística
+    4 - Compiladores
+    5 - Sistemas Digitais
+
+5º Período:
+    1 - Infra de Hardware
+    2 - Infra de Software
+    3 - Infra de Comunicação
+    4 - Sinais e Sistemas
+    5 - Sistemas Inteligentes
+
+
 Dev:
 
 - Desenvolver o blog utilizando Django e demais ferramentas
