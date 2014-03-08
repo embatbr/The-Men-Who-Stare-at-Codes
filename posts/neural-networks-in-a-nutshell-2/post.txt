@@ -114,16 +114,12 @@ Now we can plot a map of the decision regions in the *m*-dimensional space. In t
 Here is the code for the Perceptron:
 
 [code language="python"]
-class Perceptron():
-
-    def __init__(self, input_size, weights=None, bias=0, activation=signal,
-                 lrn_rate=1):
+class Perceptron(object):
+    def __init__(self, input_size, lrn_rate=1):
         """'input_size' is the length of the input.
         'lrn_rate' is the learning rate.
         """
-        if not weights:
-            weights = [0]*input_size
-        self.neuron = Neuron(weights, bias, activation)
+        self.neuron = Neuron([0]*input_size, 0, signal)
         self.lrn_rate = lrn_rate
         self.fire = self.neuron.fire
 
@@ -194,7 +190,7 @@ def perceptron(lrn_rate, num_training, num_test, a, b):
     print('error_count:', error_count)
 [/code]
 
-I used the line `x2 = -5x1 + 2` to separate the classes. The function `gen_examples()` creates a random number of points that matches only one class, so this way we maintain a similar number of examples for both. The command line to execute this code is `embat@hal9000:~/desktop/neural$ ./test.py perceptron`.
+I used the line $latex x_2 = -5x_1 + 2$ to separate the classes. The function `gen_examples()` creates a random number of points that matches only one class, so this way we maintain a similar number of examples for both. The command line to execute this code is `embat@hal9000:~/desktop/neural$ ./test.py perceptron`.
 
 Remember: the convergence is when, during the training, all examples are correctly classified. It doesn't mean the *net* will never make a mistake when used with different inputs.
 

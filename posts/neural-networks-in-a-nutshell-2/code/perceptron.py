@@ -11,16 +11,12 @@ This code is intended to teach how the Perceptron works.
 from neuron import signal, Neuron
 
 
-class Perceptron():
-
-    def __init__(self, input_size, weights=None, bias=0, activation=signal,
-                 lrn_rate=1):
+class Perceptron(object):
+    def __init__(self, input_size, lrn_rate=1):
         """'input_size' is the length of the input.
         'lrn_rate' is the learning rate.
         """
-        if not weights:
-            weights = [0]*input_size
-        self.neuron = Neuron(weights, bias, activation)
+        self.neuron = Neuron([0]*input_size, 0, signal)
         self.lrn_rate = lrn_rate
         self.fire = self.neuron.fire
 
@@ -47,7 +43,7 @@ class Perceptron():
 
     def __str__(self):
         ret = 'lrn_rate: %s' % self.lrn_rate
-        ret = '%s\n%s' % (ret, neuron.__str__())
+        ret = '%s\n%s' % (ret, self.neuron.__str__())
         return ret
 
 
