@@ -8,7 +8,7 @@ This code is intended to teach how the Adaline works.
 """
 
 
-def semilinear(x):
+def limited_linear(x):
     if x > 1:
         return 1
     elif x < -1:
@@ -29,7 +29,7 @@ class Adaline():
 
     def fire(self, input_vector):
         summed = sum([i*w for (i,w) in zip(input_vector, self.weights)])
-        return semilinear(summed + self.bias)
+        return limited_linear(summed + self.bias)
 
 
     def training(self, training_examples, validation_examples, max_mse):
