@@ -82,7 +82,7 @@ Now we know an ANN is a distributed parallel system composed of very simple proc
 
 ## 2 - Perceptron
 
-The *Perceptron* was the first algorithmically described neural network (and is the simplest). It was invented by <a href="http://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank">*Frank Rosenblatt*</a> in 1958, is a model for learning with a teacher (*supervised learning*) and is used to classify patterns *linearly separable* (patterns that lie on opposite sides of a hyerplane). Basically, the *Perceptron* is a single neuron, that can only classify examples belonging to two *linearly separable* classes. Others configurations can use more than a neuron per layer, but the classes must be all *linearly separable*.
+The *Perceptron* was the first algorithmically described neural network (and is the simplest). It was invented by <a href="http://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank">*Frank Rosenblatt*</a> in 1958, is a model for learning with a teacher (*supervised learning*) and is used to classify patterns *linearly separable* (patterns that lie on opposite sides of a hyperplane). Basically, the *Perceptron* is a single neuron, that can only classify examples belonging to two *linearly separable* classes. Others configurations can use more than a neuron per layer, but the classes must be all *linearly separable*.
 
 Depending of the source consulted, the *McCulloch-Pitts* model can use the *treshold function* or the *signal function* to activate the neuron. Previously we adopted the *treshold function* to define the model, but we will loose this definition a little in order to maintain consistency with the sources used (shown in the *references* section at the end of the post). So now, our neuron will use the *signal function*.
 
@@ -196,7 +196,7 @@ Remember: the convergence is when, during the training, all examples are correct
 
 Every code, image and post info is saved <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-2" title="Repository at gthub" target="_blank">here</a>. Next post I will talk about the types of Multiclass Perceptron and Multilayer Perceptron.
 
-### References
+## References
 
 - <a href="http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392" target="_blank">Neural Networks and Learning Machines - 3rd Ed - Haykin, Simon - Pearson</a>.
 - <a href="http://prolland.free.fr/works/ai/docs/neuro-intro.pdf" target="_blank">An introduction to Neural Networks - 8th Ed. - Kröse, Ben; van der Smagt, Patrick - University of Amsterdam</a>.

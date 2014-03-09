@@ -2,7 +2,7 @@ This is the first post that makes justice to the blog's motto: **show me the cod
 
 1. I don't know how to use any of these.
 2. I don't have time to learn them now.
-3. The focus is the concept, not the performance.
+3. The focus is in the concepts, not in the performance.
 
 <!--more-->
 
@@ -93,9 +93,9 @@ Test #1 - inputs on neuron_3: 0
 embat@hal9000:~/desktop/neural$
 ```
 
-The complete code is in the post directory on <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/blob/master/posts/neural-networks-in-a-nutshell/code/mcp.py" target="_blank">github</a> and that's all for today folks. In the next post we will see the perceptrons.
+The complete code is in the post directory on <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/blob/master/posts/neural-networks-in-a-nutshell/code/mcp.py" target="_blank">github</a> and that's all for today folks. In the next post we will see the Perceptron.
 
-### References
+## References
 
 - <a href="http://en.wikipedia.org/wiki/Artificial_neural_network" target="_blank">Neural Networks - Wikipedia</a>.
 - <a href="http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392" target="_blank">Neural Networks and Learning Machines - 3rd Ed. - Haykin, Simon - Pearson</a>.
