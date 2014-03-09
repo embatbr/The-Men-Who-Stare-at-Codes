@@ -11,7 +11,9 @@ This code is intended to teach how the Perceptron works.
 from neuron import signal, Neuron
 
 
-class Perceptron():
+class Perceptron(object):
+    """Online learning Perceptron.
+    """
     def __init__(self, input_size, lrn_rate=1, activation=signal):
         """'input_size' is the length of the input.
         'lrn_rate' is the learning rate.

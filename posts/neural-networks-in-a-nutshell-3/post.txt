@@ -128,11 +128,39 @@ Now, imagine we keep the lines from *Eq. 7* and *Eq. 8*, but again we just have 
 - C1: above *Eq. 7* and *Eq. 8*
 - C2: otherwise
 
-This means `C2`, `C3` and `C4` are all called just `C2`. There's no way to draw a line separating the new classes `C1` and `C2`. One way would be to filter the previously shown *layer*'s outputs (two numbers `y1` and `y2`) into just one, using another *perceptron*. This new *perceptron*'s rule would be something like:
+This means `C2`, `C3` and `C4` are all called just `C2`. There's no way to draw a line separating the new classes `C1` and `C2`, but we could filter the previously shown *layer*'s outputs (two numbers `y1` and `y2`) into just one, using a "*neuron*". This new *neuron*'s filter rule would be something like:
 
 - C1: (`y1`, `y2`) = (1, 1)
 - C2: otherwise
 
-This is a draft of a networks known as **Multilayer Perceptron**.
+Using the output *neuron* with a fixed *bias* in the interval (`1.5`, `-2`] we could define who is `C1` and who is `C2`. But this *filter* would just be used after training the ANN, as it's weights must always be `1`, and throught it's output is impossible to reach `y1` and `y2`. The *activation function* is not **bijective**.
 
-## 4 - Multilayer Perceptron
+This network described above is a draft of an ANN known as **Multilayer Perceptron**. But before that, as I always do (*bastard*), let me show you the Adaline network.
+
+## 4 - Adaline
+
+Adaline comes from **ADAptive LINear Element** (previously **ADAptive LInear NEuron**), an ANN based on the *McCulloch-Pitts perceptron*, but without the *activation function* (or, more precisely, a *linear activation function*). It's output is given by:
+
+- (9) $latex y = \sum_{j=1}^{n} w_jx_j + b$
+
+As we know, the *perceptron*'s learning rule is given by
+
+- (10) $latex w_j(n + 1) = w_j(n) + \eta(d_j - y_j)x_j$
+- (11) $latex b(n + 1) = b(n) + \eta(d_j - y_j)$
+
+where $latex \eta$ is the *learning rate*, $latex d_j$ is the desired output and $latex y_j$ is the actual output. This can be composed into $latex \Delta w_j = \eta(d_j - y_j)x_j$ and *Eq. 10* and *Eq. 11* can be rewritten as:
+
+- (12) $latex w_j(n + 1) = w_j(n) + \Delta w_j$
+- (13) $latex b(n + 1) = b(n) + \Delta w_0$ (remember $latex w_0 = b$ and $latex x_0 = +1$)
+
+This *learning rule* is useful to a perceptron, but not to a nonlimited output. So, we need a new *learning rule*.
+
+### Delta rule
+
+## 5 - Multilayer Perceptron
+
+## References
+
+- <a href="http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392" target="_blank">Neural Networks and Learning Machines – 3rd Ed – Haykin, Simon – Pearson</a>.
+- <a href="http://prolland.free.fr/works/ai/docs/neuro-intro.pdf" target="_blank">An introduction to Neural Networks – 8th Ed. – Kröse, Ben; van der Smagt, Patrick – University of Amsterdam</a>.
+- <a href="http://en.wikipedia.org/wiki/Delta_rule" target="_blank">Delta rule - Wikipedia</a>.

@@ -2,5 +2,5 @@
     "title" : "Neural networks in a nutshell - 3",
     "slug" : "neural-networks-in-a-nutshell-3",
     "category" : ["Learning", "In a nutshell", "Artificial Intelligence"],
-    "tags" : ["machine learning", "neural networks", "neuron", "nutshell", "pattern recognition", "Perceptron", "Python", "Multiclass Perceptron"]
+    "tags" : ["Adaline", "machine learning", "neural networks", "neuron", "nutshell", "pattern recognition", "Perceptron", "Python", "Multiclass Perceptron"]
 }
