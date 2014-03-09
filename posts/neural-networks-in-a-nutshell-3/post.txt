@@ -135,27 +135,84 @@ This means `C2`, `C3` and `C4` are all called just `C2`. There's no way to draw 
 
 Using the output *neuron* with a fixed *bias* in the interval (`1.5`, `-2`] we could define who is `C1` and who is `C2`. But this *filter* would just be used after training the ANN, as it's weights must always be `1`, and throught it's output is impossible to reach `y1` and `y2`. The *activation function* is not **bijective**.
 
-This network described above is a draft of an ANN known as **Multilayer Perceptron**. But before that, as I always do (*bastard*), let me show you the Adaline network.
+This network described above is a draft of an ANN known as **Multilayer Perceptron**. But before that, as I always do (*bastard*), let me show you the *Adaline* network.
 
 ## 4 - Adaline
 
-Adaline comes from **ADAptive LINear Element** (previously **ADAptive LInear NEuron**), an ANN based on the *McCulloch-Pitts perceptron*, but without the *activation function* (or, more precisely, a *linear activation function*). It's output is given by:
+Adaline comes from **ADAptive LINear Element** (previously **ADAptive LInear NEuron**), an ANN based on the *McCulloch-Pitts perceptron*, but without the *activation function* (or, more precisely, a *linear activation function*). It was developed by **Bernard Widrow** and **Ted Hoff** at **Stanford University** in 1960. Similar to the Perceptron, the Adaline can classify multiple classes, when it's called Madaline (from Multiclass Adaline), a layer of independent Adalines. It's output is given by:
 
 - (9) $latex y = \sum_{j=1}^{n} w_jx_j + b$
 
 As we know, the *perceptron*'s learning rule is given by
 
-- (10) $latex w_j(n + 1) = w_j(n) + \eta(d_j - y_j)x_j$
-- (11) $latex b(n + 1) = b(n) + \eta(d_j - y_j)$
+- (10) $latex w_j(n + 1) = w_j(n) + \eta(d - y)x_j$
+- (11) $latex b(n + 1) = b(n) + \eta(d - y)$
 
-where $latex \eta$ is the *learning rate*, $latex d_j$ is the desired output and $latex y_j$ is the actual output. This can be composed into $latex \Delta w_j = \eta(d_j - y_j)x_j$ and *Eq. 10* and *Eq. 11* can be rewritten as:
+where $latex \eta$ is the *learning rate*, $latex d$ is the desired output and $latex y$ is the actual output. This can be composed into $latex \Delta w_j = \eta(d - y)x_j$ and *Eq. 10* and *Eq. 11* can be rewritten as:
 
 - (12) $latex w_j(n + 1) = w_j(n) + \Delta w_j$
 - (13) $latex b(n + 1) = b(n) + \Delta w_0$ (remember $latex w_0 = b$ and $latex x_0 = +1$)
 
-This *learning rule* is useful to a perceptron, but not to a nonlimited output. So, we need a new *learning rule*.
+The perceptron's *learning rule*, when using the *threshold function*, is called *Hebb's rule*. In our case we used the *signal function*, but the essence is the same. The rule used in our *adaline* is the *delta rule*, which uses *gradient descent* to adjust the weights. For an online training, the cost is $latex \varepsilon (w) = \frac{1}{2}(d - y)^2$ and $latex \Delta w_j(n) = \eta(-\frac{\partial \varepsilon}{\partial w_j})$, resulting in *Eq. 10* and *Eq. 11*. So, in practice *perceptron* and *adaline* have the same training rule (the *delta rule*), but the weights in the first are adjusted discretly, while in the second, continuously.
 
-### Delta rule
+As *activation function* to this adaline, I used a linear function limited between `-1` and `1`:
+
+[code language="python"]
+def limited_linear(x):
+    if x > 1:
+        return 1
+    elif x < -1:
+        return -1
+    return x
+[/code]
+
+Also, as the convergence takes a long time, I used a maximum MSE as *stopping rule* (*cross-validation*):
+
+[code language="python"]
+class Adaline():
+    """Online learning Adaline.
+    """
+    def __init__(self, input_size, lrn_rate=1):
+        """'input_size' is the length of the input.
+        'lrn_rate' is the learning rate.
+        """
+        self.weights = [0]*input_size
+        self.bias = 0
+        self.lrn_rate = lrn_rate
+
+    def fire(self, input_vector):
+        summed = sum([i*w for (i,w) in zip(input_vector, self.weights)])
+        return limited_linear(summed + self.bias)
+
+
+    def training(self, training_examples, validation_examples, max_mse):
+        validation_size = len(validation_examples)
+
+        while True:
+            # training
+            for (input_vector, desired) in training_examples:
+                output = self.fire(input_vector)
+                error = desired - output
+
+                if error != 0:
+                    delta = self.lrn_rate*error
+                    self.weights = [(weight + delta*x) for (weight, x) in
+                                    zip(self.weights, input_vector)]
+                    self.bias = self.bias + delta
+
+            # validation
+            mse = 0
+            for (input_vector, desired) in validation_examples:
+                output = self.fire(input_vector)
+                error = desired - output
+                mse = mse + error*error
+            mse = mse/validation_size
+
+            if mse <= max_mse:
+                return mse
+[/code]
+
+The rest of the code is similar to the previous ones. The whole code is <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-3/code" target="_blank">here</a>.
 
 ## 5 - Multilayer Perceptron
 
@@ -164,3 +221,13 @@ This *learning rule* is useful to a perceptron, but not to a nonlimited output. 
 - <a href="http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392" target="_blank">Neural Networks and Learning Machines – 3rd Ed – Haykin, Simon – Pearson</a>.
 - <a href="http://prolland.free.fr/works/ai/docs/neuro-intro.pdf" target="_blank">An introduction to Neural Networks – 8th Ed. – Kröse, Ben; van der Smagt, Patrick – University of Amsterdam</a>.
 - <a href="http://en.wikipedia.org/wiki/Delta_rule" target="_blank">Delta rule - Wikipedia</a>.
+- <a href="http://en.wikipedia.org/wiki/Mean_squared_error" target="_blank">Mean Squared Error - Wikipedia</a>.
+
+
+
+
+
+
+
+
+
