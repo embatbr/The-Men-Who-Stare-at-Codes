@@ -32,8 +32,9 @@ class Adaline():
         return limited_linear(summed + self.bias)
 
 
-    def training(self, training_examples, validation_examples, max_mse):
+    def training(self, training_examples, validation_examples):
         validation_size = len(validation_examples)
+        old_mse = None
 
         while True:
             # training
@@ -55,7 +56,11 @@ class Adaline():
                 mse = mse + error*error
             mse = mse/validation_size
 
-            if mse <= max_mse:
+            if not old_mse:
+                old_mse = mse
+            elif mse < old_mse:
+                old_mse = mse
+            elif mse > old_mse:
                 return mse
 
     def __str__(self):
@@ -90,19 +95,19 @@ def gen_examples(num_examples, a, b):
     examples = []
 
     for _ in range(num_examples):
-        x1 = uniform(-1, 1)
-        x2 = uniform(-1, 1)
+        x1 = uniform(-10, 10)
+        x2 = uniform(-10, 10)
         examples.append(([x1, x2], classify(x1, x2, a, b)))
 
     return examples
 
-def adaline(lrn_rate, num_training, num_validation, num_test, max_mse, a, b):
+def adaline(lrn_rate, num_training, num_validation, num_test, a, b):
     adaline = Adaline(2, lrn_rate=lrn_rate)
 
     training_examples = gen_examples(num_training, a, b)
     validation_examples = gen_examples(num_validation, a, b)
     print('TRAINING')
-    mse = adaline.training(training_examples, validation_examples, max_mse)
+    mse = adaline.training(training_examples, validation_examples)
     print('mse:', mse)
 
     testing_examples = gen_examples(num_test, a, b)
@@ -116,7 +121,10 @@ def adaline(lrn_rate, num_training, num_validation, num_test, max_mse, a, b):
 if __name__ == '__main__':
     print('testing module adaline\n')
 
-    lrn_rate_list = [x/10 for x in range(1, 11)]
-    for lrn_rate in lrn_rate_list:
-        print('adaline(%s, 10000, 10000, 1000, 0.05, -5, 2):\n' % lrn_rate)
-        adaline(lrn_rate, 10000, 10000, 1000, 0.05, -5, 2)
+    # lrn_rate_list = [x/10 for x in range(1, 11)]
+    # for lrn_rate in lrn_rate_list:
+    #     print('adaline(%s, 10000, 10000, 1000, -5, 2):\n' % lrn_rate)
+    #     adaline(lrn_rate, 10000, 10000, 1000, -5, 2)
+
+    print('testing')
+    adaline(0.1, 10000, 10000, 1000, -5, 2)

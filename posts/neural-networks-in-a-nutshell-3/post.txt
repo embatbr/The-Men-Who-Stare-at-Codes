@@ -166,7 +166,7 @@ def limited_linear(x):
     return x
 [/code]
 
-Also, as the convergence takes a long time, I used a maximum MSE as *stopping rule* (*cross-validation*):
+Also,  I used *cross-validation*. I'm doing *online training* with no specific number of epochs. For each epoch, the weights are changed and later the validation set is fed to the net and the MSE is calculated using the formula $latex E = \frac{1}{M}\sum_{i=1}^{M}(d_i - y_i)^2$, where `M` is the number of inputs and $latex (d_i - y_i)^2$ is the squared error for the *i*-th input vector:
 
 [code language="python"]
 class Adaline():
@@ -185,8 +185,9 @@ class Adaline():
         return limited_linear(summed + self.bias)
 
 
-    def training(self, training_examples, validation_examples, max_mse):
+    def training(self, training_examples, validation_examples):
         validation_size = len(validation_examples)
+        old_mse = None
 
         while True:
             # training
@@ -208,9 +209,17 @@ class Adaline():
                 mse = mse + error*error
             mse = mse/validation_size
 
-            if mse <= max_mse:
+            if not old_mse:
+                old_mse = mse
+            elif mse < old_mse:
+                old_mse = mse
+            elif mse > old_mse:
                 return mse
 [/code]
+
+The use of a *activation function* not completely linear is because with the other (a totally linear function) the numbers overflowed (with value `inf`). Also, some sources shows this kind of *activation function*.
+
+Some sources says the *Adaline* converges in the same way as the *Perceptron*, other that it converges to the lowest MSE. I used the second option and when the MSE rises I pull the plug.
 
 The rest of the code is similar to the previous ones. The whole code is <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-3/code" target="_blank">here</a>.
 
@@ -220,6 +229,7 @@ The rest of the code is similar to the previous ones. The whole code is <a href=
 
 - <a href="http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392" target="_blank">Neural Networks and Learning Machines – 3rd Ed – Haykin, Simon – Pearson</a>.
 - <a href="http://prolland.free.fr/works/ai/docs/neuro-intro.pdf" target="_blank">An introduction to Neural Networks – 8th Ed. – Kröse, Ben; van der Smagt, Patrick – University of Amsterdam</a>.
+- <a href="http://www.amazon.com/Machine-Learning-Tom-M-Mitchell/dp/0070428077" target="_blank">Machine Learning - Tom Mitchell - McGraw-Hill</a>.
 - <a href="http://en.wikipedia.org/wiki/Delta_rule" target="_blank">Delta rule - Wikipedia</a>.
 - <a href="http://en.wikipedia.org/wiki/Mean_squared_error" target="_blank">Mean Squared Error - Wikipedia</a>.
 
