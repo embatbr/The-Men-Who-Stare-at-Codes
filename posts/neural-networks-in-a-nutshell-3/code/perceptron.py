@@ -131,8 +131,9 @@ def layer(lrn_rates, num_training, num_test, a, b, c, d):
     layer = Layer(2, lrn_rates=lrn_rates)
 
     (inputs_vector, outputs_vector) = gen_examples(num_training, a, b, c, d)
-    print('#TRAINING (max_epochs = 80)')
-    epochs = layer.training(inputs_vector, outputs_vector, 80)
+    max_epochs = None
+    print('#TRAINING%s' % (' (max_epochs = %d)' % max_epochs if max_epochs else ''))
+    epochs = layer.training(inputs_vector, outputs_vector, max_epochs)
     print(('epochs: %d' % epochs) if epochs else 'training aborted')
 
     (inputs_vector, outputs_vector) = gen_examples(num_test, a, b, c, d)
