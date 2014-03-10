@@ -299,15 +299,35 @@ class MultilayerPerceptron(object):
 
 Notice the structure of both classes are similar. A `NeuralLayer` is a list of neurons which length is the length of the layer's output. The same though applicable to the class `MultilayerPerceptron`.
 
-Before moving to the *backpropagation algorithm* let's first take a look in **batch learning** and **online learning*
+Before moving to the *backpropagation algorithm* let's first take a look in **batch learning** and **online learning**.
 
-### Batch Learning
+### Batch Learning and Online Learning
 
-<TODO>BATCH LEARNING AND ONLINE LEARNING pagina 127</TODO>
+Considering a *training sample* $latex T = \{\textbf{x}(n), \textbf{d}(n)\}_{n=1}^{N}$ used to train a MLP in a supervised manner. The *error signal* produced at output *j* is
 
-### Online Learning
+- (14) $latex e_j(n) = d_j(n) - y_j(n)$
 
-<TODO>BATCH LEARNING AND ONLINE LEARNING pagina 127</TODO>
+where $latex d_j(n)$ is the *j*-th element of the desired-response vector $latex \textbf{d}(n)$. The *instantaneous error energy* of neuron *j* is
+
+- (15) $latex \varepsilon_j(n) = \frac{1}{2}e_j^2(n)$
+
+Summing the error-energy contributions of all neurons in the output layer, we express the *total instantaneous error energy* of the whole network as
+
+- (16) $latex \varepsilon(n) = \sum_{j=1}^{C} \varepsilon_j(n) = \frac{1}{2}\sum_{j=1}^{C} e_j^2(n)$
+
+where *C* is the number of neurons in the output layer. With the training sample consisting of *N* examples, the *error energy averaged over the training sample*, or the *empirical risk*, is defined by
+
+- (17) $latex \varepsilon_{av}(N) = \frac{1}{N}\sum_{n=1}^{N} \varepsilon(n) = \frac{1}{2N}\sum_{n=1}^{N}\sum_{j=1}^{C} e_j^2(n)$
+
+Naturally, the "error energies" are functions dependent of the synaptic weights (i.e. free parameters) of the MLP.
+
+In batch method the adjustments of weights occur *after* the presentation of *all* the *N* examples in the training sample *T* (en *epoch*). The cost function is the $latex \varepsilon_{av}$. For each epoch of training, the examples in the training set *T* are *randomly shuffled*. Batch learning demands high *storage requirements*.
+
+In online method the adjustments of weights occur *when an example is presented*. The cost function is the $latex \varepsilon(n)$. As the above, after each epoch the training sample is randomly shuffled. The online method works better than the batch method when there's *redundancy* in the training sample. Also, it's easier to implement.
+
+The online method will be the one adopted for our backpropagation implementation.
+
+### Backpropagation
 
 ## References
 
