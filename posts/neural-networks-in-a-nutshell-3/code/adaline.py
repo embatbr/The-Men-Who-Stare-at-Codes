@@ -16,7 +16,7 @@ def limited_linear(x):
     return x
 
 
-class Adaline():
+class Adaline(object):
     """Online learning Adaline.
     """
     def __init__(self, input_size, lrn_rate=1):
@@ -31,37 +31,42 @@ class Adaline():
         summed = sum([i*w for (i,w) in zip(input_vector, self.weights)])
         return limited_linear(summed + self.bias)
 
-
     def training(self, training_examples, validation_examples):
+        """Cross-validation training.
+        """
+        training_size = len(training_examples)
         validation_size = len(validation_examples)
-        old_mse = None
+        old_mse_valid = None
 
         while True:
             # training
+            mse_train = 0
             for (input_vector, desired) in training_examples:
                 output = self.fire(input_vector)
                 error = desired - output
+                mse_train = mse_train + (error*error)/2
 
                 if error != 0:
                     delta = self.lrn_rate*error
                     self.weights = [(weight + delta*x) for (weight, x) in
                                     zip(self.weights, input_vector)]
                     self.bias = self.bias + delta
+            mse_train = mse_train/training_size
 
             # validation
-            mse = 0
+            mse_valid = 0
             for (input_vector, desired) in validation_examples:
                 output = self.fire(input_vector)
                 error = desired - output
-                mse = mse + error*error
-            mse = mse/validation_size
+                mse_valid = mse_valid + (error*error)/2
+            mse_valid = mse_valid/validation_size
 
-            if not old_mse:
-                old_mse = mse
-            elif mse < old_mse:
-                old_mse = mse
-            elif mse > old_mse:
-                return mse
+            if not old_mse_valid:
+                old_mse_valid = mse_valid
+            elif mse_valid < old_mse_valid:
+                old_mse_valid = mse_valid
+            elif mse_valid > old_mse_valid:
+                return (mse_train, mse_valid)
 
     def __str__(self):
         ret = 'lrn_rate: %s' % self.lrn_rate
@@ -72,14 +77,14 @@ class Adaline():
 
 def load_test(adaline, testing_examples):
     testing_size = len(testing_examples)
-    mse = 0
+    mse_test = 0
     for (input_vector, desired_output) in testing_examples:
         actual_output = adaline.fire(input_vector)
         error = desired_output - actual_output
-        mse = mse + error*error
-    mse = mse/testing_size
+        mse_test = mse_test + (error*error)/2
+    mse_test = mse_test/testing_size
 
-    return mse
+    return mse_test
 
 # test
 
@@ -106,9 +111,10 @@ def adaline(lrn_rate, num_training, num_validation, num_test, a, b):
 
     training_examples = gen_examples(num_training, a, b)
     validation_examples = gen_examples(num_validation, a, b)
-    print('TRAINING')
-    mse = adaline.training(training_examples, validation_examples)
-    print('mse:', mse)
+    print('TRAINING (cross-validation)')
+    (mse_train, mse_valid) = adaline.training(training_examples, validation_examples)
+    print('mse (training):', mse_train)
+    print('mse (validation):', mse_valid)
 
     testing_examples = gen_examples(num_test, a, b)
     print('\nTESTING')

@@ -2,7 +2,7 @@ For now we learnt <a href="http://themenwhostareatcodes.wordpress.com/2014/03/02
 
 <!--more-->
 
-The Perceptron converged in our example because the problem was *lineraly separable*, what means we could divide it in two classes using a *hyperplane* (in that case, a *straight line*). That's why I defined the stopping rule as "stop when there's no errors, *bitch*", because someday it happens. If just one example of class `C1` where in the region of class `C2`, we couldn't draw a line dividing both classes. So, if you don't know if the problem is *linearly separable* (what could lead to an endless loop), change the *stopping rule* to abort training after a predefined number of epochs:
+The Perceptron converged in our example because the problem was *lineraly separable*, what means we could divide it in two classes using a *hyperplane* (in that case, a *straight line*). That's why I defined the stopping rule as "**stop when there's no errors, *bitch***", because someday it happens. If just one example of class `C1` where in the region of class `C2`, we couldn't draw a line dividing both classes. So, if you don't know if the problem is *linearly separable* (what could lead to an endless loop), change the *stopping rule* to abort training after a predefined number of epochs:
 
 [code language="python"]
     def training(self, examples, max_epochs=None):
@@ -135,7 +135,7 @@ This means `C2`, `C3` and `C4` are all called just `C2`. There's no way to draw 
 
 Using the output *neuron* with a fixed *bias* in the interval (`1.5`, `-2`] we could define who is `C1` and who is `C2`. But this *filter* would just be used after training the ANN, as it's weights must always be `1`, and throught it's output is impossible to reach `y1` and `y2`. The *activation function* is not **bijective**.
 
-This network described above is a draft of an ANN known as **Multilayer Perceptron**. But before that, as I always do (*bastard*), let me show you the *Adaline* network.
+This network described above is a draft of an ANN known as **Multilayer Perceptron**. But before that, as I always do (*bastard*), let me show you the **Adaline** network.
 
 ## 4 - Adaline
 
@@ -169,7 +169,7 @@ def limited_linear(x):
 Also,  I used *cross-validation*. I'm doing *online training* with no specific number of epochs. For each epoch, the weights are changed and later the validation set is fed to the net and the MSE is calculated using the formula $latex E = \frac{1}{M}\sum_{i=1}^{M}(d_i - y_i)^2$, where `M` is the number of inputs and $latex (d_i - y_i)^2$ is the squared error for the *i*-th input vector:
 
 [code language="python"]
-class Adaline():
+class Adaline(object):
     """Online learning Adaline.
     """
     def __init__(self, input_size, lrn_rate=1):
@@ -184,46 +184,130 @@ class Adaline():
         summed = sum([i*w for (i,w) in zip(input_vector, self.weights)])
         return limited_linear(summed + self.bias)
 
-
     def training(self, training_examples, validation_examples):
+        """Cross-validation training.
+        """
+        training_size = len(training_examples)
         validation_size = len(validation_examples)
-        old_mse = None
+        old_mse_valid = None
 
         while True:
             # training
+            mse_train = 0
             for (input_vector, desired) in training_examples:
                 output = self.fire(input_vector)
                 error = desired - output
+                mse_train = mse_train + (error*error)/2
 
                 if error != 0:
                     delta = self.lrn_rate*error
                     self.weights = [(weight + delta*x) for (weight, x) in
                                     zip(self.weights, input_vector)]
                     self.bias = self.bias + delta
+            mse_train = mse_train/training_size
 
             # validation
-            mse = 0
+            mse_valid = 0
             for (input_vector, desired) in validation_examples:
                 output = self.fire(input_vector)
                 error = desired - output
-                mse = mse + error*error
-            mse = mse/validation_size
+                mse_valid = mse_valid + (error*error)/2
+            mse_valid = mse_valid/validation_size
 
-            if not old_mse:
-                old_mse = mse
-            elif mse < old_mse:
-                old_mse = mse
-            elif mse > old_mse:
-                return mse
+            if not old_mse_valid:
+                old_mse_valid = mse_valid
+            elif mse_valid < old_mse_valid:
+                old_mse_valid = mse_valid
+            elif mse_valid > old_mse_valid:
+                return (mse_train, mse_valid)
 [/code]
 
 The use of a *activation function* not completely linear is because with the other (a totally linear function) the numbers overflowed (with value `inf`). Also, some sources shows this kind of *activation function*.
 
-Some sources says the *Adaline* converges in the same way as the *Perceptron*, other that it converges to the lowest MSE. I used the second option and when the MSE rises I pull the plug.
+Some sources says the *Adaline* converges in the same way as the *Perceptron* (no error if the training set is *linearly separable*), others that it converges to the lowest MSE (makes sense too, LMS == Least Mean Square). I used the second option and when the actual MSE is higher than the previous one, I pull the plug.
 
-The rest of the code is similar to the previous ones. The whole code is <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-3/code" target="_blank">here</a>.
+The rest of the code is similar to the previous ones. You can find it <a href="https://github.com/embatbr/The-Men-Who-Stare-at-Codes/tree/master/posts/neural-networks-in-a-nutshell-3/code" target="_blank">here</a>.
 
 ## 5 - Multilayer Perceptron
+
+Until now, our ANNs had only two layers, one with input nodes (that are not neurons) and other with output nodes. The *Perceptron* and *Adaline* neural networks contains one, and one only, layer of neurons. This makes they limited. Most problems in the real world, as the one exemplified in the *Overview* section, are nonlinear and with more than two classes. The problem showed in the beginning of this post, where we have two straight lines dividing the region in only two classes could be solved in these two ways
+
+1. Output `(1, 1)` determines class `C1`; outputs `(1, -1)`, `(-1, 1)` and `(-1, -1)` determines class `C2`.
+2. Insert an extra layer to filter the doubled output into just one.
+
+but others cannot. Will we divide the space in thousands of regions and use a table to determine who is `C1` and who is `C2`? If so, let's forget ANNs and start searching another technique.
+
+So, a *Multilayer Perceptron* (abbreviated to **MLP**) contains three basic features:
+
+- Each neuron is activated by a *differentiable* nonlinear function.
+- The network contains one or more layers between the input and output layers. These are known as *hidden layers*, because we can't say what they outputs are.
+- All neurons from a layer are weighted connected to all neurons of the next layer (*fully connected* graph).
+
+<TODO>inserir imagem do mlp (figure-08), provinda da pagina 124 de [1]</TODO>
+
+The code below shows the implementation of one layer (similar to the class `Layer` in the module `perceptron`)
+
+[code language="python"]
+class NeuralLayer(object):
+    """A layer of independent neurons.
+    """
+    def __init__(self, num_neurons, input_size, activation):
+        self.neurons = [Neuron([0]*input_size, 0, activation)]*num_neurons
+
+    def fire(self, input_vector):
+        """Not checking if input_vector fits in the neurons' inputs.
+        """
+        return [neuron.fire(input_vector) for neuron in self.neurons]
+
+    def __str__(self):
+        ret = ''
+
+        num_neurons = len(self.neurons)
+        for (neuron, i) in zip(self.neurons, range(num_neurons)):
+            ret = '%sneuron #%d\n%s\n' % (ret, i, neuron.__str__())
+
+        return ret
+[/code]
+
+and the next shows our Multilayer Perceptron (the training algorithm is not implemented yet. It will be detailed in it's own subsection):
+
+[code language="python"]
+class MultilayerPerceptron(object):
+    """A feedfoward neural network composed of N neural layers (1 output layer
+    and N - 1 hidden layers).
+    """
+    def __init__(self, num_neurons_per_layer, input_size, activation, lrn_rate):
+        """num_neurons_per_layer is a list of int.
+        """
+        num_inputs_per_layer = [input_size] + num_neurons_per_layer[: -1]
+        num_layers = len(num_neurons_per_layer)
+
+        self.layers = []
+        for i in range(num_layers):
+            layer = NeuralLayer(num_neurons_per_layer[i],
+                                num_inputs_per_layer[i], activation)
+            self.layers.append(layer)
+
+        self.lrn_rate = lrn_rate
+
+    def fire(self, input_vector):
+        output = input_vector
+        for layer in self.layers:
+            output = layer.fire(output)
+        return output
+[/code]
+
+Notice the structure of both classes are similar. A `NeuralLayer` is a list of neurons which length is the length of the layer's output. The same though applicable to the class `MultilayerPerceptron`.
+
+Before moving to the *backpropagation algorithm* let's first take a look in **batch learning** and **online learning*
+
+### Batch Learning
+
+<TODO>BATCH LEARNING AND ONLINE LEARNING pagina 127</TODO>
+
+### Online Learning
+
+<TODO>BATCH LEARNING AND ONLINE LEARNING pagina 127</TODO>
 
 ## References
 
