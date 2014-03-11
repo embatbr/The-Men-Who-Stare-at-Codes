@@ -52,6 +52,8 @@ class MultilayerPerceptron(object):
         self.lrn_rate = lrn_rate
 
     def fire(self, input_vector):
+        """Foward pass.
+        """
         output = input_vector
         for layer in self.layers:
             output = layer.fire(output)

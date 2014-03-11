@@ -17,7 +17,8 @@ def limited_linear(x):
 
 
 class Adaline(object):
-    """Online learning Adaline.
+    """Online learning Adaline. Shit! This fucking class should be a subclass
+    of neuron.Neuron! Idiot!
     """
     def __init__(self, input_size, lrn_rate=1):
         """'input_size' is the length of the input.
