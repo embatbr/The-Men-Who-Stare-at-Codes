@@ -2,7 +2,7 @@ For now we learnt <a href="http://themenwhostareatcodes.wordpress.com/2014/03/02
 
 <!--more-->
 
-The Perceptron converged in our example because the problem was *lineraly separable*, what means we could divide it in two classes using a *hyperplane* (in that case, a *straight line*). That's why I defined the stopping rule as "**stop when there's no errors, *bitch***", because someday it happens. If just one example of class `C1` where in the region of class `C2`, we couldn't draw a line dividing both classes. So, if you don't know if the problem is *linearly separable* (what could lead to an endless loop), change the *stopping rule* to abort training after a predefined number of epochs:
+The Perceptron converged in our example because the problem was *linearly separable*, what means we could divide it in two classes using a *hyperplane* (in that case, a *straight line*). That's why I defined the stopping rule as "**stop when there's no errors, *bitch***", because someday it happens. If just one example of class `C1` where in the region of class `C2`, we couldn't draw a line dividing both classes. So, if you don't know if the problem is *linearly separable* (what could lead to an endless loop), change the *stopping rule* to abort training after a predefined number of epochs:
 
 [code language="python"]
     def training(self, examples, max_epochs=None):
@@ -31,7 +31,7 @@ But sometimes what doesn't seem to be separable by one line can be by two or mor
 
 ## 3 - Multiclass Perceptron
 
-Taking our equation from previous post (as shown in *Eq. 7*) let's add another line (*Eq. 8*) crossing the first
+Taking our equation from previous post (as shown in *Eq. 7*) let's add another line (*Eq. 8*), crossing the first
 
 - (7) $latex x_2 = -5x_1 + 2$
 - (8) $latex x_2 = 3x_1 + 4$
@@ -85,7 +85,7 @@ class Layer(object):
         return epochs
 [/code]
 
-It's importante to notice that each *perceptron* receives all inputs, no matter if it's one, two or ten in the layer. Also, as the classes are *linearly separable*, we can train one *perceptron* per time. So, now, our Multiclass Perceptron is composed of two layers: an input layer and an output layer (where the neurons are).
+It's important to notice that each *perceptron* receives all inputs, no matter if it's one, two or ten in the layer. Also, as the classes are *linearly separable*, we can train one *perceptron* per time. So, now, our Multiclass Perceptron is composed of two layers: an input layer and an output layer (where the neurons are).
 
 The code to test this new Perceptron of ours (with two neurons) is basically the same:
 
@@ -130,8 +130,8 @@ Now, imagine we keep the lines from *Eq. 7* and *Eq. 8*, but again we just have 
 
 This means `C2`, `C3` and `C4` are all called just `C2`. There's no way to draw a line separating the new classes `C1` and `C2`, but we could filter the previously shown *layer*'s outputs (two numbers `y1` and `y2`) into just one, using a "*neuron*". This new *neuron*'s filter rule would be something like:
 
-- C1: (`y1`, `y2`) = (1, 1)
-- C2: otherwise
+- C1: `if (y1, y2) == (1, 1)`
+- C2: `otherwise`
 
 Using the output *neuron* with a fixed *bias* in the interval (`1.5`, `-2`] we could define who is `C1` and who is `C2`. But this *filter* would just be used after training the ANN, as it's weights must always be `1`, and through it's output is impossible to reach `y1` and `y2`. The *activation function* is not **bijective**.
 
@@ -153,9 +153,9 @@ where $latex \eta$ is the *learning rate*, $latex d$ is the desired output and $
 - (12) $latex w_j(n + 1) = w_j(n) + \Delta w_j$
 - (13) $latex b(n + 1) = b(n) + \Delta w_0$ (remember $latex w_0 = b$ and $latex x_0 = +1$)
 
-The perceptron's *learning rule*, when using the *threshold function*, is called *Hebb's rule*. In our case we used the *signal function*, but the essence is the same. The rule used in our *adaline* is the *delta rule*, which uses *gradient descent* to adjust the weights. For an online training, the cost is $latex \varepsilon (w) = \frac{1}{2}(d - y)^2$ and $latex \Delta w_j(n) = \eta(-\frac{\partial \varepsilon}{\partial w_j})$, resulting in *Eq. 10* and *Eq. 11*. So, in practice *perceptron* and *adaline* have the same training rule (the *delta rule*), but the weights in the first are adjusted discretly, while in the second, continuously.
+The perceptron's *learning rule*, when using the *threshold function*, is called *Hebb's rule*. In our case we used the *signal function*, but the essence is the same. The rule used in our *adaline* is the *delta rule*, which uses *gradient descent* to adjust the weights. For an online training, the cost is $latex \varepsilon (w) = \frac{1}{2}(d - y)^2$ and $latex \Delta w_j(n) = \eta(-\frac{\partial \varepsilon}{\partial w_j})$, resulting in *Eq. 10* and *Eq. 11*. So, in practice *perceptron* and *adaline* have the same training rule (the *delta rule*), but the weights in the first are adjusted discretely, while in the second, continuously.
 
-As *activation function* to this adaline, I used a linear function limited between `-1` and `1`:
+As *activation function* to this adaline, I used a linear function limited between `-1` and `1:
 
 [code language="python"]
 def limited_linear(x):
@@ -230,7 +230,7 @@ The rest of the code is similar to the previous ones. You can find it <a href="h
 
 ## 5 - Multilayer Perceptron
 
-Until now, our ANNs had only two layers, one with input nodes (that are not neurons) and other with output nodes. The *Perceptron* and *Adaline* neural networks contains one, and one only, layer of neurons. This makes they limited. Most problems in the real world, as the one exemplified in the *Overview* section, are nonlinear and with more than two classes. The problem showed in the beginning of this post, where we have two straight lines dividing the region in only two classes could be solved in these two ways
+Until now, our ANNs had only two layers, one with input nodes (that are not neurons) and other with output nodes. The *Perceptron* and *Adaline* neural networks contains one, and one only, layer of neurons. This makes they limited. Most problems in the real world, as the one exemplified in the *Overview* section, are non-linear by nature and with more than two classes. The problem showed in the beginning of this post, where we have two straight lines dividing the region in only two classes could be solved in these two ways
 
 1. Output `(1, 1)` determines class `C1`; outputs `(1, -1)`, `(-1, 1)` and `(-1, -1)` determines class `C2`.
 2. Insert an extra layer to filter the doubled output into just one.
@@ -243,7 +243,7 @@ So, a *Multilayer Perceptron* (abbreviated as **MLP**) contains three basic feat
 - The network contains one or more layers between the input and output layers. These are known as *hidden layers*, because we can't say what they outputs are.
 - All neurons from a layer are connected to all neurons of the next layer (*fully connected* graph) through weights.
 
-[caption id="attachment_595" align="aligncenter" width="450"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-08.png"><img class=" wp-image-595    " alt="figure-08" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-08.png?w=300" width="450" height="219" /></a> <strong>Figure 8</strong> Multilayer Perceptron with two hidden layers. Watch out for the high connected graph.[/caption]
+[caption id="attachment_595" align="aligncenter" width="450"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-08.png"><img class=" wp-image-595    " alt="figure-08" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-08.png?w=300" width="510" height="248" /></a> <strong>Figure 8</strong> Multilayer Perceptron with two hidden layers. Watch out for the high connected graph.[/caption]
 
 The code below shows the implementation of one layer (similar to the class `Layer` in the module `perceptron`)
 
@@ -297,7 +297,7 @@ class MultilayerPerceptron(object):
         return output
 [/code]
 
-Notice the structure of both classes are similar. A `NeuralLayer` is a list of neurons which length is the length of the layer's output. The same though applicable to the class `MultilayerPerceptron`.
+Notice the structure of both classes are similar. A `NeuralLayer` is a list of neurons which length is the length of the layer's output. The same thought applicable to the class `MultilayerPerceptron`.
 
 Before moving to the *backpropagation algorithm* let's first take a look in **batch learning** and **online learning**.
 
@@ -334,3 +334,5 @@ The online method will be the one adopted for our backpropagation implementation
 - <a href="http://www.amazon.com/Machine-Learning-Tom-M-Mitchell/dp/0070428077" target="_blank">Machine Learning - Tom Mitchell - McGraw-Hill</a>.
 - <a href="http://en.wikipedia.org/wiki/Delta_rule" target="_blank">Delta rule - Wikipedia</a>.
 - <a href="http://en.wikipedia.org/wiki/Mean_squared_error" target="_blank">Mean Squared Error - Wikipedia</a>.
+
+**Live long and prosper**

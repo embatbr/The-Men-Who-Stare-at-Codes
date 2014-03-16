@@ -2,14 +2,14 @@ Last <a title="Neural networks in a nutshell" href="http://themenwhostareatcodes
 
 <!--more-->
 
-The so called *unit step function* has an abrupt change in value when reaches `x = 0`, but it can be either a *treshold function* (limited between `0` and `1`), or a *signal function* (output between `-1` and `1`), as shown in *Fig. 4*. However this change doesn't happens in the real neuron. It's not binary, but more smooth, going from the lower limit and growing until the upper limit, shaped like an **S**. The *sigmoid function* has this shape, as shown in *Fig. 5*, and the two cases demonstrated here are the *logistic sigmoid* (*Eq. 3*) and the *hyperbolic tangent* (*Eq. 4*) functions.
+The so called *unit step function* has an abrupt change in value when reaches `x = 0`, but it can be either a *threshold function* (limited between `0` and `1`), or a *signal function* (output between `-1` and `1`), as shown in *Fig. 4*. However this change doesn't happens in the real neuron. It's not binary, but more smooth, going from the lower limit and growing until the upper limit, shaped like an **S**. The *sigmoid function* has this shape, as shown in *Fig. 5*, and the two cases demonstrated here are the *logistic sigmoid* (*Eq. 3*) and the *hyperbolic tangent* (*Eq. 4*) functions.
 
 [caption id="attachment_354" align="aligncenter" width="360"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-05.png"><img class=" wp-image-354 " alt="figure-05" src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-05.png?w=300" width="360" height="191" /></a> <strong>Figure 5</strong> Sigmoid function shaped as an S.[/caption]
 
 - (3) $latex \varphi(v) = \frac{1}{1 + e^{-av}}$, with $latex \varphi(v)$ between `0` and `1`.
 - (4) $latex \varphi(v) = tanh(v) = \frac{e^v - e^{-v}}{e^v + e^{-v}}$, with $latex \varphi(v)$ between `-1` and `1`.
 
-Also, another caracteristic of these functions is they are *differentiable*, while the *unit step* is not, what will prove to be an importante feature still in this post.
+Also, another characteristic of these functions is they are *differentiable*, while the *unit step* is not, what will prove to be an important feature in the future.
 
 So, now, a piece of code. Using the code from the previous post we will build a more general model of a neuron, containing the *logsig* (with `a = 1`) and *tansig* functions:
 
@@ -78,13 +78,13 @@ embat@hal9000:~/desktop/neural$
 
 showing the infinite range of values a neuron with *sigmoid activation function* produces.
 
-Now we know an ANN is a distributed parallel system composed of very simple processing units (*neurons*) interconnected and how these units work, it's time to learn about some topologies. In this post we will talk about the perceptrons, which are *feedforward neural networks*. The nexts will cover more elaborated ones.
+Now we know an ANN is a distributed parallel system composed of very simple processing units (*neurons*) interconnected and how these units work, it's time to learn about some topologies. In this post we will talk about the perceptrons, which are *feed-forward neural networks*. The next will cover more elaborated ones.
 
 ## 2 - Perceptron
 
-The *Perceptron* was the first algorithmically described neural network (and is the simplest). It was invented by <a href="http://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank">*Frank Rosenblatt*</a> in 1958, is a model for learning with a teacher (*supervised learning*) and is used to classify patterns *linearly separable* (patterns that lie on opposite sides of a hyperplane). Basically, the *Perceptron* is a single neuron, that can only classify examples belonging to two *linearly separable* classes. Others configurations can use more than a neuron per layer, but the classes must be all *linearly separable*.
+The *Perceptron* was the first algorithmically described neural network (and is the simplest). It was invented by <a href="http://en.wikipedia.org/wiki/Frank_Rosenblatt" target="_blank">*Frank Rosenblatt*</a> in 1958, is a model for learning with a teacher (*supervised learning*) and is used to classify patterns *linearly separable* (patterns that lie on opposite sides of a hyperplane). Basically, the *Perceptron* is a single neuron that can only classify examples belonging to two *linearly separable* classes. Others configurations can use more than a neuron per layer, but the classes must be all *linearly separable* too.
 
-Depending of the source consulted, the *McCulloch-Pitts* model can use the *treshold function* or the *signal function* to activate the neuron. Previously we adopted the *treshold function* to define the model, but we will loose this definition a little in order to maintain consistency with the sources used (shown in the *references* section at the end of the post). So now, our neuron will use the *signal function*.
+Depending of the source consulted, the *McCulloch-Pitts* model can use the *threshold function* or the *signal function* to activate the neuron. Previously we adopted the *threshold function* to define the model, but we will loose this definition a little in order to maintain consistency with the sources used (shown in the ***References*** section at the end of the post). So now, our neuron will use the *signal function*.
 
 [caption id="attachment_370" align="aligncenter" width="360"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-06.png"><img class=" wp-image-370  " alt="Figure 6 Signal-flow graph of the perceptron." src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-06.png?w=300" width="360" height="174" /></a> <strong>Figure 6</strong> Signal-flow graph of the perceptron.[/caption]
 
@@ -154,7 +154,7 @@ The Perceptron contains only one neuron and an attribute learning rate, so as me
        `bias(n) = bias(n) + lrn_rate*error`
 where
        `error = desired_output - actual_output` and `weights` and `x` are vectors.
-4. If `error_count &gt; 0`:
+4. If `error_count &gt;= 0`:
        `goto` step 2.
 5. Finish
 
@@ -190,7 +190,9 @@ def perceptron(lrn_rate, num_training, num_test, a, b):
     print('error_count:', error_count)
 [/code]
 
-I used the line $latex x_2 = -5x_1 + 2$ to separate the classes. The function `gen_examples()` creates a random number of points that matches only one class, so this way we maintain a similar number of examples for both. The command line to execute this code is `embat@hal9000:~/desktop/neural$ ./test.py perceptron`.
+I used the line $latex x_2 = -5x_1 + 2$ to separate the classes. The function `gen_examples()` creates a random number of points that matches only one class, so this way we maintain a similar number of examples for both. The command line to execute this code is
+
+`embat@hal9000:~/desktop/neural$ ./test.py perceptron`
 
 Remember: the convergence is when, during the training, all examples are correctly classified. It doesn't mean the *net* will never make a mistake when used with different inputs.
 
