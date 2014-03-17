@@ -1,8 +1,10 @@
-### Backpropagation
+Last <a href="http://themenwhostareatcodes.wordpress.com/2014/03/10/neural-networks-in-a-nutshell-3/" title="Neural networks in a nutshell – 3" target="_blank">post</a> we begun to see MultiLayer Perceptron, studying it's topology and learning how batch and online trainings are configured. For the sake of explanation, we will use the online training mode, more easy to understand and usually more effective than the batch training.
+
+## 6 - Backpropagation
 
 The error generation shown in *Fig. 9* is self explanatory:
 
-[caption id="attachment_601" align="aligncenter" width="510"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-09.png"><img class=" wp-image-601  " alt="Figure 9 Signal-flow graph of the error generation." src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-09.png?w=300" width="510" height="333" /></a> <strong>Figure 9</strong> Signal-flow graph of the error generation.[/caption]
+[caption id="attachment_601" align="aligncenter" width="510"]<a href="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-09.png"><img class=" wp-image-601  " alt="Figure 9 Signal-flow graph of the error generation." src="http://themenwhostareatcodes.files.wordpress.com/2014/03/figure-09.png?w=450" width="765" height="333" /></a> <strong>Figure 9</strong> Signal-flow graph of the error generation.[/caption]
 
 The nodes named $latex y_i(n)$ represents the inputs for neuron *j* (*n* is the example number), weighted summed into variable $latex v_j(n)$
 
@@ -32,7 +34,7 @@ Now, for *Eq. 19*, we get
 
 - (24) $latex \frac{\partial y_j(n)}{\partial v_j(n)} = \varphi_j'(v_j(n))$
 
-where the $latex '$ signifies differentiation with respect to the argument. Finally, differentiating *Eq. 18* with respect to $latex w_{ji}$ yields
+where the $latex '$ signifies differentiation with respect to the argument (in this case, $latex v_j(n)$). Finally, differentiating *Eq. 18* with respect to $latex w_{ji}$ yields
 
 - (25) $latex \frac{\partial v_j(n)}{\partial w_{ji}(n)} = y_i(n)$
 
@@ -44,6 +46,13 @@ Then, *Eq. 20* turns into
 
 - (27) $latex \Delta w_{ji}(n) = \eta e_j(n)\varphi_j'(v_j(n))y_i(n) = \eta \delta_j(n)y_i(n)$
 
-where $latex \delta_j(n) = e_j(n)\varphi_j'(v_j(n))$ is the *local gradient*. Reading *Eq. 27* we notice that the *delta rule* shown in the previous sections did not present the differentiation of the activation function ($latex \varphi_j'(v_j(n))$).
+where $latex \delta_j(n) = e_j(n)\varphi_j'(v_j(n))$ is the *local gradient*. Reading *Eq. 27* we notice that the *delta rule* shown in the previous sections did not present the differentiation of the activation function ($latex \varphi_j'(v_j(n))$), mostly because they weren't differentiable, so we needed to adapt the rule. This rule shown in *Eq. 27* is the *generalised delta rule*.
 
 From these last two equations we note that a key factor in the calculation of $latex \Delta w_{ji}(n)$ is the error signal $latex e_j(n)$ at the output of neuron *j*. We can identify two distinct cases, depending of the location of this node. In **case 1**, neuron *j* is in the output layer. This case is simple and we have an idea of how to proceed. In **case 2**, neuron *j* belongs to a *hidden layer*. Even without being touchable, a hidden neuron shares the responsibility of the error presented in the output of the network. This is known as the *credit-assignment problem* or "who is to blame?". So, let's see in more details how to proceed when neuron *j* fits in **case 2**.
+
+## References
+
+- <a href="http://www.amazon.com/Neural-Networks-Learning-Machines-Edition/dp/0131471392" target="_blank">Neural Networks and Learning Machines – 3rd Ed – Haykin, Simon – Pearson</a>.
+- <a href="http://prolland.free.fr/works/ai/docs/neuro-intro.pdf" target="_blank">An introduction to Neural Networks – 8th Ed. – Kröse, Ben; van der Smagt, Patrick – University of Amsterdam</a>.
+
+**Live long and prosper**
