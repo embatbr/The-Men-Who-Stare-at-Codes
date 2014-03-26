@@ -1,0 +1,21 @@
+Those who follow the blog may have notice the absence of new posts. The last one released was the <a href="http://themenwhostareatcodes.wordpress.com/2014/03/10/neural-networks-in-a-nutshell-3/" title="Neural networks in a nutshell – 3" target="_blank">part 3 of neural nets</a>. I still intend to finish the series of neural nets with the post about **Backpropagation** (it's almost done). After done this I will write two more *nutshells* (algorithms and LaTeX) and start doing the **pumpkin series**.
+
+<!--more-->
+
+But "What is this pumpkin series?" you may ask. Well, the nutshells are just a few posts (in my view, from 1 to 5). A glance in a particular subject. The posts about neural networks started when I was studying for my Neural Networks' exam (part of the 5 years Computer Engineering graduation) and, as I believe, the best way to learn is teaching it to others. Or as Einstein's quote **"if you can't explain it simply, you don't understand it well enough"**. That belongs to the **nutshell series**. The pumpkin series will have the duration and, most, intensity of a Coursera's class (but without the videos).
+
+So, my intention here is to bring something new about the universe of Computer Science and relearn some subjects I studied years ago (or didn't learnt very well). Also I believe grad schools here in Brazil are looking to the past (even the public ones, the bests) when they try to make the student absorb more and more content, focusing on the quantity, not the quality. I must say that being the professors of these schools public employees, there's not too much incentive to perform well (a great number do it, however, because they love it).
+
+My focus will primarily be in the neglected basic courses like programming introduction, algorithms and operating systems, but I intend to teach informatics theory (finite state machines, turing machines, compilers and so on). I'll also have the boldness of design how a Computer Science graduation should be.
+
+Finally, how the next posts will look:
+
+- Finish the Neural Networks in a nutshell series with the Backpropagation algorithm.
+- Write the nutshells about LaTex and Algorithms.
+- Some random post about something I will be doing at the moment.
+- Start the pumpkin series with an introductory course of programming (using C, a man's language).
+- Write others pumpkin series (Algorithms will be next).
+
+But the nutshells will not be cast out. I will always try to bring something interest about computer technology.
+
+**Live long and prosper**
