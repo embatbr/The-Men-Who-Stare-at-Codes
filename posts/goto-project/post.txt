@@ -1,0 +1,9 @@
+The <a href="https://github.com/embatbr/goto-project" target="_blank">goto-project</a> is a better *cd'ing*. This project was forked from a <a href="https://github.com/pauloborges/goto" target="_blank">colleague's repository</a> who had the same idea (but was faster and skilful).
+
+The command is very handy for those who uses the console a lot and always need to do a combination of `cd`s and `tab`s to reach the desired directory. The project is composed of two commands: `goto` to do the *cd'ing* and `label` to create a new target.
+
+It's entirely written in Python 3 (the <a href="https://github.com/embatbr/goto-old" target="_blank">old fork</a> is in Python 2).
+
+See it <a href="https://github.com/embatbr/goto-project" target="_blank">here</a>.
+
+**Live long and prosper**
