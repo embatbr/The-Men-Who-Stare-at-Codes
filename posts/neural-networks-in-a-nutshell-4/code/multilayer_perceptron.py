@@ -59,6 +59,41 @@ class MultilayerPerceptron(object):
             output = layer.fire(output)
         return output
 
+    def training(self, training_examples, validation_examples):
+        """The training is made using cross-validation. For each epoch there's a
+        validation, and the MSE is monitored, so the training stops in case it
+        starts to raise.
+        """
+        training_size = len(training_examples)
+        validation_size = len(validation_examples)
+        old_mse_valid = None
+
+        while True:
+            # training
+            mse_train = 0
+            for (input_vector, desired) in training_examples:
+                actual_output = mlp.fire(input_vector)
+                error = sum([(d - y)*(d - y) for (d, y) in
+                             zip(desired_output, actual_output)])
+                mse_train = mse_train + error/2
+
+            mse_train = mse_train/training_size
+
+            # validation
+            mse_valid = 0
+            for (input_vector, desired) in validation_examples:
+                output = self.fire(input_vector)
+                error = desired - output
+                mse_valid = mse_valid + error*error
+            mse_valid = mse_valid/(2 * validation_size)
+
+            if not old_mse_valid:
+                old_mse_valid = mse_valid
+            elif mse_valid < old_mse_valid:
+                old_mse_valid = mse_valid
+            elif mse_valid > old_mse_valid:
+                return (mse_train, mse_valid)
+
     def __str__(self):
         ret = ''
         num_layers = len(self.layers)
@@ -67,6 +102,42 @@ class MultilayerPerceptron(object):
         return ret
 
 
-mlp = MultilayerPerceptron([4, 5, 2], 3, logsig, 0.1)
-print(mlp)
-print('fire:', mlp.fire([1, -1, 1]))
+def load_test(mlp, testing_examples):
+    mse_test = 0
+
+    for (input_vector, desired_output) in testing_examples:
+        actual_output = mlp.fire(input_vector)
+        error = sum([d - y for (d, y) in zip(desired_output, actual_output)])
+        mse_test = mse_test + (error*error)
+
+    testing_size = len(testing_examples)
+    mse_test = mse_test/(2 * testing_size()
+
+    return mse_test
+
+# test
+
+from random import uniform, random
+
+
+# classifies a input similar to the perceptron, with a probability of being wrong
+def classify(y, x, a, b, c, d, prob_wrong=0.2):
+    wrong = random() < prob_wrong
+    classification = 1 # class C1
+
+    if (y < a*x + b) or (y < c*x + d):
+        classification =  -1 # class C2
+
+    if wrong:
+        classification = -classification
+    return classification
+
+def gen_examples(num_examples, a, b, c, d):
+    examples = []
+
+    for _ in range(num_examples):
+        x1 = uniform(-10, 10)
+        x2 = uniform(-10, 10)
+        examples.append(([x1, x2], classify(x1, x2, a, b, c, d)))
+
+    return examples
