@@ -1,0 +1,7 @@
+March 13 of 2014 was a Thursday, and as usual I was going to watch some TV show before my rejuvenating sleep. This time the choice was the fresh released second season of **House of Cards**. For motives of a high power (aka *Netflix' rehab*) I had to download it with buccaneer friends, along with some subtitles (in English *of course*!). But with my internet access suspended due to lack of payment (thanks **42 days Postal strike** - the answer for all shit job's problems) I had to get it while in the grad's lab.
+
+It's normal to get the wrong subtitle, and the correct way to deal with it is downloading the correct one. Without contact to the outer world, I had to improvise. In this moment, pythonic skills comes and within some hours (remember: *!internet -> !google* and *!sleep -> Australopithecus' mind*) the <a href="https://github.com/embatbr/subtitler" target="_blank">subtitler</a> is ready.
+
+As that law created by *Robocop's dad*, it didn't work. The subtitles wasn't wrong just by forwarded time, but totally desynchronized. At least I had some hours of fun. Maybe I should get back to the neural nets, identify when and what the characters are talking and adjust the subtitles that way! Easy as pie...
+
+**Live long and prosper**
