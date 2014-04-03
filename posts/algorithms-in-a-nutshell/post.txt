@@ -2,10 +2,66 @@ Moving to a new *nutshell series* (don't worry, I'll finish the one about neural
 
 <!--more-->
 
-## Definition
+## 0 - Definition
 
 An **algorithm** is a systematic process to resolve a problem. It's a finite sequence of steps well defined to execute a task, like a *cooking recipe*. The term "well defined" seems a little vague, but basically is "defined to the point one can understand precisely each step".
 
 A **data structure** is, like the name says, a structure build to somehow store and represent data. A computer network will be represented as a matrix of adjacency or as nodes in a graph?
 
 Algorithms and data structures live symbiotically. We cannot think about algorithms without a structure to represent the data manipulated by the first. Non sequitur. Also, data structures alone are practically useless.
+
+## 1 - Computational Algorithm
+
+Approaching our environment, IT, a computational algorithm could be defined as a procedure that turns data into information. This subset we are going to study has two basic aspects:
+
+**Correctness:** The method is correct and it is proved using the premises. In other words, every possible input will give a correct output, even for an infinite input set. The proof is mathematically demonstrable.
+
+**Complexity:** Evaluate the efficiency of the algorithm in computational resources, using parameters such as execution time, memory usage and etc. This way we can guarantee our proved corrected algorithm is usable or not.
+
+**<span style="color: #dd2222;">Warning!</span>** A (computational) algorithm is not the same of a program. A program is merely an implemented algorithm running in a machine. The algorithm may be incorrect (fail to proof correctness) but still can be executed. It's just an abstraction defining how a particular problem is solved.
+
+## 2 - Complexity
+
+Although we can define complexity as we wish, in our study complexity is the execution time measured by mathematical expressions to translate algorithm's behaviour in terms of input size. We'll always consider the *worst case*.
+
+Let's see some code. In our example, we'll find the complexity of summing all numbers of an array.
+
+[code language="c"]
+#include <stdio.h>
+
+int main(void)
+{
+    int numbers[] = {1, 2, 3, 4, 5};
+    int sum = 0;
+    int i = 0;
+    int len = sizeof(numbers) / sizeof(int);
+
+    while(i < len)
+    {
+        sum = sum + numbers[i];
+        i++;
+    }
+
+    printf("sum: %d\n", sum);
+    return 0;
+}
+[/code]
+
+Inside the method `main`, all lines above and below the `while` block are executed in a constant time (maybe not `sizeof(numbers)`, but we'll consider it anyway). The loop is executed 5 times, but for an arbitrary length we consider `n`, the input size. So, the execution time is
+
+**exec_time = cte + (t_comp + t_sum + t_assig + t_add)\*n**
+**exec_time = cte + cte2\*n**
+
+and we can see that this algorithm runs with a linear time. So, we replace this function by another, simpler, with the same asymptotic behaviour. For functions with terms of different order we take the higher order to study it. Ex:
+
+**6n³ + 4n + 9 -> n³**
+
+To capture this notion we use a function that ignores additive and multiplicative constants, taking only the higher order term. If the number of steps is **3n**, we say the execution time is **O(n)**. The objective is highlight the curve's dominant term.
+
+
+
+
+
+
+
+
