@@ -1,6 +1,6 @@
 {
     "title" : "Neural networks in a nutshell",
     "slug" : "neural-networks-in-a-nutshell",
-    "category" : ["Learning", "In a nutshell", "Artificial Intelligence"],
+    "category" : "In a nutshell",
     "tags" : ["machine learning", "McCulloch-Pitts", "neural networks", "nutshell", "pattern recognition","Python"]
 }

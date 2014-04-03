@@ -1,6 +1,6 @@
 {
     "title" : "Neural networks in a nutshell - 3",
     "slug" : "neural-networks-in-a-nutshell-3",
-    "category" : ["Learning", "In a nutshell", "Artificial Intelligence"],
+    "category" : "In a nutshell",
     "tags" : ["Adaline", "Delta Rule", "Hebb's Rule", "machine learning", "Multiclass Perceptron", "Multilayer Perceptron", "neural networks", "nutshell", "pattern recognition", "Perceptron", "Python"]
 }

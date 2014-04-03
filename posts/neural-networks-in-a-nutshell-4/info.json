@@ -1,6 +1,6 @@
 {
-    "title" : "Neural networks in a nutshell - 4",
-    "slug" : "neural-networks-in-a-nutshell-4",
-    "category" : ["Learning", "In a nutshell", "Artificial Intelligence"],
+    "title" : "Neural networks in a nutshell - Final",
+    "slug" : "neural-networks-in-a-nutshell-final",
+    "category" : "In a nutshell",
     "tags" : ["Backpropagation", "Delta Rule", "machine learning", "Multilayer Perceptron", "neural networks", "nutshell", "pattern recognition", "Python"]
 }
