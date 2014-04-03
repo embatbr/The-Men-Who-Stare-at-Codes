@@ -1,0 +1,11 @@
+Moving to a new *nutshell series* (don't worry, I'll finish the one about neural nets some day), we are going to see the basic topics of what in many universities is the **Algorithms and Data Structures** course. My references will be slides from the <a href="http://www.cin.ufpe.br/~if672" target="_blank">course in my grad school</a> and one or other link from <a href="https://www.youtube.com/watch?v=iDbyYGrswtg" target="_blank">the internet</a>. Also, the majority of codes (if not all of them) will be written in the **C programming language** (if you don't know what is it, get the fuck out of here you heretic!).
+
+<!--more-->
+
+## Definition
+
+An **algorithm** is a systematic process to resolve a problem. It's a finite sequence of steps well defined to execute a task, like a *cooking recipe*. The term "well defined" seems a little vague, but basically is "defined to the point one can understand precisely each step".
+
+A **data structure** is, like the name says, a structure build to somehow store and represent data. A computer network will be represented as a matrix of adjacency or as nodes in a graph?
+
+Algorithms and data structures live symbiotically. We cannot think about algorithms without a structure to represent the data manipulated by the first. Non sequitur. Also, data structures alone are practically useless.
