@@ -1,6 +1,6 @@
 {
     "title" : "Less nutshell more pumpkin",
     "slug" : "less-nutshell-more-pumpkin",
-    "category" : ["Fast Food"],
+    "category" : "Fast Food",
     "tags" : ["nutshell", "pumpkin", "Computer Science"]
 }
