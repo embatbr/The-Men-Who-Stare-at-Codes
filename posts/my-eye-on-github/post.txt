@@ -1,6 +1,6 @@
 I believe 99% of my readers have a GitHub account and use it (at least to backup). If you're in the 1%, be ashamed and <a href="https://github.com/" target="_blank">get it fixed now!</a>
 
-This post is just to show to where I am looking at GitHub. I'll briefly talk about the repositories in my watch and star lists. My own projects will not be mentioned here. If you want to know some of them <a href="https://github.com/embatbr?tab=repositories" target="_blank">click here</a>. Let's start!
+This post is just to show *to where I am looking at* in GitHub. I'll briefly talk about the repositories in my watch and star lists. My own projects will not be mentioned here. If you want to know some of them <a href="https://github.com/embatbr?tab=repositories" target="_blank">click here</a>. Let's start!
 
 <!--more-->
 
