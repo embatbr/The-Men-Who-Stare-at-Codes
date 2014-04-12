@@ -2,11 +2,11 @@ I believe 99% of my readers have a GitHub account and use it (at least to backup
 
 This post is just to show to where I am looking at GitHub. I'll briefly talk about the repositories in my watch and star lists. My own projects will not be mentioned here. If you want to know some of them <a href="https://github.com/embatbr?tab=repositories" target="_blank">click here</a>. Let's start!
 
+<!--more-->
+
 ### <a href="https://github.com/bitcoin/bitcoin" target="_blank">bitcoin</a>
 
 That's the official repository (or just a mirror - I don't know) of <a href="http://en.wikipedia.org/wiki/Bitcoin" target="_blank">Bitcoin</a>, the revolutionary cryptocurrency created by <a href="http://en.wikipedia.org/wiki/Satoshi_Nakamoto" target="_blank">Satoshi Nakamoto</a>. I still don't use it, but soon this repo will be cloned in hal9000.
-
-<!--more-->
 
 ### <a href="https://github.com/faif/python-patterns" target="_blank">python-patterns</a>
 
