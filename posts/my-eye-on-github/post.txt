@@ -1,0 +1,41 @@
+I believe 99% of my readers have a GitHub account and use it (at least to backup). If you're in the 1%, be ashamed and <a href="https://github.com/" target="_blank">get it fixed now!</a>
+
+This post is just to show to where I am looking at GitHub. I'll briefly talk about the repositories in my watch and star lists. My own projects will not be mentioned here. If you want to know some of them <a href="https://github.com/embatbr?tab=repositories" target="_blank">click here</a>. Let's start!
+
+### <a href="https://github.com/bitcoin/bitcoin" target="_blank">bitcoin</a>
+
+That's the official repository (or just a mirror - I don't know) of <a href="http://en.wikipedia.org/wiki/Bitcoin" target="_blank">Bitcoin</a>, the revolutionary cryptocurrency created by <a href="http://en.wikipedia.org/wiki/Satoshi_Nakamoto" target="_blank">Satoshi Nakamoto</a>. I still don't use it, but soon this repo will be cloned in hal9000.
+
+<!--more-->
+
+### <a href="https://github.com/faif/python-patterns" target="_blank">python-patterns</a>
+
+A collection of design patterns implemented in Python. Valuable to follow and read. Know this patterns is essential to any computer scientist.
+
+### <a href="https://github.com/rupa/z" target="_blank">z</a>
+
+An intelligent *change directory* command. A possible new acquisition. For now I'll keep my <a href="http://themenwhostareatcodes.wordpress.com/2014/03/24/goto-project/" title="goto-project" target="_blank">goto</a>.
+
+### <a href="https://github.com/rg3/youtube-dl" target="_blank">youtube-dl</a>
+
+Very handy. This little program allows one to download videos from Youtube just using the console (remember, friendly screens are for pussies). Better than any website I ever used, with no limitation on size or quality and very fast. I guess this was one of the firsts repository I followed on GitHub.
+
+### <a href="https://github.com/lucasicf/facebook-chat-only" target="_blank">facebook-chat-only</a>
+
+A hider from Facebook's distractions, such as timeline and that side bar no one notice. It shows only the facechat. The author is a colleague at mine.
+
+### <a href="https://github.com/arduino/Arduino" target="_blank">Arduino</a>
+
+The official repository at GitHub of the most known easy-to-use eletronic board.
+
+### <a href="https://github.com/django/django" target="_blank">django</a>
+
+Quentin Tarantino's official repository for the film Django, starred by Jamie Foxx, Christopher Waltz, Leonardo DiCaprio and Samuel L. Jackson. You can clone it and change whatever you want (like the final).
+
+### <a href="https://github.com/torvalds/linux" target="_blank">linux</a>
+
+Last but no less important, the OS we all love and use. But that's just a mirror. If you don't know, Linus opinion about GitHub is that sucks. Patches just via email.
+
+So, that's all folk,
+
+**Live long and prosper**
