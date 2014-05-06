@@ -1,6 +1,4 @@
-{
-    "title" : "About",
-    "content" : "The **Men Who Stare at Codes** is a blog about IT with a technical approach.
+The **Men Who Stare at Codes** is a blog about IT with a technical approach.
 Why this name? Look at <a href=\"http://en.wikipedia.org/wiki/The_Men_Who_Stare_at_Goats\" target=\"_blank\">this</a>.
 
 Every post and other resources are in the blog's <a href=\"https://github.com/embatbr/The-Men-Who-Stare-at-Codes\" target=\"_blank\">repository</a>.
@@ -9,5 +7,4 @@ If you want to contact me, send an email to **embatbr** at **gmail** dot **com**
 
 My social profiles:
 <a href=\"https://github.com/embatbr\" target=\"_blank\">github</a>
-<a href=\"http://www.linkedin.com/in/embat\" target=\"_blank\">LinkedIn</a>"
-}
+<a href=\"http://www.linkedin.com/in/embat\" target=\"_blank\">LinkedIn</a>
