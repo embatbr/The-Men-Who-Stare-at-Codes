@@ -1,0 +1,22 @@
+With more than a month without a significant post, I'm finally back! In this new series (I promise to close the other two soon) we will learn about Bitcoin, the new tech revolution following transistors, integrated circuits, personal computers and <a href="https://www.youtube.com/watch?v=iDbyYGrswtg" target="_blank">the internet</a>. Yes, it's "we" because I'm a noob too. Maybe not as noob as some of you, but I'm no Stephen Hawking. But before dive into Bitcoin, we must define **what is money** first.
+
+## What is money?
+
+In English there's a difference between *money* and *currency*. In my mother language, Portuguese, there's no word to capture the proper meaning of *currency*. But even for English native speakers, this difference is more philosophical. So I'll treat *money* and *currency* as the same thing and call it just *money* most of the time.
+
+<!--more-->
+
+So, money emerged to resolve some common problems with exchanges in primitive societies. How many chickens I must have to change for one of your pigs? Three? Four? But is it alive or dead? And if one of my chickens is a giant? Does it count as two? Maybe we should use the weight. But does a pound of chicken values as much as a pound of pig? Maybe it's necessary to have some kind of table relating the pounds of chickens, pigs, vegetables and so on with each other. Instead of do such a herculean work, let's use some medium of exchange. We can't use rocks, seeds (say this to the Mayans) or anything easy to acquire. Romans used salt as money in the early days of their Republic. That's the origin of the word *salary*. Salt is not as easy to extract as common rocks or fruit seeds. With time, many societies turned to the use of precious metals such as copper, silver and gold as medium of exchange. This feeling is still used today and can observed when gold prices rises during crisis.
+
+Now we have gold (and silver and copper in some cases) used as money. The evolution of this use led to coinage by the rulers. Any coin of gold must have the face of the monarch or it's not valid and no one but he can forge new gold coins. This led to monopoly of money. Of course people always find alternative ways of payment, creating distortions (by the State's eye) between the official and the current money (search for hyperinflation in Argentina nowadays and Brazil in the 80's and early 90's and see the massive use of US dollars by people).
+
+So, accelerating a little, banks! Banks birth happened when some clever folks decided to store people's gold (difficult to carry and easy to be stolen) and emit a certificate proving that Jon of the Snows has a certain amount of gold stored in that particular bank. With time, people started to use this paper representations of gold as gold itself and almost never reclaimed their gold back. The clever bankers decided to emit more certificates than the real amount of gold, lending money and **creating wealth from nothing**. That's how bankers became the most powerful people of the modern age. What could happen if all the clients decide to withdraw their gold deposits? The bank wouldn't have enough gold. To avoid such a terrible thing, the governments started to change the way how money was valued. Slowly the national currencies where not more backed in gold reserves but in "the confidence of people", what is a fancy way to say "we're deep in debt, please support us". And some things that should not have been forgotten, were lost . Fraud became costume. Costume became law. And for more than a hundred years the money has lost most of it's value. Nowadays the bank system has it's foundations in what is called fractional reserve, a law enforced fraud that allows banks to have only 10% of their loan's money as reserve. That's really create money from nothing. And let's not forget the State and it's 24/7 printer.
+
+## Bitcoin or 'how the system should work'
+
+
+
+
+
+
+
