@@ -35,22 +35,13 @@
 \maketitle
 
 
-\begin{abstract}
-\begin{itshape}
-Colocar o abstract no final. Checar se deve ser centralizado.\\
-
-\noindent\textbf{keywords}: colocar keywords no final
-\end{itshape}
-\end{abstract}
-
-
 \section{Introduction}
 
 According to the \textit{Encyclopaedia Britannica}, \textbf{probability theory} is ``a branch of mathematics concerned with the analysis of random phenomena" \cite{enc_brit_prob}. This science is used to measure the likeliness that an event will occur. \textbf{Statistics} is defined by \textit{The Oxford Dictionary of Statistical Terms} as ``the study of the collection, analysis, interpretation, presentation and organization of data" \cite{oxford_stat}.
 
-Usually these two sciences are taught together, due to a strong connection between them. In an election poll, for example, the researchers use the statistics of the voting population (schooling, region and etc.) to know the probability of victory for each candidate, by taking a sample, generalizing it and calculating the error rate. Machine learing algorithms and insurance companies also use probability and statistics as a tool to extract information.
+Despite being separated sciences they usually are taught together. In an election poll, for example, the researchers use the statistics of the voting population (schooling, region and etc.) to know the probability of victory for each candidate, by taking a sample, generalizing it and calculating how similar it is to reality. Machine learing algorithms and insurance companies also use probability and statistics as a tool to extract information.
 
-This first class will approach combinatorial analysis and axioms of probability, mainly using \cite{ross} as reference (chapters 1 and 2). The intention is to be a concise and introductory explanation.
+This first class will approach combinatorial analysis and axioms of probability, mainly using \cite{ross} as reference (chapters 1 and 2). The intention is to be a concise and introductory explanation. To go deeper, the reader must search fuller materials.
 
 
 \section{Combinatorial Analysis}
@@ -71,7 +62,7 @@ A communication system consisting of a transmitter, four antennas (signal repeat
 
 \subsection{The Generalized Basic Principle of Counting}
 
-If $r$ experiments that are to be performed are such that the first one may result in any of $n_1$ possible outcomes; and if, for each of these $n_1$ possible outcomes, there are $n_2$ possible outcomes of the second experiment; and if, for each of the possible outcomes of the first two experiments, there are $n_3$ possible outcomes of the third experiment; and if \dots , then there is a total of $n_1 \cdot n_2 \dotsm n_r = \prod_{i=1}^{r} n_i$ possible outcomes of the $r$ experiments.\\
+If $r$ experiments that are to be performed are such that the first one may result in any of $n_1$ possible outcomes; and if, for each of these $n_1$ possible outcomes, there are $n_2$ possible outcomes of the second experiment; and if, for each of the possible outcomes of the first two experiments, there are $n_3$ possible outcomes of the third experiment; and if \dots , then there is a total of $n_1 \cdot n_2 \dotsm n_r = \prod_{i=1}^{r} n_i$ possible outcomes of the $r$ experiments \cite{ross}.\\
 
 \noindent\textbf{\textit{Example.}} How many different 7-place license plates are possible if the first 3 places are to be occupied by letters and the final 4 by numbers?\\
 \noindent\textbf{\textit{Solution.}} By the generalized basic principle of counting, the answer is $26 \cdot 26 \cdot 26 \cdot 10 \cdot 10 \cdot 10 \cdot 10 = 175,760,000$.
