@@ -1,0 +1,7 @@
+A succint Computer Engineering graduation (working in progress). Each topic is a specific course, with a list of *pdf* files containing the subjects.
+
+## Probability Theory and Statistics
+
+1. *Writing right now*
+
+**Live long and prosper**
