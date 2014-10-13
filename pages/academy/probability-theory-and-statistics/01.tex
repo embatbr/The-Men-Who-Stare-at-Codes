@@ -1,0 +1,109 @@
+% Document number 1 of N, part of a concise course in Probability Theory and
+% Statistics.
+% References:
+% [1] A First Course in Probability - 8th Edition - Sheldon Ross
+
+\documentclass[a4paper,twocolumn]{article}
+
+\usepackage{times}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[a4paper,margin=2cm,columnsep=1cm]{geometry}
+\usepackage{authblk}
+\usepackage{titlesec}
+\usepackage[pdftex]{graphicx}
+\usepackage{mathtools}
+
+
+\begin{document}
+
+\graphicspath{{images/}}
+\renewcommand{\abstractname}{\normalsize\bfseries\filcenter Abstract}
+\titleformat*{\section}{\normalsize\bfseries}
+\titleformat*{\subsection}{\small\bfseries}
+\renewcommand{\refname}{\normalsize\bfseries\filcenter References}
+\renewcommand{\figurename}{\small Figure}
+\newcommand{\figureref}[1]{\textit{Figure \ref{fig:#1}}}
+\newcommand{\equationref}[1]{\textit{Equation \ref{eq:#1}}}
+
+
+\title{\textbf{Probability Theory and Statistics\\
+\small{CLASS 01}}}
+\author{\textit{Eduardo M. B. de A. Tenório}}
+\affil{\small\texttt{embatbr@gmail.com}}
+
+\maketitle
+
+
+\begin{abstract}
+\begin{itshape}
+Colocar o abstract no final. Checar se deve ser centralizado.\\
+
+\noindent\textbf{keywords}: colocar keywords no final
+\end{itshape}
+\end{abstract}
+
+
+\section{Introduction}
+
+According to the \textit{Encyclopaedia Britannica}, \textbf{probability theory} is ``a branch of mathematics concerned with the analysis of random phenomena" \cite{enc_brit_prob}. This science is used to measure the likeliness that an event will occur. \textbf{Statistics} is defined by \textit{The Oxford Dictionary of Statistical Terms} as ``the study of the collection, analysis, interpretation, presentation and organization of data" \cite{oxford_stat}.
+
+Usually these two sciences are taught together, due to a strong connection between them. In an election poll, for example, the researchers use the statistics of the voting population (schooling, region and etc.) to know the probability of victory for each candidate, by taking a sample, generalizing it and calculating the error rate. Machine learing algorithms and insurance companies also use probability and statistics as a tool to extract information.
+
+This first class will approach combinatorial analysis and axioms of probability, mainly using \cite{ross} as reference (chapters 1 and 2). The intention is to be a concise and introductory explanation.
+
+
+\section{Combinatorial Analysis}
+
+A communication system consisting of a transmitter, four antennas (signal repeaters) and a receiver is organized in a straight line. The system is called \textit{functional} as long as two consecutive antennas are not defective. If we have exactly $m$ of $n$ defective antennas, what is the probability that the resulting system will be function? For the particular case where we have $n = 4$ and $m = 2$, there are 6 possible configurations, namely,
+
+\begin{center}
+0 1 1 0\\
+0 1 0 1\\
+1 0 1 0\\
+0 0 1 1\\
+1 0 0 1\\
+1 1 0 0
+\end{center}
+
+\noindent where 1 means \textit{working} and 0, \textit{defective}. As the resulting system is functional in the first 3 arrangements and not functional in the remaining 3, it is clear that the probability of have a functional system is $\frac{3}{6} = \frac{1}{2}$. So, if we generalize it to undefined $m$ and $n$ values, our probability problem reduces to a counting problem. The mathematical theory of counting is formally known as \textit{combinatorial analysis}.
+
+
+\subsection{The Generalized Basic Principle of Counting}
+
+If $r$ experiments that are to be performed are such that the first one may result in any of $n_1$ possible outcomes; and if, for each of these $n_1$ possible outcomes, there are $n_2$ possible outcomes of the second experiment; and if, for each of the possible outcomes of the first two experiments, there are $n_3$ possible outcomes of the third experiment; and if \dots , then there is a total of $n_1 \cdot n_2 \dotsm n_r = \prod_{i=1}^{r} n_i$ possible outcomes of the $r$ experiments.\\
+
+\noindent\textbf{\textit{Example.}} How many different 7-place license plates are possible if the first 3 places are to be occupied by letters and the final 4 by numbers?\\
+\noindent\textbf{\textit{Solution.}} By the generalized basic principle of counting, the answer is $26 \cdot 26 \cdot 26 \cdot 10 \cdot 10 \cdot 10 \cdot 10 = 175,760,000$.
+
+
+
+\subsection{Permutations}
+\subsection{Combinations}
+\subsection{Multinomial Coefficients}
+\subsection{The Number of Integer Solutions of Equations}
+
+
+\section{Axioms of Probability}
+
+
+\begin{thebibliography}{9}
+    \bibitem{enc_brit_prob}
+         ``Probability theory, Encyclopaedia Britannica".
+         Britannica.com.
+         Retrieved 2014-10-11
+
+    \bibitem{oxford_stat}
+        Dodge, Y. (2006)
+        \textit{The Oxford Dictionary of Statistical Terms}, OUP.
+        ISBN 0-19-920613-9
+
+    \bibitem{ross}
+        Ross, Sheldon M.,
+        2010,
+        ``A First Course in Probability", 8th ed.,
+        Prentice Hall
+\end{thebibliography}
+
+
+\end{document}
