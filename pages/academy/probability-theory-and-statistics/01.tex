@@ -27,8 +27,7 @@
 \newcommand{\equationref}[1]{\textit{Equation \ref{eq:#1}}}
 
 
-\title{\textbf{Probability Theory and Statistics\\
-\small{CLASS 01}}}
+\title{\textbf{Probability Theory and Statistics}}
 \author{\textit{Eduardo M. B. de A. Tenório}}
 \affil{\small\texttt{embatbr@gmail.com}}
 
@@ -39,9 +38,9 @@
 
 According to the \textit{Encyclopaedia Britannica}, \textbf{probability theory} is ``a branch of mathematics concerned with the analysis of random phenomena" \cite{enc_brit_prob}. This science is used to measure the likeliness that an event will occur. \textbf{Statistics} is defined by \textit{The Oxford Dictionary of Statistical Terms} as ``the study of the collection, analysis, interpretation, presentation and organization of data" \cite{oxford_stat}.
 
-A good example of probability and statistics as a tool is in election polls. Researchers use the statistics of the voting population (schooling, region and etc.) to know the probability of victory for each candidate, by taking a sample, generalizing it and calculating how similar it is to reality. Machine learing algorithms and insurance companies are also good examples of probability and statistics used to extract information.
+A good example of probability and statistics as a tool is in election polls: researchers use the statistics of the voting population (schooling, region and etc.) to know the probability of victory for each candidate, by taking a sample, generalizing it and calculating the similarity to reality. Machine learning algorithms and insurance policies are also good examples of probability and statistics used to extract information.
 
-This first class will approach combinatorial analysis and axioms of probability, mainly using \cite{ross} as reference (chapters 1 and 2). The intention is to be a concise and introductory explanation. If the reader desires to go deeper, further readings are recommended.
+This document is a working in progress, where I intend to present the basic topics of Probability Theory and Statistics. So, it will change with time. The main reference, will be the book \textbf{A First Course in Probability - 8th ed.} \cite{ross}, but probably other materials will be used. If the reader desires to go deeper, further readings are recommended.
 
 
 \section{Combinatorial Analysis}
@@ -57,7 +56,7 @@ A communication system consisting of a transmitter, four antennas (signal repeat
 1 1 0 0
 \end{center}
 
-\noindent where 1 means \textit{working} and 0, \textit{defective}. As the resulting system is functional in the first 3 arrangements and not functional in the remaining 3, it is clear that the probability of have a functional system is $\frac{3}{6} = \frac{1}{2}$. So, if we generalize it to undefined $m$ and $n$ values, our probability problem reduces to a counting problem. The mathematical theory of counting is formally known as \textit{combinatorial analysis}.
+\noindent where 1 means \textit{working} and 0, \textit{defective}. As the resulting system is functional in the first 3 arrangements and not functional in the remaining 3, it is clear that the probability of have a functional system is $\frac{3}{6} = \frac{1}{2}$. So, if we generalize it to undefined $m$ and $n$ values, our probability problem reduces to a counting problem. The mathematical theory of counting is formally known as \textbf{combinatorial analysis}.
 
 
 \subsection{The Generalized Basic Principle of Counting}
@@ -70,30 +69,46 @@ If $r$ experiments that are to be performed are such that the first one may resu
 
 \subsection{Permutations}
 
-In mathematics, \textbf{permutation} means ``rearranging the elements of a set in a sequence". The number of possible sequences is a function of the set's size. Given a set of $n$ elements, we can \textit{permute} it's elements according to the formula:
+In mathematics, \textbf{permutation} means ``rearranging the elements of a set in a sequence", and the number of possible sequences is a function of the set's size. Given a set of $n$ elements, we can \textit{permute} it's elements according to the formula:
 
 \begin{center}
 $P_n = n(n - 1)(n - 2) \dotsm 3 \cdot 2 \cdot 1 = n!$
 \end{center}
 
-As we are arranging the $n$ elements in $n$ positions, the first place can be chosen from $n$ possibilities, the second from $(n - 1)$ and so on, until the last with just one remaining option. We use the $!$ after a arbitrary number $n$ to denote the \textbf{factorial} of $n$.\\
+\noindent As we are arranging the $n$ elements in $n$ positions, the first place can be chosen from $n$ possibilities, the second from $(n - 1)$ and so on, until the last with just one remaining option. We use the $!$ after a arbitrary number $n$ to denote the \textbf{factorial} of $n$.\\
 
 \noindent\textbf{\textit{Example.}} In a group of 6 men and 4 women, how many possible arrangments can we have if \textbf{\textit{(a)}} put all in the same group, and \textbf{\textit{(b)}} divide by sex?\\
 \noindent\textbf{\textit{Solution.}} \textbf{\textit{(a)}} We have 10 people to rearrange into 10 positions, so we just do $P_{10} = 10! = 3,628,800$.\\
 \textbf{\textit{(b)}} Using the \textbf{basic principle} we have two different experiments (rearranging men and rearranging women). So, our result is just $P_6 P_4 = 6!4! = 720 \cdot 24 = 17,280$ possibilities.
 
-If our permutation do not preserve order (called \textbf{circular permutation}), the formulta is no longer $n!$ (simple permutation), but $(n - 1)!$. Permuting $abc$ circularly, the results $abc$, $cab$ and $bca$ are equal. The same to $acb$, $bac$ and $cba$. For $n$ elements, as the first $n$ possibilities of the previous ``first position" are the same, we do $\frac{P_n}{n} = \frac{n!}{n} = (n - 1)!$.
+If our permutation do not preserve order (called \textbf{circular permutation}), the formulta is no longer $n!$ (simple permutation), but $(n - 1)!$. For example, if we permute $abc$ circularly, the results $abc$, $cab$ and $bca$ are equal. The same to $acb$, $bac$ and $cba$. For $n$ elements, as the first $n$ possibilities of the previous ``first position" are the same, we do
+
+\begin{center}
+$Pc_n = \frac{P_n}{n} = \frac{n!}{n} = (n - 1)!$.
+\end{center}
 
 
 \subsection{$k$-permutations of $n$}
 
+A permutation of $n$ elements in $k$ positions is also called an ``arrangement of $n$, $k$ to $k$" and can be symbolized by $A_{n,k}$. Given the simple permutation shown before ($P_n = n!$), if we permute the $n$ elements in $k$ positions, this means that the first position has $n$ possible values, the second has $(n -1)$ possibilities and so on, until the last position having $(n - k)$ possibilities.\\
+
+\noindent\textbf{\textit{Example.}} We have 7 athletes in a competition and want to rank them in the three best positions: gold, silver and bronze medals.\\
+\noindent\textbf{\textit{Solution.}} The gold medal can be won by all 7 athletes. Ranked the first place, the second has 6 options and the third, 5. This means that $A_{7,3} = 7 \cdot 6 \cdot 5 = 210$.\\
+
+\noindent So, we can generalize it, think a little and have the simple formula $A_{n,k} = \frac{n!}{(n - k)!}$ for an arrangement.
+
 
 \subsection{Combinations}
-\subsection{Multinomial Coefficients}
-\subsection{The Number of Integer Solutions of Equations}
 
+If we join the ideas of a circular permutation (no order) and $k$-permutation of $n$ we develop a new interesting idea. In the previous example (the competition), chosen the first three places, we can permute them in $3! = 6$ ways. If we abolish the different medals and just give a ``well done" medal to all three, the six different configurations involving these particular athletes are the same and we can count them as just one. The same to the other 209 configurations. So, now we have $\frac{A_{7,3}}{6} = 35$. This is named \textbf{combination},
 
-\section{Axioms of Probability}
+\begin{center}
+$C_{n,k} = \binom{n}{k} = \frac{A_{n,k}}{k!} = \frac{n!}{k!(n - k)!}$.
+\end{center}
+
+\noindent and is read ``combination of $n$, $k$ to $k$". Remember that $r \leq n$ always (but I shouldn't need to say that).
+
+Now you have the tools to answer the question from the beginning of this section (I will skip this one because I am lazy and already know it) and go deeper into this subject, if you desire. Try to read something about \textbf{binomial theorem} and to generalize the combinatorial analysis to \textbf{multinomial coefficients}.
 
 
 \begin{thebibliography}{9}
