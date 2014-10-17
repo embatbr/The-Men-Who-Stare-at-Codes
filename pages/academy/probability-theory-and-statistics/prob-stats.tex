@@ -27,9 +27,19 @@
 \newcommand{\equationref}[1]{\textit{Equation \ref{eq:#1}}}
 
 
-\title{\textbf{Probability Theory and Statistics}}
-\author{\textit{Eduardo M. B. de A. Tenório}}
-\affil{\small\texttt{embatbr@gmail.com}}
+\title{
+    \textbf{Probability Theory and Statistics}\\
+    \textit{\Large A Very Concise Approach}
+}
+\author{
+    \textbf{Eduardo M. B. de A. Tenório}\\
+    \small\texttt{embatbr@gmail.com}
+}
+\affil{
+    \large{The Men Who Stare at Codes}\\
+    \small\texttt{themenwhostareatcodes.wordpress.com}
+}
+\date{\today}
 
 \maketitle
 
@@ -79,13 +89,15 @@ $P_n = n(n - 1)(n - 2) \dotsm 3 \cdot 2 \cdot 1 = n!$
 
 \noindent\textbf{\textit{Example.}} In a group of 6 men and 4 women, how many possible arrangments can we have if \textbf{\textit{(a)}} put all in the same group, and \textbf{\textit{(b)}} divide by sex?\\
 \noindent\textbf{\textit{Solution.}} \textbf{\textit{(a)}} We have 10 people to rearrange into 10 positions, so we just do $P_{10} = 10! = 3,628,800$.\\
-\textbf{\textit{(b)}} Using the \textbf{basic principle} we have two different experiments (rearranging men and rearranging women). So, our result is just $P_6 P_4 = 6!4! = 720 \cdot 24 = 17,280$ possibilities.
+\textbf{\textit{(b)}} Using the \textbf{basic principle} we have two different experiments (rearranging men and rearranging women). So, our result is just $P_6 P_4 = 6!4! = 720 \cdot 24 = 17,280$ possibilities.\\
 
-If our permutation do not preserve order (called \textbf{circular permutation}), the formulta is no longer $n!$ (simple permutation), but $(n - 1)!$. For example, if we permute $abc$ circularly, the results $abc$, $cab$ and $bca$ are equal. The same to $acb$, $bac$ and $cba$. For $n$ elements, as the first $n$ possibilities of the previous ``first position" are the same, we do
+If our permutation do not preserve beginning and end (called \textbf{circular permutation}), the formula is no longer $n!$ (simple permutation), but $(n - 1)!$. For example, if we permute $abc$ circularly, the results $abc$, $cab$ and $bca$ are equal. The same to $acb$, $bac$ and $cba$. For $n$ elements, as the first $n$ possibilities of the previous ``first position" are the same, we do
 
 \begin{center}
-$Pc_n = \frac{P_n}{n} = \frac{n!}{n} = (n - 1)!$.
+$Pc_n = \frac{P_n}{n} = \frac{n!}{n} = (n - 1)!$
 \end{center}
+
+\noindent\textbf{Remember:} the order is still importante, but know the line does not have a beginning and an end, but a circular organization.
 
 
 \subsection{$k$-permutations of $n$}
@@ -103,7 +115,7 @@ A permutation of $n$ elements in $k$ positions is also called an ``arrangement o
 If we join the ideas of a circular permutation (no order) and $k$-permutation of $n$ we develop a new interesting idea. In the previous example (the competition), chosen the first three places, we can permute them in $3! = 6$ ways. If we abolish the different medals and just give a ``well done" medal to all three, the six different configurations involving these particular athletes are the same and we can count them as just one. The same to the other 209 configurations. So, now we have $\frac{A_{7,3}}{6} = 35$. This is named \textbf{combination},
 
 \begin{center}
-$C_{n,k} = \binom{n}{k} = \frac{A_{n,k}}{k!} = \frac{n!}{k!(n - k)!}$.
+$C_{n,k} = \binom{n}{k} = \frac{A_{n,k}}{k!} = \frac{n!}{k!(n - k)!}$
 \end{center}
 
 \noindent and is read ``combination of $n$, $k$ to $k$". Remember that $r \leq n$ always (but I shouldn't need to say that).
