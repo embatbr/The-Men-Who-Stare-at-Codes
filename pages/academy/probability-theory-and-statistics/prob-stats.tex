@@ -48,9 +48,9 @@
 
 According to the \textit{Encyclopaedia Britannica}, \textbf{probability theory} is ``a branch of mathematics concerned with the analysis of random phenomena" \cite{enc_brit_prob}. This science is used to measure the likeliness that an event will occur. \textbf{Statistics} is defined by \textit{The Oxford Dictionary of Statistical Terms} as ``the study of the collection, analysis, interpretation, presentation and organization of data" \cite{oxford_stat}.
 
-A good example of probability and statistics as a tool is in election polls: researchers use the statistics of the voting population (schooling, region and etc.) to know the probability of victory for each candidate, by taking a sample, generalizing it and calculating the similarity to reality. Machine learning algorithms and insurance policies are also good examples of probability and statistics used to extract information.
+A good example of probability and statistics as a tool is in election polls: researchers use the statistics of the voting population (schooling, region and etc.) to know the probability of victory for each candidate, by taking a sample, generalizing it and calculating the similarity to reality. Machine learning algorithms and insurance policies are also good examples of probability and statistics used to extract valuable information.
 
-This document is a working in progress, where I intend to present the basic topics of Probability Theory and Statistics. So, it will change with time. The main reference, will be the book \textbf{A First Course in Probability - 8th ed.} \cite{ross}, but probably other materials will be used. If the reader desires to go deeper, further readings are recommended.
+This document is a working in progress, where I intend to present the basic topics of Probability Theory and Statistics, so it will change with time. The main reference will be the book \textbf{A First Course in Probability - 8th ed.} \cite{ross_2010}, but probably other materials will be used. If the reader desires to go deeper, further readings are recommended.
 
 
 \section{Combinatorial Analysis}
@@ -66,12 +66,12 @@ A communication system consisting of a transmitter, four antennas (signal repeat
 1 1 0 0
 \end{center}
 
-\noindent where 1 means \textit{working} and 0, \textit{defective}. As the resulting system is functional in the first 3 arrangements and not functional in the remaining 3, it is clear that the probability of have a functional system is $\frac{3}{6} = \frac{1}{2}$. So, if we generalize it to undefined $m$ and $n$ values, our probability problem reduces to a counting problem. The mathematical theory of counting is formally known as \textbf{combinatorial analysis}.
+\noindent where 1 means \textit{working} and 0, \textit{defective}. As the resulting system is functional in the first 3 arrangements and not functional in the remaining 3, it is clear that the probability of having a functional system is $\frac{3}{6} = \frac{1}{2}$. So, if we generalize it to undefined $m$ and $n$ values, our probability problem reduces to a counting problem. The mathematical theory of counting is formally known as \textbf{combinatorial analysis}.
 
 
 \subsection{The Generalized Basic Principle of Counting}
 
-If $r$ experiments that are to be performed are such that the first one may result in any of $n_1$ possible outcomes; and if, for each of these $n_1$ possible outcomes, there are $n_2$ possible outcomes of the second experiment; and if, for each of the possible outcomes of the first two experiments, there are $n_3$ possible outcomes of the third experiment; and if \dots , then there is a total of $n_1 n_2 \dotsm n_r = \prod_{i=1}^{r} n_i$ possible outcomes of the $r$ experiments \cite{ross}.\\
+If $r$ experiments that are to be performed are such that the first one may result in any of $n_1$ possible outcomes; and if, for each of these $n_1$ possible outcomes, there are $n_2$ possible outcomes of the second experiment; and if, for each of the possible outcomes of the first two experiments, there are $n_3$ possible outcomes of the third experiment; and if \dots , then there is a total of $n_1 n_2 \dotsm n_r = \prod_{i=1}^{r} n_i$ possible outcomes of the $r$ experiments \cite{ross_2010}.\\
 
 \noindent\textbf{\textit{Example.}} How many different 7-place license plates are possible if the first 3 places are to be occupied by letters and the final 4 by numbers?\\
 \noindent\textbf{\textit{Solution.}} By the generalized basic principle of counting, the answer is $26 \cdot 26 \cdot 26 \cdot 10 \cdot 10 \cdot 10 \cdot 10 = 175,760,000$.
@@ -102,9 +102,9 @@ $Pc_n = \frac{P_n}{n} = \frac{n!}{n} = (n - 1)!$
 
 \subsection{$k$-permutations of $n$}
 
-A permutation of $n$ elements in $k$ positions is also called an ``arrangement of $n$, $k$ to $k$" and can be symbolized by $A_{n,k}$. Given the simple permutation shown before ($P_n = n!$), if we permute the $n$ elements in $k$ positions, this means that the first position has $n$ possible values, the second has $(n -1)$ possibilities and so on, until the last position having $(n - k)$ possibilities.\\
+A permutation of $n$ elements in $k$ positions is also called an ``arrangement of $n$, $k$ to $k$" and can be symbolized by $A_{n,k}$. Given the simple permutation shown before ($P_n = n!$), if we permute the $n$ elements in $k$ positions, this means that the first position has $n$ possible values, the second has $(n -1)$ possibilities and so on, until the last position having $(n - k + 1)$ possibilities.\\
 
-\noindent\textbf{\textit{Example.}} We have 7 athletes in a competition and want to rank them in the three best positions: gold, silver and bronze medals.\\
+\noindent\textbf{\textit{Example.}} We have 7 athletes in a competition and want to rank them in the three best positions: gold, silver and bronze medals. How many possibilities there is?\\
 \noindent\textbf{\textit{Solution.}} The gold medal can be won by all 7 athletes. Ranked the first place, the second has 6 options and the third, 5. This means that $A_{7,3} = 7 \cdot 6 \cdot 5 = 210$.\\
 
 \noindent So, we can generalize it, think a little and have the simple formula $A_{n,k} = \frac{n!}{(n - k)!}$ for an arrangement.
@@ -112,7 +112,7 @@ A permutation of $n$ elements in $k$ positions is also called an ``arrangement o
 
 \subsection{Combinations}
 
-If we join the ideas of a circular permutation (no order) and $k$-permutation of $n$ we develop a new interesting idea. In the previous example (the competition), chosen the first three places, we can permute them in $3! = 6$ ways. If we abolish the different medals and just give a ``well done" medal to all three, the six different configurations involving these particular athletes are the same and we can count them as just one. The same to the other 209 configurations. So, now we have $\frac{A_{7,3}}{6} = 35$. This is named \textbf{combination},
+If we join the ideas of a circular permutation and arrangement, we develop a new interesting one. In the previous example (the competition), chosen the first three places, we can permute them in $3! = 6$ ways. If we abolish the different medals and just give a ``well done" medal to all three, the six different configurations involving these particular athletes are the same and we can count them as just one. The same to the other 209 configurations. So, now we have $\frac{A_{7,3}}{6} = 35$. This is named a \textbf{combination},
 
 \begin{center}
 $C_{n,k} = \binom{n}{k} = \frac{A_{n,k}}{k!} = \frac{n!}{k!(n - k)!}$
@@ -120,7 +120,7 @@ $C_{n,k} = \binom{n}{k} = \frac{A_{n,k}}{k!} = \frac{n!}{k!(n - k)!}$
 
 \noindent and is read ``combination of $n$, $k$ to $k$". Remember that $r \leq n$ always (but I shouldn't need to say that).
 
-Now you have the tools to answer the question from the beginning of this section (I will skip this one because I am lazy and already know it) and go deeper into this subject, if you desire. Try to read something about \textbf{binomial theorem} and to generalize the combinatorial analysis to \textbf{multinomial coefficients}.
+Now you have the tools to answer the question from the beginning of this section (answer in page 7 from \cite{ross_2010}) and go deeper into this subject, if you desire. Try to read something about \textbf{binomial theorem} and to generalize the combinatorial analysis to \textbf{multinomial coefficients}.
 
 
 \begin{thebibliography}{9}
@@ -134,7 +134,7 @@ Now you have the tools to answer the question from the beginning of this section
         \textit{The Oxford Dictionary of Statistical Terms}, OUP.
         ISBN 0-19-920613-9
 
-    \bibitem{ross}
+    \bibitem{ross_2010}
         Ross, Sheldon M.,
         2010,
         ``A First Course in Probability", 8th ed.,
