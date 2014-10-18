@@ -120,7 +120,25 @@ $C_{n,k} = \binom{n}{k} = \frac{A_{n,k}}{k!} = \frac{n!}{k!(n - k)!}$
 
 \noindent and is read ``combination of $n$, $k$ to $k$". Remember that $r \leq n$ always (but I shouldn't need to say that).
 
-Now you have the tools to answer the question from the beginning of this section (answer in page 7 from \cite{ross_2010}) and go deeper into this subject, if you desire. Try to read something about \textbf{binomial theorem} and to generalize the combinatorial analysis to \textbf{multinomial coefficients}.
+Now you have the tools to answer the question from the beginning of this section and go deeper into this subject, if you desire. After see the solution, try to read about \textbf{binomial theorem} and to generalize the combinatorial analysis to \textbf{multinomial coefficients}.
+
+
+\subsection{Answering The Problem}
+
+Let us go back to the antennas problem from the beginning of the section. Given a number of antennas $n = 4$, with $m = 2$ defectives, we name the working ones as $1$ and the defective one as $0$. Let us consider two $0$s and two $1$s, being the set of possibilities $S = \{0_1, 0_2, 1_1, 1_2\}$, just to ilustrative purposes. The configurations are:
+
+\begin{center}
+$0_1 0_2 1_1 1_2 = 0 0 1 1$\\
+$0_1 1_1 0_2 1_2 = 0 1 0 1$\\
+$0_1 1_1 1_2 0_2 = 0 1 1 0$\\
+$1_1 0_1 0_2 1_2 = 1 0 0 1$\\
+$1_1 0_1 1_2 0_2 = 1 0 1 0$\\
+$1_1 1_2 0_1 0_2 = 1 1 0 0$\\
+\end{center}
+
+\noindent Take notice that as there is no difference between the $0$s and no difference between the $1$s, the index in each number is irrelevant. So, we are back to the configurations from the beginning of this section and realized we are talking about a combination.
+
+Now, generalizing, we have $n$ antennas, with $m$ defectives. This means we can line up $n - m$ functional antennas, with one or none defective antenna between two functional (and also between the transmitter and the receiver). Than, we have $n - m + 1$ possible positions to fill these spaces and must select $m$ of them. This is $C_{n - m + 1,m} = \binom{n - m + 1}{m}$. Fill it with $n = 4$ and $m = 2$ and we find the same answer.
 
 
 \begin{thebibliography}{9}
