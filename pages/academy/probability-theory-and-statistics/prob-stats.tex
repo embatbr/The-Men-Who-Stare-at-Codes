@@ -13,6 +13,7 @@
 \usepackage{titlesec}
 \usepackage[pdftex]{graphicx}
 \usepackage{mathtools}
+\usepackage{amssymb}
 
 
 \begin{document}
@@ -25,6 +26,9 @@
 \renewcommand{\figurename}{\small Figure}
 \newcommand{\figureref}[1]{\textit{Figure \ref{fig:#1}}}
 \newcommand{\equationref}[1]{\textit{Equation \ref{eq:#1}}}
+\newcommand{\Lim}{\lim\limits}
+\newcommand{\Bigcup}{\bigcup\limits}
+\newcommand{\Bigsum}{\sum\limits}
 
 
 \title{
@@ -87,9 +91,10 @@ If $r$ experiments that are to be performed are such that the first one may resu
 
 In mathematics, \textbf{permutation} means ``rearranging the elements of a set in a sequence", and the number of possible sequences is a function of the set's size. Given a set of $n$ elements, we can \textit{permute} it's elements according to the formula:
 
-\begin{center}
-$P_n = n(n - 1)(n - 2) \dotsm 3 \cdot 2 \cdot 1 = n!$
-\end{center}
+\begin{equation}
+\label{eq:permutation}
+P_n = n(n - 1)(n - 2) \dotsm 3 \cdot 2 \cdot 1 = n!
+\end{equation}
 
 \noindent As we are arranging the $n$ elements in $n$ positions, the first place can be chosen from $n$ possibilities, the second from $(n - 1)$ and so on, until the last with just one remaining option. We use the $!$ after a arbitrary number $n$ to denote the \textbf{factorial} of $n$.
 
@@ -103,9 +108,10 @@ $P_n = n(n - 1)(n - 2) \dotsm 3 \cdot 2 \cdot 1 = n!$
 
 If our permutation do not preserve beginning and end (called \textbf{circular permutation}), the formula is no longer $n!$ (simple permutation), but $(n - 1)!$. For example, if we permute $abc$ circularly, the results $abc$, $cab$ and $bca$ are equal. The same to $acb$, $bac$ and $cba$. For $n$ elements, as the first $n$ possibilities of the previous ``first position" are the same, we do
 
-\begin{center}
-$Pc_n = \frac{P_n}{n} = \frac{n!}{n} = (n - 1)!$
-\end{center}
+\begin{equation}
+\label{eq:circ-permutation}
+Pc_n = \frac{P_n}{n} = \frac{n!}{n} = (n - 1)!
+\end{equation}
 
 \noindent\textbf{Remember:} the order is still importante, but now the line does not have a beginning and an end, but a circular organization.
 
@@ -130,9 +136,10 @@ A permutation of $n$ elements in $k$ positions is also called an ``arrangement o
 
 If we join the ideas of a circular permutation and arrangement, we develop a new interesting one. In the previous example (the competition), chosen the first three places, we can permute them in $3! = 6$ ways. If we abolish the different medals and just give a ``well done" medal to all three, the six different configurations involving these particular athletes are the same and we can count them as just one. The same to the other 209 configurations. So, now we have $\frac{A_{7,3}}{6} = 35$. This is called \textbf{combination},
 
-\begin{center}
-$C_{n,k} = \binom{n}{k} = \frac{A_{n,k}}{k!} = \frac{n!}{k!(n - k)!}$
-\end{center}
+\begin{equation}
+\label{eq:combination}
+C_{n,k} = \binom{n}{k} = \frac{A_{n,k}}{k!} = \frac{n!}{k!(n - k)!}
+\end{equation}
 
 \noindent and is read ``combination of $n$, $k$ to $k$". Remember that $r \leq n$ always (but I shouldn't need to say that).
 
@@ -164,8 +171,9 @@ Now, generalizing, we have $n$ antennas, with $m$ defectives. This means we can 
 This section is where we really start to talk about probability theory. The first subsection discusses sample spaces and events, basically \textit{set theory} with a wider vision. So, althought I will explain many basic concepts, it is interesting that you have a background in set theory.
 
 \subsection{Sample Space and Events}
+\label{subsec:sample}
 
-In probability theory we deal with problems of uncertainty, with experiments we cannot guarantee the outcome. However, we know the set of possible outcomes, as \textit{head} or \textit{tail} for a coin tossing, for an experiment. When flipping a coin we cannot see a ``pair number" or ``male/female". This set of possible outcomes for an experiment is called \textbf{sample space} and is denoted $S$. Any subset of $S$ is known as an \textbf{event}. The following examples will clarify these concepts:
+In probability theory we deal with problems of uncertainty, with experiments we cannot guarantee the outcome. However, we know the set of possible outcomes for an experiment, as \textit{head} or \textit{tail} for a coin tossing (not an ``even number" or ``male/female"). This set of possible outcomes for an experiment is called \textbf{sample space} and is denoted $S$. Any subset of $S$ is known as an \textbf{event}. The following examples will clarify these concepts:
 
 \begin{enumerate}
     \item If the experiment consists of flipping two coins, then the sample space consists of the following four points:
@@ -186,6 +194,45 @@ In probability theory we deal with problems of uncertainty, with experiments we 
     $A = \{1,6),(2,5),(3,4),(4,3),(5,2),(6,1)\}$ and $B = \{(3,1),(3,2),(3,3),(3,4),(3,5),(3,6)\}$
     \end{center}
 \end{enumerate}
+
+Similar to what (I believe) you learned in set theory, events can be \textit{unified}, \textit{intersected}, \textit{complemented} and etc. As this is piece of cake, any doubt can be answered with a quick consultation to a regular book about set theory.
+
+
+\subsection{Axioms of Probability}
+\label{subsec:axioms}
+
+When we say an event $E$ has a probability $P(E) = 30\%$, that doesn't mean we will have 30 occurrences of $E$ for each 100 repetitions of the experiment, but that when the number is really big, the outcomes of $E$ approach this percentage. The leap here is named \textit{relative frequency}, that is the ratio
+
+\begin{equation}
+\label{eq:rel-freq}
+f(E) = \frac{n(E)}{n}
+\end{equation}
+
+\noindent where $n$ is the number of outcomes and $n(E)$ is the number of occurrences of the event $E$. For a small $n$, let us say 10, $n(E)$ hardly is 3. But when $n \to \infty$, $f(E) \to P(E)$, so
+
+\begin{equation}
+\label{eq:probability}
+P(E) = \Lim_{n \to \infty} \frac{n(E)}{n}
+\end{equation}
+
+Now, let us do it properly, showing the \textbf{axioms of probability}. They are few and they are simple. Just a glance and you will think ``of course, this is so obvious".
+
+\begin{description}
+    \item[Axiom 1] $0 \leq P(E) \leq 1$
+    \item[Axiom 2] $P(S) = 1$
+    \item[Axiom 3] $P(\Bigcup_{i=1}^{\infty} E_i) = \Bigsum_{i=1}^{\infty} P(E_i)$, for $E_iE_j = \varnothing$ when $i \neq j$
+\end{description}
+
+\noindent Notice that from Axiom 1 an event cannot have a probability greater than the probability of $S$ (Axiom 2). If $P(E) = P(S) \to E = S$. From Axiom 3 we can state that $P(\varnothing) = 0$ (how would you prove that?).
+
+\bigskip
+
+\noindent\textbf{\textit{Example.}} If we roll an honest die (all sides are equally probable) we have $P(\{1\}) = P(\{2\}) = P(\{3\}) = P(\{4\}) = P(\{5\}) = P(\{6\}) = \frac{1}{6}$. From Axiom 3 $P(\{1,2,3\}) = P(\{1\}) + P(\{2\}) + P(\{3\}) = \frac{1}{2}$.
+
+\bigskip
+
+Hopefully, the reader will agree that the axioms are natural and in accordance with our intuitive concept of probability as related to chance and randomness. Furthermore, using these axioms we shall be able to prove that if an experiment is repeated over and over again, then, with probability 1, the proportion of time during which any specific event $E$ occurs will equal $P(E)$ \cite{ross_2010}.
+
 
 
 \begin{thebibliography}{9}
