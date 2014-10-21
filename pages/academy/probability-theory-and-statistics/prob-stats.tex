@@ -44,7 +44,8 @@
 \maketitle
 
 
-\section{Introduction}
+\section*{Introduction}
+\label{sec:intro}
 
 According to the \textit{Encyclopaedia Britannica}, \textbf{probability theory} is ``a branch of mathematics concerned with the analysis of random phenomena" \cite{enc_brit_prob}. This science is used to measure the likeliness that an event will occur. \textbf{Statistics} is defined by \textit{The Oxford Dictionary of Statistical Terms} as ``the study of the collection, analysis, interpretation, presentation and organization of data" \cite{oxford_stat}.
 
@@ -54,6 +55,7 @@ This document is a working in progress, where I intend to present the basic topi
 
 
 \section{Combinatorial Analysis}
+\label{sec:comb-anal}   % or "combo-anal" hue hue br
 
 A communication system consisting of a transmitter, four antennas (signal repeaters) and a receiver is organized in a straight line. The system is called \textit{functional} as long as two consecutive antennas are not defective. If we have exactly $m$ of $n$ defective antennas, what is the probability that the resulting system will be functional? For the particular case where we have $n = 4$ and $m = 2$, there are 6 possible configurations, namely,
 
@@ -70,14 +72,18 @@ A communication system consisting of a transmitter, four antennas (signal repeat
 
 
 \subsection{The Generalized Basic Principle of Counting}
+\label{subsec:basic-principle}
 
-If $r$ experiments that are to be performed are such that the first one may result in any of $n_1$ possible outcomes; and if, for each of these $n_1$ possible outcomes, there are $n_2$ possible outcomes of the second experiment; and if, for each of the possible outcomes of the first two experiments, there are $n_3$ possible outcomes of the third experiment; and if \dots , then there is a total of $n_1 n_2 \dotsm n_r = \prod_{i=1}^{r} n_i$ possible outcomes of the $r$ experiments \cite{ross_2010}.\\
+If $r$ experiments that are to be performed are such that the first one may result in any of $n_1$ possible outcomes; and if, for each of these $n_1$ possible outcomes, there are $n_2$ possible outcomes of the second experiment; and if, for each of the possible outcomes of the first two experiments, there are $n_3$ possible outcomes of the third experiment; and if \dots , then there is a total of $n_1 n_2 \dotsm n_r = \prod_{i=1}^{r} n_i$ possible outcomes of the $r$ experiments \cite{ross_2010}.
+
+\bigskip
 
 \noindent\textbf{\textit{Example.}} How many different 7-place license plates are possible if the first 3 places are to be occupied by letters and the final 4 by numbers?\\
 \noindent\textbf{\textit{Solution.}} By the generalized basic principle of counting, the answer is $26 \cdot 26 \cdot 26 \cdot 10 \cdot 10 \cdot 10 \cdot 10 = 175,760,000$.
 
 
 \subsection{Permutations}
+\label{subsec:permutations}
 
 In mathematics, \textbf{permutation} means ``rearranging the elements of a set in a sequence", and the number of possible sequences is a function of the set's size. Given a set of $n$ elements, we can \textit{permute} it's elements according to the formula:
 
@@ -85,11 +91,15 @@ In mathematics, \textbf{permutation} means ``rearranging the elements of a set i
 $P_n = n(n - 1)(n - 2) \dotsm 3 \cdot 2 \cdot 1 = n!$
 \end{center}
 
-\noindent As we are arranging the $n$ elements in $n$ positions, the first place can be chosen from $n$ possibilities, the second from $(n - 1)$ and so on, until the last with just one remaining option. We use the $!$ after a arbitrary number $n$ to denote the \textbf{factorial} of $n$.\\
+\noindent As we are arranging the $n$ elements in $n$ positions, the first place can be chosen from $n$ possibilities, the second from $(n - 1)$ and so on, until the last with just one remaining option. We use the $!$ after a arbitrary number $n$ to denote the \textbf{factorial} of $n$.
+
+\bigskip
 
 \noindent\textbf{\textit{Example.}} In a group of 6 men and 4 women, how many possible arrangments can we have if \textbf{\textit{(a)}} put all in the same group, and \textbf{\textit{(b)}} divide by sex?\\
 \noindent\textbf{\textit{Solution.}} \textbf{\textit{(a)}} We have 10 people to rearrange into 10 positions, so we just do $P_{10} = 10! = 3,628,800$.\\
-\textbf{\textit{(b)}} Using the \textbf{basic principle} we have two different experiments (rearranging men and rearranging women). So, our result is just $P_6 P_4 = 6!4! = 720 \cdot 24 = 17,280$ possibilities.\\
+\textbf{\textit{(b)}} Using the \textbf{basic principle} we have two different experiments (rearranging men and rearranging women). So, our result is just $P_6 P_4 = 6!4! = 720 \cdot 24 = 17,280$ possibilities.
+
+\bigskip
 
 If our permutation do not preserve beginning and end (called \textbf{circular permutation}), the formula is no longer $n!$ (simple permutation), but $(n - 1)!$. For example, if we permute $abc$ circularly, the results $abc$, $cab$ and $bca$ are equal. The same to $acb$, $bac$ and $cba$. For $n$ elements, as the first $n$ possibilities of the previous ``first position" are the same, we do
 
@@ -97,20 +107,26 @@ If our permutation do not preserve beginning and end (called \textbf{circular pe
 $Pc_n = \frac{P_n}{n} = \frac{n!}{n} = (n - 1)!$
 \end{center}
 
-\noindent\textbf{Remember:} the order is still importante, but know the line does not have a beginning and an end, but a circular organization.
+\noindent\textbf{Remember:} the order is still importante, but now the line does not have a beginning and an end, but a circular organization.
 
 
 \subsection{$k$-permutations of $n$}
+\label{subsec:arrang}
 
-A permutation of $n$ elements in $k$ positions is also called an ``arrangement of $n$, $k$ to $k$" and can be symbolized by $A_{n,k}$. Given the simple permutation shown before ($P_n = n!$), if we permute the $n$ elements in $k$ positions, this means that the first position has $n$ possible values, the second has $(n -1)$ possibilities and so on, until the last position having $(n - k + 1)$ possibilities.\\
+A permutation of $n$ elements in $k$ positions is also called an ``arrangement of $n$, $k$ to $k$" and can be symbolized by $A_{n,k}$. Given the simple permutation shown before ($P_n = n!$), if we permute the $n$ elements in $k$ positions, this means that the first position has $n$ possible values, the second has $(n -1)$ possibilities and so on, until the last position having $(n - k + 1)$ possibilities.
+
+\bigskip
 
 \noindent\textbf{\textit{Example.}} We have 7 athletes in a competition and want to rank them in the three best positions: gold, silver and bronze medals. How many possibilities there is?\\
-\noindent\textbf{\textit{Solution.}} The gold medal can be won by all 7 athletes. Ranked the first place, the second has 6 options and the third, 5. This means that $A_{7,3} = 7 \cdot 6 \cdot 5 = 210$.\\
+\noindent\textbf{\textit{Solution.}} The gold medal can be won by all 7 athletes. Ranked the first place, the second has 6 options and the third, 5. This means that $A_{7,3} = 7 \cdot 6 \cdot 5 = 210$.
+
+\bigskip
 
 \noindent So, we can generalize it, think a little and have the simple formula $A_{n,k} = \frac{n!}{(n - k)!}$ for an arrangement.
 
 
 \subsection{Combinations}
+\label{subsec:comb}
 
 If we join the ideas of a circular permutation and arrangement, we develop a new interesting one. In the previous example (the competition), chosen the first three places, we can permute them in $3! = 6$ ways. If we abolish the different medals and just give a ``well done" medal to all three, the six different configurations involving these particular athletes are the same and we can count them as just one. The same to the other 209 configurations. So, now we have $\frac{A_{7,3}}{6} = 35$. This is called \textbf{combination},
 
@@ -124,6 +140,7 @@ Now you have the tools to answer the question from the beginning of this section
 
 
 \subsection{Answering The Problem}
+\label{subsec:answer-comb-anal}
 
 Let us go back to the antennas problem from the beginning of the section. Given a number of antennas $n = 4$, with $m = 2$ defectives, we name the working ones as $1$ and the defective one as $0$. Let us consider two $0$s and two $1$s, being the set of possibilities $S = \{0_1, 0_2, 1_1, 1_2\}$, just to ilustrative purposes. The configurations are:
 
@@ -139,6 +156,36 @@ $1_1 1_2 0_1 0_2 = 1 1 0 0$\\
 \noindent Take notice that as there is no difference between the $0$s and no difference between the $1$s, the index in each number is irrelevant. So, we are back to the configurations from the beginning of this section and realized we are talking about a combination.
 
 Now, generalizing, we have $n$ antennas, with $m$ defectives. This means we can line up $n - m$ functional antennas, with one or none defective antenna between two functional (and also between the transmitter and the receiver). Than, we have $n - m + 1$ possible positions to fill these spaces and must select $m$ of them. This is $C_{n - m + 1,m} = \binom{n - m + 1}{m}$. Fill it with $n = 4$ and $m = 2$ and we find the same answer.
+
+
+\section{Axioms of Probability}
+\label{sec:axioms}
+
+This section is where we really start to talk about probability theory. The first subsection discusses sample spaces and events, basically \textit{set theory} with a wider vision. So, althought I will explain many basic concepts, it is interesting that you have a background in set theory.
+
+\subsection{Sample Space and Events}
+
+In probability theory we deal with problems of uncertainty, with experiments we cannot guarantee the outcome. However, we know the set of possible outcomes, as \textit{head} or \textit{tail} for a coin tossing, for an experiment. When flipping a coin we cannot see a ``pair number" or ``male/female". This set of possible outcomes for an experiment is called \textbf{sample space} and is denoted $S$. Any subset of $S$ is known as an \textbf{event}. The following examples will clarify these concepts:
+
+\begin{enumerate}
+    \item If the experiment consists of flipping two coins, then the sample space consists of the following four points:
+    \begin{center}
+    $S = \{(H,H),(H,T),(T,H),(T,T)\}$
+    \end{center}
+    where $H = head$ and $T = tail$. Valuable events are $A$ = \{all outcomes are heads\} and $B$ = \{has at least one tail\}, with
+    \begin{center}
+    $A = \{(H,H)\}$ and $B = \{(H,T),(T,H),(T,T)\}$
+    \end{center}
+
+    \item If the experiment consists of tossing two dice, then the sample space consists of the 36 points
+    \begin{center}
+    $S = \{(i, j): i, j = 1, 2, 3, 4, 5, 6\}$
+    \end{center}
+    where the outcome $(i, j)$ is said to occur if $i$ appears on the leftmost die and $j$ on the other die. Valuable events are $A = \{i + j = 7\}$ and $B$ = \{all outcomes with $i = 3$\}, with
+    \begin{center}
+    $A = \{1,6),(2,5),(3,4),(4,3),(5,2),(6,1)\}$ and $B = \{(3,1),(3,2),(3,3),(3,4),(3,5),(3,6)\}$
+    \end{center}
+\end{enumerate}
 
 
 \begin{thebibliography}{9}
