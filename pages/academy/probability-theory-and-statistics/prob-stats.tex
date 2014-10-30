@@ -245,6 +245,29 @@ Beyond these easy to understand axioms, there are some propositions we can easil
 \noindent You may take a time to prove these three items (specially the third), but after this exercise your knowledges about probability will be better sedimented.
 
 
+\subsection{Equally Likely Samples}
+
+Suppose we have an closed urn containing 11 balls, 5 red and 6 black. Choosing 3 balls without look, what would be the probability to have 1 black and 2 red?
+
+\bigskip
+
+\noindent\textbf{\textit{Solution.}} Since there is no concern about order, the problem reduces itself to a simple combinatory problem. Using $b$ to black and $r$ to red, the outcomes can be $brr$, $rbr$ or $rrb$. So we can choose 3 balls out of 11, being 1 out of 6 and 2 out of 5. As the choice of each ball is independent, we have
+
+\begin{equation}
+\label{eq:balls_problem}
+P(E) = \frac{\binom{6}{1}\binom{5}{2}}{\binom{11}{3}} = \frac{6 \cdot 10}{165} = \frac{4}{11}
+\end{equation}
+
+Why did this happened? It was not said, but every ball had the same size, friction and etc. The only difference between them was the color, which had no influence in the choice. The balls were \textbf{equally probable}, what means each one of them had the same chance to be chosen. So, if $S = \{s_1, s_2,\dotsm,s_N\}$ and $E_i$ is the event of choose sample $s_i$, then
+
+\begin{equation}
+\label{eq:equally_prob}
+P(E_i) = \frac{1}{N}, i = 1, 2, \dotsm N
+\end{equation}
+
+\noindent To prove it, remember the axioms and how independent these events are.
+
+
 \begin{thebibliography}{9}
     \bibitem{enc_brit_prob}
          ``Probability theory, Encyclopaedia Britannica".
