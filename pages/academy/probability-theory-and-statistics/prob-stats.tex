@@ -53,7 +53,7 @@
 
 According to the \textit{Encyclopaedia Britannica}, \textbf{probability theory} is ``a branch of mathematics concerned with the analysis of random phenomena" \cite{enc_brit_prob}. This science is used to measure the likeliness that an event will occur. \textbf{Statistics} is defined by \textit{The Oxford Dictionary of Statistical Terms} as ``the study of the collection, analysis, interpretation, presentation and organization of data" \cite{oxford_stat}.
 
-A good example of probability and statistics as a tool is in election polls: researchers use the statistics of the voting population (schooling, region and etc.) to know the probability of victory for each candidate, by taking a sample, generalizing it and calculating the similarity to reality. Machine learning algorithms and insurance policies are also good examples of probability and statistics used to extract valuable information.
+A good example of probability and statistics as a tool is in election polls: researchers use the statistics of the voting population (schooling, region and etc.) to know the probability of victory for each candidate, by taking a sample, generalizing it and calculating the similarity to reality. Machine learning algorithms and insurance policies are also good examples of probability and statistics used to make smart decisions.
 
 This document is a working in progress, where I intend to present the basic topics of Probability Theory and Statistics, so it will change with time. The main reference will be the book \textbf{A First Course in Probability - 8th ed.} \cite{ross_2010}, but probably other materials will be used. If the reader desires to go deeper, further readings are recommended.
 
@@ -113,17 +113,17 @@ If our permutation do not preserve beginning and end (called \textbf{circular pe
 Pc_n = \frac{P_n}{n} = \frac{n!}{n} = (n - 1)!
 \end{equation}
 
-\noindent\textbf{Remember:} the order is still importante, but now the line does not have a beginning and an end, but a circular organization.
+\noindent\textbf{Remember:} the order is still important, but now the line does not have a beginning and an end, but a circular organization.
 
 
 \subsection{$k$-permutations of $n$}
 \label{subsec:arrang}
 
-A permutation of $n$ elements in $k$ positions is also called an ``arrangement of $n$, $k$ to $k$" and can be symbolized by $A_{n,k}$. Given the simple permutation shown before ($P_n = n!$), if we permute the $n$ elements in $k$ positions, this means that the first position has $n$ possible values, the second has $(n -1)$ possibilities and so on, until the last position having $(n - k + 1)$ possibilities.
+A permutation of $n$ elements in $k$ positions is also called an ``arrangement of $n$, $k$ to $k$" and can be symbolized by $A_{n,k}$. Starting with the simple permutation shown before ($P_n = n!$), if we take the general case and permute the $n$ elements in $k$ positions the first position has $n$ possible values, the second has $(n -1)$ possibilities and so on, until the last position having $(n - k + 1)$ possibilities.
 
 \bigskip
 
-\noindent\textbf{\textit{Example.}} We have 7 athletes in a competition and want to rank them in the three best positions: gold, silver and bronze medals. How many possibilities there is?\\
+\noindent\textbf{\textit{Example.}} We have 7 athletes in a competition and want to rank them in the three best positions: gold, silver and bronze medals. How many possibilities are there?\\
 \noindent\textbf{\textit{Solution.}} The gold medal can be won by all 7 athletes. Ranked the first place, the second has 6 options and the third, 5. This means that $A_{7,3} = 7 \cdot 6 \cdot 5 = 210$.
 
 \bigskip
@@ -134,16 +134,16 @@ A permutation of $n$ elements in $k$ positions is also called an ``arrangement o
 \subsection{Combinations}
 \label{subsec:comb}
 
-If we join the ideas of a circular permutation and arrangement, we develop a new interesting one. In the previous example (the competition), chosen the first three places, we can permute them in $3! = 6$ ways. If we abolish the different medals and just give a ``well done" medal to all three, the six different configurations involving these particular athletes are the same and we can count them as just one. The same to the other 209 configurations. So, now we have $\frac{A_{7,3}}{6} = 35$. This is called \textbf{combination},
+If we join the ideas of a circular permutation and arrangement, we develop a new interesting one. In the previous example (the competition), chosen the first three places, we can permute them in $3! = 6$ ways. If we abolish the different medals and just give a ``attaboy" medal to all three (damn liberals!), the six different configurations involving these particular athletes are the same and we can count them as just one. The same to the other 209 configurations. So, now we have $\frac{A_{7,3}}{6} = 35$. This is called \textbf{combination},
 
 \begin{equation}
 \label{eq:combination}
 C_{n,k} = \binom{n}{k} = \frac{A_{n,k}}{k!} = \frac{n!}{k!(n - k)!}
 \end{equation}
 
-\noindent and is read ``combination of $n$, $k$ to $k$". Remember that $r \leq n$ always (but I shouldn't need to say that).
+\noindent and is read ``combination of $n$, $k$ to $k$". Remember that $k \leq n$ always (but I shouldn't need to say that, aye?).
 
-Now you have the tools to answer the question from the beginning of this section and go deeper into this subject, if you desire. After see the solution, try to read about \textbf{binomial theorem} and to generalize the combinatorial analysis to \textbf{multinomial coefficients}.
+Now you have the tools to answer the question and go deeper into this subject, if you desire. After see the solution, try to read about \textbf{binomial theorem} and to generalize the combinatorial analysis to \textbf{multinomial coefficients}.
 
 
 \subsection{Answering The Problem}
@@ -160,7 +160,7 @@ $1_1 0_1 1_2 0_2 = 1 0 1 0$\\
 $1_1 1_2 0_1 0_2 = 1 1 0 0$\\
 \end{center}
 
-\noindent Take notice that as there is no difference between the $0$s and no difference between the $1$s, the index in each number is irrelevant. So, we are back to the configurations from the beginning of this section and realized we are talking about a combination.
+\noindent Take notice that as there is no difference between the $0$s and no difference between the $1$s, the index in each number is irrelevant. So, we are back to the initial configurations and realized we are talking about combinations.
 
 Now, generalizing, we have $n$ antennas, with $m$ defectives. This means we can line up $n - m$ functional antennas, with one or none defective antenna between two functional (and also between the transmitter and the receiver). Than, we have $n - m + 1$ possible positions to fill these spaces and must select $m$ of them. This is $C_{n - m + 1,m} = \binom{n - m + 1}{m}$. Fill it with $n = 4$ and $m = 2$ and we find the same answer.
 
@@ -168,7 +168,7 @@ Now, generalizing, we have $n$ antennas, with $m$ defectives. This means we can 
 \section{Axioms of Probability}
 \label{sec:axioms}
 
-This section is where we really start to talk about probability theory. The first subsection discusses sample spaces and events, basically \textit{set theory} with a wider vision. So, althought I will explain many basic concepts, it is interesting that you have a background in set theory.
+This section is where we really start to talk about probability theory. The first subsection discusses sample spaces and events, basically \textit{set theory} with a wider vision. So, althought I will explain many basic concepts, it is interesting that you have a basic knowledge about sets.
 
 \subsection{Sample Space and Events}
 \label{subsec:sample}
@@ -176,7 +176,7 @@ This section is where we really start to talk about probability theory. The firs
 In probability theory we deal with problems of uncertainty, with experiments we cannot guarantee the outcome. However, we know the set of possible outcomes for an experiment, as \textit{head} or \textit{tail} for a coin tossing (not an ``even number" or ``male/female"). This set of possible outcomes for an experiment is called \textbf{sample space} and is denoted $S$. Any subset of $S$ is known as an \textbf{event}. The following examples will clarify these concepts:
 
 \begin{enumerate}
-    \item If the experiment consists of flipping two coins, then the sample space consists of the following four points:
+    \item If the experiment consists of flipping two coins, then the sample space consists of the following four pairs:
     \begin{center}
     $S = \{(H,H),(H,T),(T,H),(T,T)\}$
     \end{center}
@@ -201,7 +201,7 @@ Similar to what (I believe) you learned in set theory, events can be \textit{uni
 \subsection{Axioms of Probability}
 \label{subsec:axioms}
 
-When we say an event $E$ has a probability $P(E) = 30\%$, that doesn't mean we will have 30 occurrences of $E$ for each 100 repetitions of the experiment, but that when the number is really big, the outcomes of $E$ approach this percentage. The leap here is named \textit{relative frequency}, that is the ratio
+When we say an event $E$ has a probability $P(E) = 30\%$, that doesn't mean we will have exactly 30 occurrences of $E$ for each 100 repetitions of the experiment, but that when the number is really big, the outcomes of $E$ approach this percentage. The leap here is named \textit{relative frequency}, that is the ratio
 
 \begin{equation}
 \label{eq:rel-freq}
