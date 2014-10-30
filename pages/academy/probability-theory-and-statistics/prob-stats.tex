@@ -29,6 +29,7 @@
 \newcommand{\Lim}{\lim\limits}
 \newcommand{\Bigcup}{\bigcup\limits}
 \newcommand{\Bigsum}{\sum\limits}
+\newcommand{\notset}[1]{\overline{#1}}
 
 
 \title{
@@ -233,6 +234,15 @@ Now, let us do it properly, showing the \textbf{axioms of probability}. They are
 
 Hopefully, the reader will agree that the axioms are natural and in accordance with our intuitive concept of probability as related to chance and randomness. Furthermore, using these axioms we shall be able to prove that if an experiment is repeated over and over again, then, with probability 1, the proportion of time during which any specific event $E$ occurs will equal $P(E)$ \cite{ross_2010}.
 
+Beyond these easy to understand axioms, there are some propositions we can easily reach. I will leave as an exercise for the reader to find some relations:
+
+\begin{itemize}
+    \item Given an event $E$, how would you describe $P(\notset{E})$ in terms of $P(E)$?
+    \item If $E \subseteq F$, what is the relation between their probabilities? And for $E \subset F$?
+    \item As $P(A \cup B) = P(A) + P(B)$ for $A \cap B = \varnothing$, find the general $P(A \cup B)$. Do the same to $P(\Bigcup_{i=1}^{n}A)$.
+\end{itemize}
+
+\noindent You may take a time to prove these three items (specially the third), but after this exercise your knowledges about probability will be better sedimented.
 
 
 \begin{thebibliography}{9}
